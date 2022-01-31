@@ -1,0 +1,13 @@
+name: "DACCS"
+title: "Noah_Milstein_Blog"
+description: |
+  Noah_Milstein_Blog
+output_dir: "."
+base_url: https://nmilsteinuma.github.io/
+navbar:
+  right:
+    - text: "Home"
+      href: index.html
+    - text: "About"
+      href: about.html
+output: distill::distill_article
