@@ -42,3 +42,74 @@ vcount(florentine)
 ecount(florentine)
 
 ```
+
+```{r}
+
+is_bipartite(florentine)
+
+is_directed(florentine)
+
+is_weighted(florentine)
+
+```
+
+```{r}
+
+vertex_attr_names(florentine)
+
+edge_attr_names(florentine)
+
+```
+
+```{r}
+
+igraph::dyad.census(florentine)
+
+```
+
+```{r}
+
+igraph::triad_census(florentine)
+
+```
+
+```{r}
+
+transitivity(florentine, type="global")
+
+```
+
+```{r}
+
+transitivity(florentine, type="average")
+
+```
+
+```{r}
+
+V(florentine)[c("Peruzzi","Lamberteschi", "Ginori")]
+
+```
+
+```{r}
+transitivity(florentine, type="local", vids=V(florentine)[c("Peruzzi","Lamberteschi", "Ginori")]) 
+```
+
+```{r}
+
+distances(florentine,"Peruzzi", "Lamberteschi")
+
+```
+
+```{r}
+
+distances(florentine,"Peruzzi", "Ginori")
+
+```
+
+```{r}
+
+distances(florentine,"Lamberteschi","Ginori")
+
+```
+
