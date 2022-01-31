@@ -1,0 +1,48 @@
+---
+title: "Initial_Network_Analysis_Florentine_Family"
+description: |
+  Homework 2: Brief Analysis of the Florentine Family Set
+author:
+  - name: Noah Milstein
+date: 2022-01-31
+output:
+  distill::distill_article:
+    self_contained: false
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+```{r}
+
+library(network)
+
+library(igraph)
+
+```
+
+```{r}
+?graph.adjacency()
+```
+
+```{r}
+
+data(flo, package="network")
+
+matrix <- as.matrix(flo) 
+
+florentine<- graph.adjacency(flo, mode="directed", weighted=NULL)
+
+
+plot(florentine)
+```
+
+```{r}
+
+vcount(florentine)
+
+ecount(florentine)
+
+```
