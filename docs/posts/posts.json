@@ -1,24 +1,5 @@
 [
   {
-    "path": "posts/welcome/",
-    "title": "Welcome to My Blog!",
-    "description": "This is my New blog for code relating to Political and Social Networks",
-    "author": [
-      {
-        "name": "Noah Milstein",
-        "url": "https://example.com/norajones"
-      }
-    ],
-    "date": "2022-01-31",
-    "categories": [],
-    "contents": "\n\n\n\n\n\n\n\n\n\n\n\n\n",
-    "preview": "posts/welcome/welcome_files/figure-html5/unnamed-chunk-5-1.png",
-    "last_modified": "2022-01-31T16:09:32-05:00",
-    "input_file": "welcome.knit.md",
-    "preview_width": 1248,
-    "preview_height": 768
-  },
-  {
     "path": "posts/2022-01-31-homework2network/",
     "title": "Homework_2_Network",
     "description": "A short description of the post.",
@@ -33,7 +14,7 @@
     "contents": "\n\n\nlibrary(network)\n\nlibrary(igraph)\n\n\n\n\n\ndata(flo, package=\"network\")\n\nmatrix <- as.matrix(flo) \n\nflorentine<- graph.adjacency(flo, mode=\"directed\", weighted=NULL)\n\n\nplot(florentine)\n\n\n\n\n\n\nvcount(florentine)\n\n\n[1] 16\n\necount(florentine)\n\n\n[1] 40\n\n\n\n\n",
     "preview": "posts/2022-01-31-homework2network/homework2network_files/figure-html5/unnamed-chunk-2-1.png",
     "last_modified": "2022-01-31T14:30:26-05:00",
-    "input_file": "homework2network.knit.md",
+    "input_file": {},
     "preview_width": 1248,
     "preview_height": 768
   },
@@ -51,8 +32,27 @@
     "categories": [],
     "contents": "\n\n\ndata(flo, package=\"network\")\n\nmatrix <- as.matrix(flo) \n\nflorentine<- graph.adjacency(flo, mode=\"directed\", weighted=NULL)\n\nplot(florentine)\n\n\n\n\n\n\nvcount(florentine)\n\n\n[1] 16\n\necount(florentine)\n\n\n[1] 40\n\n\n\nis_bipartite(florentine)\n\n\n[1] FALSE\n\nis_directed(florentine)\n\n\n[1] TRUE\n\nis_weighted(florentine)\n\n\n[1] FALSE\n\n\n\nvertex_attr_names(florentine)\n\n\n[1] \"name\"\n\nedge_attr_names(florentine)\n\n\ncharacter(0)\n\n\n\nigraph::dyad.census(florentine)\n\n\n$mut\n[1] 20\n\n$asym\n[1] 0\n\n$null\n[1] 100\n\n\n\nigraph::triad_census(florentine)\n\n\n [1] 324   0 195   0   0   0   0   0   0   0  38   0   0   0   0   3\n\n\n\ntransitivity(florentine, type=\"global\")\n\n\n[1] 0.1914894\n\n\n\ntransitivity(florentine, type=\"average\")\n\n\n[1] 0.2181818\n\n\n\nV(florentine)[c(\"Peruzzi\",\"Lamberteschi\", \"Ginori\")]\n\n\n+ 3/16 vertices, named, from 398dd1d:\n[1] Peruzzi      Lamberteschi Ginori      \n\n\n\ntransitivity(florentine, type=\"local\", vids=V(florentine)[c(\"Peruzzi\",\"Lamberteschi\", \"Ginori\")]) \n\n\n[1] 0.6666667       NaN       NaN\n\n\n\ndistances(florentine,\"Peruzzi\", \"Lamberteschi\")\n\n\n        Lamberteschi\nPeruzzi            3\n\n\n\ndistances(florentine,\"Peruzzi\", \"Ginori\")\n\n\n        Ginori\nPeruzzi      4\n\n\n\ndistances(florentine,\"Lamberteschi\",\"Ginori\")\n\n\n             Ginori\nLamberteschi      3\n\n\n\n\n",
     "preview": "posts/2022-01-31-the-sharpe-ratio/the-sharpe-ratio_files/figure-html5/unnamed-chunk-2-1.png",
-    "last_modified": "2022-01-31T14:54:49-05:00",
-    "input_file": "the-sharpe-ratio.knit.md",
+    "last_modified": "2022-01-31T14:54:50-05:00",
+    "input_file": {},
+    "preview_width": 1248,
+    "preview_height": 768
+  },
+  {
+    "path": "posts/welcome/",
+    "title": "Welcome to My Blog!",
+    "description": "This is my New blog for code relating to Political and Social Networks",
+    "author": [
+      {
+        "name": "Noah Milstein",
+        "url": "https://example.com/norajones"
+      }
+    ],
+    "date": "2022-01-31",
+    "categories": [],
+    "contents": "\n\n\n\n\n\n\n\n\n\n\n\n\n",
+    "preview": "posts/welcome/welcome_files/figure-html5/unnamed-chunk-5-1.png",
+    "last_modified": "2022-01-31T16:09:32-05:00",
+    "input_file": {},
     "preview_width": 1248,
     "preview_height": 768
   }

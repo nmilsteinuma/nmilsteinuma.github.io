@@ -5,15 +5,15 @@
       "title": "About this blog",
       "description": "Some additional details about the blog",
       "author": [],
-      "contents": "\n\n\n\n",
-      "last_modified": "2022-01-31T12:25:49-05:00"
+      "contents": "\nHello and Welcome to my blog\n\n\n\n\n\n\n",
+      "last_modified": "2022-01-31T16:22:20-05:00"
     },
     {
       "path": "index.html",
       "title": "Noah_Milstein_Blog",
       "author": [],
       "contents": "\n\n\n\n",
-      "last_modified": "2022-01-31T12:25:50-05:00"
+      "last_modified": "2022-01-31T16:09:32-05:00"
     }
   ],
   "collections": ["posts/posts.json"]

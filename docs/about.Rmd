@@ -16,7 +16,7 @@ library(aRtsy)
 
 ```
 
-```{r, include=FALSE}
+```{r}
 
 set.seed(2421)
 canvas_polylines(colors = colorPalette("klimt"), ratio = 0.5, iterations = 20, size = 0.1, resolution = 500)
