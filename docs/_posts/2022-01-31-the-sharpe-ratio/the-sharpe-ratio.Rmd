@@ -1,5 +1,5 @@
 ---
-title: "Initial_Network_Analysis_Florentine_Family"
+title: "Initial Network Analysis Florentine Family"
 description: |
   Homework 2: Brief Analysis of the Florentine Family Set
 author:
@@ -12,19 +12,15 @@ output:
 
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE)
+knitr::opts_chunk$set(echo = TRUE)
 ```
 
-```{r}
+```{r, include=FALSE}
 
 library(network)
 
 library(igraph)
 
-```
-
-```{r}
-?graph.adjacency()
 ```
 
 ```{r}
@@ -35,8 +31,8 @@ matrix <- as.matrix(flo)
 
 florentine<- graph.adjacency(flo, mode="directed", weighted=NULL)
 
-
 plot(florentine)
+
 ```
 
 ```{r}
