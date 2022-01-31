@@ -6,7 +6,7 @@ description: |
 author:
   - name: Noah Milstein 
     url: https://example.com/norajones
-    affiliation: Spacely Sprockets
+    affiliation: UMass DACSS
     affiliation_url: https://example.com/spacelysprokets
 date: 01-31-2022
 output:
