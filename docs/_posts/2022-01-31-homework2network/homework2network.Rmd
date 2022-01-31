@@ -11,13 +11,38 @@ output:
     self_contained: false
 ---
 
-
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
-Distill is a publication format for scientific and technical writing, native to the web.
+```{r}
 
-Learn more about using Distill at <https://rstudio.github.io/distill>.
+library(network)
+
+library(igraph)
+
+```
+
+```{r}
+?graph.adjacency()
+```
+
+```{r}
+
+data(flo, package="network")
+
+matrix <- as.matrix(flo) 
+
+florentine<- graph.adjacency(flo, mode="directed", weighted=NULL)
 
 
+plot(florentine)
+```
+
+```{r}
+
+vcount(florentine)
+
+ecount(florentine)
+
+```

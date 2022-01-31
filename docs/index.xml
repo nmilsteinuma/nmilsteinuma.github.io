@@ -17,5 +17,14 @@ reading what we have to say!</description>
       <guid>https://nmilsteinuma.github.io/posts/welcome</guid>
       <pubDate>Mon, 31 Jan 2022 00:00:00 +0000</pubDate>
     </item>
+    <item>
+      <title>Homework_2_Network</title>
+      <dc:creator>Nora Jones</dc:creator>
+      <link>https://nmilsteinuma.github.io/posts/2022-01-31-homework2network</link>
+      <description>A short description of the post.</description>
+      <guid>https://nmilsteinuma.github.io/posts/2022-01-31-homework2network</guid>
+      <pubDate>Mon, 31 Jan 2022 00:00:00 +0000</pubDate>
+      <media:content url="https://nmilsteinuma.github.io/posts/2022-01-31-homework2network/homework2network_files/figure-html5/unnamed-chunk-3-1.png" medium="image" type="image/png" width="1248" height="768"/>
+    </item>
   </channel>
 </rss>
