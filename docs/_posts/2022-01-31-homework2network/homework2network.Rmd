@@ -3,7 +3,7 @@ title: "Homework_2_Network"
 description: |
   A short description of the post.
 author:
-  - name: Nora Jones
+  - name: Noah Milstein
     url: https://example.com/norajones
 date: 2022-01-31
 output:
