@@ -12,6 +12,11 @@ output:
   distill::distill_article:
     self_contained: false
 ---
+
+```{r,include=FALSE}
+library(aRtsy)
+```
+
 ```{r, include=FALSE}
 library(ggChernoff)
 ```
@@ -26,6 +31,16 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ```{r, include=FALSE}
 library(ggplot2)
+```
+
+```{r}
+?aRtsy
+```
+
+```{r}
+
+canvas_maze(color = colorPalette("dark1"), polar = TRUE)
+
 ```
 
 
