@@ -9,13 +9,13 @@
     <generator>Distill</generator>
     <lastBuildDate>Mon, 31 Jan 2022 00:00:00 +0000</lastBuildDate>
     <item>
-      <title>Welcome to Noah_Milstein_Blog</title>
-      <dc:creator>Nora Jones</dc:creator>
+      <title>Welcome to My Blog!</title>
+      <dc:creator>Noah Milstein</dc:creator>
       <link>https://nmilsteinuma.github.io/posts/welcome</link>
-      <description>Welcome to our new blog, Noah_Milstein_Blog. We hope you enjoy 
-reading what we have to say!</description>
+      <description>This is my New blog for code relating to Political and Social Networks</description>
       <guid>https://nmilsteinuma.github.io/posts/welcome</guid>
       <pubDate>Mon, 31 Jan 2022 00:00:00 +0000</pubDate>
+      <media:content url="https://nmilsteinuma.github.io/posts/welcome/welcome_files/figure-html5/unnamed-chunk-3-1.png" medium="image" type="image/png" width="1248" height="768"/>
     </item>
     <item>
       <title>Homework_2_Network</title>

@@ -1,8 +1,7 @@
 ---
-title: "Welcome to Noah_Milstein_Blog"
+title: "Welcome to My Blog!"
 description: |
-  Welcome to our new blog, Noah_Milstein_Blog. We hope you enjoy 
-  reading what we have to say!
+  This is my New blog for code relating to Political and Social Networks
 author:
   - name: Noah Milstein 
     url: https://example.com/norajones
@@ -13,6 +12,9 @@ output:
   distill::distill_article:
     self_contained: false
 ---
+```{r, include=FALSE}
+library(ggChernoff)
+```
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
@@ -22,5 +24,15 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ```
 
+```{r, include=FALSE}
+library(ggplot2)
+```
+
+
+```{r}
+face <- chernoffGrob(.5, .5, size = 1e3, smile = 1, colour = 'navy', fill = 'lightblue')
+grid::grid.newpage()
+grid::grid.draw(face)
+```
 
 
