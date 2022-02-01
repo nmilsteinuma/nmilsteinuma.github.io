@@ -15,12 +15,15 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-```{r, echo=FALSE}
+```{r, echo=FALSE, message=FALSE}
+
 library(aRtsy)
 
 library(network)
 
 library(igraph)
+
+library(statnet)
 
 ```
 
@@ -47,7 +50,7 @@ data(flo, package="network")
 
 # In order to make the dataset usable I make it into a matrix using as.matrix()
 
-matrix <- as.matrix(flo) 
+matrix_florentine <- as.matrix(flo) 
 
 # Next I used the graph.adjacency command to make the florentine dataset into
 # An Adjacency Matrix 
@@ -64,6 +67,14 @@ vcount(florentine)
 
 ecount(florentine)
 
+```
+
+```{r}
+statted_florentine<-as.network(matrix_florentine)
+```
+
+```{r}
+print(statted_florentine)
 ```
 
 The number of vertices in the dataset is 16, in this case these nodes each represent a florentine family. Te number of edges is 40. In this instance ties or edges, represent marriages between these influential families.
@@ -92,6 +103,13 @@ edge_attr_names(florentine)
 
 ```
 
+```{r}
+
+network::list.vertex.attributes(statted_florentine)
+
+network::list.edge.attributes(statted_florentine)
+
+```
 
 The vector attribute names are the names of the florentine families.
 
@@ -105,12 +123,29 @@ igraph::dyad.census(florentine)
 
 ```
 
+```{r}
+ 
+sna::dyad.census(statted_florentine)
+
+```
+
 The dyad census indicates that amongest that among the dyad ties, being between 2 families, 20 are mutual and none are asymptotic. In addition 100 of the dyad are null, or not connected.
 
 ```{r}
 
 igraph::triad_census(florentine)
 ?triad_census(florentine)
+```
+
+```{r}
+
+sna::triad.census(statted_florentine, mode="graph")
+
+```
+
+```{r}
+sum(sna::triad.census(statted_florentine, mode="graph"))
+
 ```
 
 For dyads there are 16 possibilities. Here our results are as follows:
@@ -132,6 +167,12 @@ The global transitivity of the graph is 0.1914894, or 19.15% triangles out of al
 ```{r}
 
 transitivity(florentine, type="average")
+
+```
+
+```{r}
+
+gtrans(statted_florentine)
 
 ```
 
@@ -177,4 +218,16 @@ distances(florentine,"Lamberteschi","Ginori")
 ```
 
 The distance between the nodes of Lamberteschi and Ginori is 3
+
+```{r}
+
+isolates(statted_florentine)
+
+```
+
+```{r}
+
+as.vector(statted_florentine%v%'vertex.names')[c(isolates(statted_florentine))]
+
+```
 
