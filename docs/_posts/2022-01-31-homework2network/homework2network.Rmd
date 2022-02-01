@@ -4,12 +4,12 @@ description: |
   A short description of the post.
 author:
   - name: Noah Milstein
-    url: https://example.com/norajones
 date: 2022-01-31
 output:
   distill::distill_article:
     self_contained: false
 ---
+
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
@@ -21,9 +21,15 @@ library(network)
 
 library(igraph)
 
+library(aRtsy)
+
 ```
 
+```{r,Echo=FALSE}
 
+set.seed(1)
+canvas_diamonds(colors = colorPalette("klimt"))
+```
 
 ```{r}
 
