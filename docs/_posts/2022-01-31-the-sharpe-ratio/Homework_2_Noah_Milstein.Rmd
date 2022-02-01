@@ -227,7 +227,15 @@ isolates(statted_florentine)
 
 ```{r}
 
+as.vector(statted_florentine%v%'vertex.names')
+
+```
+
+```{r}
+
 as.vector(statted_florentine%v%'vertex.names')[c(isolates(statted_florentine))]
 
 ```
+
+
 
