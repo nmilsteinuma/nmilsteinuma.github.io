@@ -15,7 +15,8 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-```{r, include=FALSE}
+```{r, echo=FALSE}
+library(aRtsy)
 
 library(network)
 
@@ -23,15 +24,38 @@ library(igraph)
 
 ```
 
+```{r, echo=FALSE}
+
+set.seed(125)
+
+canvas_squares(colors = colorPalette("origami"), cuts = 1000, ratio = 1.6, resolution = 200, noise = FALSE)
+# see ?canvas_squares for more input parameters of this function
+```
+
+### Chosen Network:
+
+The Network I chose was the Florentine family dataset network from the network package. This dataset represents marriages between influential families in florence.
+
+### Network Size:
+
+Network size for the Florentine Family network dataset is described briefly by the code below:
+
 ```{r}
+# I access the florentine families dataset through the package "network"
 
 data(flo, package="network")
 
+# In order to make the dataset usable I make it into a matrix using as.matrix()
+
 matrix <- as.matrix(flo) 
+
+# Next I used the graph.adjacency command to make the florentine dataset into
+# An Adjacency Matrix 
 
 florentine<- graph.adjacency(flo, mode="directed", weighted=NULL)
 
-plot(florentine)
+plot(florentine, vertex.color="skyblue1", vertex.label.color="navy", 
+     vertex.label.dist=1, vertex.size=7,  edge.arrow.size=0.5, margin=0000)
 
 ```
 
@@ -43,6 +67,12 @@ ecount(florentine)
 
 ```
 
+The number of vertices in the dataset is 16, in this case these nodes each represent a florentine family. Te number of edges is 40. In this instance ties or edges, represent marriages between these influential families.
+
+### Network Features
+
+Next the features of the dataset are described using the 3 commands in the code chunk below.
+
 ```{r}
 
 is_bipartite(florentine)
@@ -53,6 +83,8 @@ is_weighted(florentine)
 
 ```
 
+These results suggests that the florentine family dataset is not bipartite, its ties are directed, and the ties are unweighted.
+
 ```{r}
 
 vertex_attr_names(florentine)
@@ -61,17 +93,34 @@ edge_attr_names(florentine)
 
 ```
 
+
+The vector attribute names are the names of the florentine families.
+
+The edge attributes do not have name.
+
+#### Dyad and Triad Census
+
 ```{r}
 
 igraph::dyad.census(florentine)
 
 ```
 
+The dyad census indicates that amongest that among the dyad ties, being between 2 families, 20 are mutual and none are asymptotic. In addition 100 of the dyad are null, or not connected.
+
 ```{r}
 
 igraph::triad_census(florentine)
-
+?triad_census(florentine)
 ```
+
+For dyads there are 16 possibilities. Here our results are as follows:
+324, 003 (A,B,C, the empty graph.)
+195, 102 (A<->B, C, the graph with a mutual connection between two vertices.)
+38, 030C (A<-B<-C, A->C.) and 
+3, 300 (A<->B<->C, A<->C, the complete graph.)
+
+#### Network Transitivity
 
 ```{r}
 
@@ -79,11 +128,15 @@ transitivity(florentine, type="global")
 
 ```
 
+The global transitivity of the graph is 0.1914894, or 19.15% triangles out of all connected triads.
+
 ```{r}
 
 transitivity(florentine, type="average")
 
 ```
+
+The average transitivity is the average transitivity of local triad clusters. Here it is 0.2181818 or 21.18% of the total.
 
 ```{r}
 
@@ -91,9 +144,15 @@ V(florentine)[c("Peruzzi","Lamberteschi", "Ginori")]
 
 ```
 
+#### Network Distances
+
+First we see that the average path length between 2 nodes in our dataset is 2.485714
+
 ```{r}
-transitivity(florentine, type="local", vids=V(florentine)[c("Peruzzi","Lamberteschi", "Ginori")]) 
+average.path.length(florentine,directed=F)
 ```
+
+I then test the distances between 3 families, those being the Peruzzi, Lamberteschi, and Ginori
 
 ```{r}
 
@@ -101,15 +160,22 @@ distances(florentine,"Peruzzi", "Lamberteschi")
 
 ```
 
+The distance between the nodes of Peruzzi and Lamberteschi is 3
+
 ```{r}
 
 distances(florentine,"Peruzzi", "Ginori")
 
 ```
 
+The distance between the nodes of Peruzzi and Ginori is 4
+
+
 ```{r}
 
 distances(florentine,"Lamberteschi","Ginori")
 
 ```
+
+The distance between the nodes of Lamberteschi and Ginori is 3
 

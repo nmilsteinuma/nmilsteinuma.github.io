@@ -117,7 +117,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   <!--/radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-resource-manifest">
-  {"type":"character","attributes":{},"value":["the-sharpe-ratio_files/anchor-4.2.2/anchor.min.js","the-sharpe-ratio_files/bowser-1.9.3/bowser.min.js","the-sharpe-ratio_files/distill-2.2.21/template.v2.js","the-sharpe-ratio_files/figure-html5/unnamed-chunk-2-1.png","the-sharpe-ratio_files/figure-html5/unnamed-chunk-3-1.png","the-sharpe-ratio_files/jquery-3.6.0/jquery-3.6.0.js","the-sharpe-ratio_files/jquery-3.6.0/jquery-3.6.0.min.js","the-sharpe-ratio_files/jquery-3.6.0/jquery-3.6.0.min.map","the-sharpe-ratio_files/popper-2.6.0/popper.min.js","the-sharpe-ratio_files/tippy-6.2.7/tippy-bundle.umd.min.js","the-sharpe-ratio_files/tippy-6.2.7/tippy-light-border.css","the-sharpe-ratio_files/tippy-6.2.7/tippy.css","the-sharpe-ratio_files/tippy-6.2.7/tippy.umd.min.js","the-sharpe-ratio_files/webcomponents-2.0.0/webcomponents.js"]}
+  {"type":"character","attributes":{},"value":["the-sharpe-ratio_files/anchor-4.2.2/anchor.min.js","the-sharpe-ratio_files/bowser-1.9.3/bowser.min.js","the-sharpe-ratio_files/distill-2.2.21/template.v2.js","the-sharpe-ratio_files/figure-html5/unnamed-chunk-2-1.png","the-sharpe-ratio_files/figure-html5/unnamed-chunk-3-1.png","the-sharpe-ratio_files/figure-html5/unnamed-chunk-4-1.png","the-sharpe-ratio_files/jquery-3.6.0/jquery-3.6.0.js","the-sharpe-ratio_files/jquery-3.6.0/jquery-3.6.0.min.js","the-sharpe-ratio_files/jquery-3.6.0/jquery-3.6.0.min.map","the-sharpe-ratio_files/popper-2.6.0/popper.min.js","the-sharpe-ratio_files/tippy-6.2.7/tippy-bundle.umd.min.js","the-sharpe-ratio_files/tippy-6.2.7/tippy-light-border.css","the-sharpe-ratio_files/tippy-6.2.7/tippy.css","the-sharpe-ratio_files/tippy-6.2.7/tippy.umd.min.js","the-sharpe-ratio_files/webcomponents-2.0.0/webcomponents.js"]}
   </script>
   <!--radix_placeholder_navigation_in_header-->
   <!--/radix_placeholder_navigation_in_header-->
@@ -1482,59 +1482,84 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 
 <div class="d-article">
 <div class="layout-chunk" data-layout="l-body">
+
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<p><img src="the-sharpe-ratio_files/figure-html5/unnamed-chunk-2-1.png" width="624" /></p>
+</div>
+<h3 id="chosen-network">Chosen Network:</h3>
+<p>The Network I chose was the Florentine family dataset network from the network package. This dataset represents marriages between influential families in florence.</p>
+<h3 id="network-size">Network Size:</h3>
+<p>Network size for the Florentine Family network dataset is described briefly by the code below:</p>
+<div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>flo</span>, package<span class='op'>=</span><span class='st'>"network"</span><span class='op'>)</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># I access the florentine families dataset through the package "network"</span>
+
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>flo</span>, package<span class='op'>=</span><span class='st'>"network"</span><span class='op'>)</span>
+
+<span class='co'># In order to make the dataset usable I make it into a matrix using as.matrix()</span>
 
 <span class='va'>matrix</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>as.matrix</a></span><span class='op'>(</span><span class='va'>flo</span><span class='op'>)</span> 
 
-<span class='va'>florentine</span><span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/igraph/man/graph_from_adjacency_matrix.html'>graph.adjacency</a></span><span class='op'>(</span><span class='va'>flo</span>, mode<span class='op'>=</span><span class='st'>"directed"</span>, weighted<span class='op'>=</span><span class='cn'>NULL</span><span class='op'>)</span>
+<span class='co'># Next I used the graph.adjacency command to make the florentine dataset into</span>
+<span class='co'># An Adjacency Matrix </span>
 
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>florentine</span><span class='op'>)</span>
+<span class='va'>florentine</span><span class='op'>&lt;-</span> <span class='fu'>graph.adjacency</span><span class='op'>(</span><span class='va'>flo</span>, mode<span class='op'>=</span><span class='st'>"directed"</span>, weighted<span class='op'>=</span><span class='cn'>NULL</span><span class='op'>)</span>
+
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>florentine</span>, vertex.color<span class='op'>=</span><span class='st'>"skyblue1"</span>, vertex.label.color<span class='op'>=</span><span class='st'>"navy"</span>, 
+     vertex.label.dist<span class='op'>=</span><span class='fl'>1</span>, vertex.size<span class='op'>=</span><span class='fl'>7</span>,  edge.arrow.size<span class='op'>=</span><span class='fl'>0.5</span>, margin<span class='op'>=</span><span class='fl'>0000</span><span class='op'>)</span>
 </code></pre>
 </div>
-<p><img src="the-sharpe-ratio_files/figure-html5/unnamed-chunk-2-1.png" width="624" /></p>
+<p><img src="the-sharpe-ratio_files/figure-html5/unnamed-chunk-3-1.png" width="624" /></p>
 </div>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/pkg/igraph/man/gorder.html'>vcount</a></span><span class='op'>(</span><span class='va'>florentine</span><span class='op'>)</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>vcount</span><span class='op'>(</span><span class='va'>florentine</span><span class='op'>)</span>
 </code></pre>
 </div>
 <pre><code>[1] 16</code></pre>
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/pkg/igraph/man/gsize.html'>ecount</a></span><span class='op'>(</span><span class='va'>florentine</span><span class='op'>)</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>ecount</span><span class='op'>(</span><span class='va'>florentine</span><span class='op'>)</span>
 </code></pre>
 </div>
 <pre><code>[1] 40</code></pre>
 </div>
+<p>The number of vertices in the dataset is 16, in this case these nodes each represent a florentine family. Te number of edges is 40. In this instance ties or edges, represent marriages between these influential families.</p>
+<h3 id="network-features">Network Features</h3>
+<p>Next the features of the dataset are described using the 3 commands in the code chunk below.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/pkg/igraph/man/make_bipartite_graph.html'>is_bipartite</a></span><span class='op'>(</span><span class='va'>florentine</span><span class='op'>)</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>is_bipartite</span><span class='op'>(</span><span class='va'>florentine</span><span class='op'>)</span>
 </code></pre>
 </div>
 <pre><code>[1] FALSE</code></pre>
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/pkg/igraph/man/is_directed.html'>is_directed</a></span><span class='op'>(</span><span class='va'>florentine</span><span class='op'>)</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>is_directed</span><span class='op'>(</span><span class='va'>florentine</span><span class='op'>)</span>
 </code></pre>
 </div>
 <pre><code>[1] TRUE</code></pre>
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/pkg/igraph/man/is_weighted.html'>is_weighted</a></span><span class='op'>(</span><span class='va'>florentine</span><span class='op'>)</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>is_weighted</span><span class='op'>(</span><span class='va'>florentine</span><span class='op'>)</span>
 </code></pre>
 </div>
 <pre><code>[1] FALSE</code></pre>
 </div>
+<p>These results suggests that the florentine family dataset is not bipartite, its ties are directed, and the ties are unweighted.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/pkg/igraph/man/vertex_attr_names.html'>vertex_attr_names</a></span><span class='op'>(</span><span class='va'>florentine</span><span class='op'>)</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>vertex_attr_names</span><span class='op'>(</span><span class='va'>florentine</span><span class='op'>)</span>
 </code></pre>
 </div>
 <pre><code>[1] &quot;name&quot;</code></pre>
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/pkg/igraph/man/edge_attr_names.html'>edge_attr_names</a></span><span class='op'>(</span><span class='va'>florentine</span><span class='op'>)</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>edge_attr_names</span><span class='op'>(</span><span class='va'>florentine</span><span class='op'>)</span>
 </code></pre>
 </div>
 <pre><code>character(0)</code></pre>
 </div>
+<p>The vector attribute names are the names of the florentine families.</p>
+<p>The edge attributes do not have name.</p>
+<h4 id="dyad-and-triad-census">Dyad and Triad Census</h4>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>igraph</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/igraph/man/dyad_census.html'>dyad.census</a></span><span class='op'>(</span><span class='va'>florentine</span><span class='op'>)</span>
@@ -1549,66 +1574,81 @@ $asym
 $null
 [1] 100</code></pre>
 </div>
+<p>The dyad census indicates that amongest that among the dyad ties, being between 2 families, 20 are mutual and none are asymptotic. In addition 100 of the dyad are null, or not connected.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>igraph</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/igraph/man/triad_census.html'>triad_census</a></span><span class='op'>(</span><span class='va'>florentine</span><span class='op'>)</span>
 </code></pre>
 </div>
 <pre><code> [1] 324   0 195   0   0   0   0   0   0   0  38   0   0   0   0   3</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='op'>?</span><span class='fu'>triad_census</span><span class='op'>(</span><span class='va'>florentine</span><span class='op'>)</span>
+</code></pre>
 </div>
+</div>
+<p>For dyads there are 16 possibilities. Here our results are as follows: 324, 003 (A,B,C, the empty graph.) 195, 102 (A&lt;-&gt;B, C, the graph with a mutual connection between two vertices.) 38, 030C (A&lt;-B&lt;-C, A-&gt;C.) and 3, 300 (A&lt;-&gt;B&lt;-&gt;C, A&lt;-&gt;C, the complete graph.)</p>
+<h4 id="network-transitivity">Network Transitivity</h4>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/pkg/igraph/man/transitivity.html'>transitivity</a></span><span class='op'>(</span><span class='va'>florentine</span>, type<span class='op'>=</span><span class='st'>"global"</span><span class='op'>)</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>transitivity</span><span class='op'>(</span><span class='va'>florentine</span>, type<span class='op'>=</span><span class='st'>"global"</span><span class='op'>)</span>
 </code></pre>
 </div>
 <pre><code>[1] 0.1914894</code></pre>
 </div>
+<p>The global transitivity of the graph is 0.1914894, or 19.15% triangles out of all connected triads.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/pkg/igraph/man/transitivity.html'>transitivity</a></span><span class='op'>(</span><span class='va'>florentine</span>, type<span class='op'>=</span><span class='st'>"average"</span><span class='op'>)</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>transitivity</span><span class='op'>(</span><span class='va'>florentine</span>, type<span class='op'>=</span><span class='st'>"average"</span><span class='op'>)</span>
 </code></pre>
 </div>
 <pre><code>[1] 0.2181818</code></pre>
 </div>
+<p>The average transitivity is the average transitivity of local triad clusters. Here it is 0.2181818 or 21.18% of the total.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/pkg/igraph/man/V.html'>V</a></span><span class='op'>(</span><span class='va'>florentine</span><span class='op'>)</span><span class='op'>[</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Peruzzi"</span>,<span class='st'>"Lamberteschi"</span>, <span class='st'>"Ginori"</span><span class='op'>)</span><span class='op'>]</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>V</span><span class='op'>(</span><span class='va'>florentine</span><span class='op'>)</span><span class='op'>[</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Peruzzi"</span>,<span class='st'>"Lamberteschi"</span>, <span class='st'>"Ginori"</span><span class='op'>)</span><span class='op'>]</span>
 </code></pre>
 </div>
-<pre><code>+ 3/16 vertices, named, from 398dd1d:
+<pre><code>+ 3/16 vertices, named, from cd32095:
 [1] Peruzzi      Lamberteschi Ginori      </code></pre>
 </div>
+<h4 id="network-distances">Network Distances</h4>
+<p>First we see that the average path length between 2 nodes in our dataset is 2.485714</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/pkg/igraph/man/transitivity.html'>transitivity</a></span><span class='op'>(</span><span class='va'>florentine</span>, type<span class='op'>=</span><span class='st'>"local"</span>, vids<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/pkg/igraph/man/V.html'>V</a></span><span class='op'>(</span><span class='va'>florentine</span><span class='op'>)</span><span class='op'>[</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Peruzzi"</span>,<span class='st'>"Lamberteschi"</span>, <span class='st'>"Ginori"</span><span class='op'>)</span><span class='op'>]</span><span class='op'>)</span> 
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>average.path.length</span><span class='op'>(</span><span class='va'>florentine</span>,directed<span class='op'>=</span><span class='cn'>F</span><span class='op'>)</span>
 </code></pre>
 </div>
-<pre><code>[1] 0.6666667       NaN       NaN</code></pre>
+<pre><code>[1] 2.485714</code></pre>
 </div>
+<p>I then test the distances between 3 families, those being the Peruzzi, Lamberteschi, and Ginori</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/pkg/igraph/man/distances.html'>distances</a></span><span class='op'>(</span><span class='va'>florentine</span>,<span class='st'>"Peruzzi"</span>, <span class='st'>"Lamberteschi"</span><span class='op'>)</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>distances</span><span class='op'>(</span><span class='va'>florentine</span>,<span class='st'>"Peruzzi"</span>, <span class='st'>"Lamberteschi"</span><span class='op'>)</span>
 </code></pre>
 </div>
 <pre><code>        Lamberteschi
 Peruzzi            3</code></pre>
 </div>
+<p>The distance between the nodes of Peruzzi and Lamberteschi is 3</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/pkg/igraph/man/distances.html'>distances</a></span><span class='op'>(</span><span class='va'>florentine</span>,<span class='st'>"Peruzzi"</span>, <span class='st'>"Ginori"</span><span class='op'>)</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>distances</span><span class='op'>(</span><span class='va'>florentine</span>,<span class='st'>"Peruzzi"</span>, <span class='st'>"Ginori"</span><span class='op'>)</span>
 </code></pre>
 </div>
 <pre><code>        Ginori
 Peruzzi      4</code></pre>
 </div>
+<p>The distance between the nodes of Peruzzi and Ginori is 4</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/pkg/igraph/man/distances.html'>distances</a></span><span class='op'>(</span><span class='va'>florentine</span>,<span class='st'>"Lamberteschi"</span>,<span class='st'>"Ginori"</span><span class='op'>)</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>distances</span><span class='op'>(</span><span class='va'>florentine</span>,<span class='st'>"Lamberteschi"</span>,<span class='st'>"Ginori"</span><span class='op'>)</span>
 </code></pre>
 </div>
 <pre><code>             Ginori
 Lamberteschi      3</code></pre>
 </div>
+<p>The distance between the nodes of Lamberteschi and Ginori is 3</p>
 <div class="sourceCode" id="cb17"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
