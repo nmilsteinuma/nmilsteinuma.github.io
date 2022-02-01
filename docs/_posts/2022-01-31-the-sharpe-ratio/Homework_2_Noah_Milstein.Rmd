@@ -44,6 +44,8 @@ The Network I chose was the Florentine family dataset network from the network p
 Network size for the Florentine Family network dataset is described briefly by the code below:
 
 ```{r}
+
+set.seed(2)
 # I access the florentine families dataset through the package "network"
 
 data(flo, package="network")
