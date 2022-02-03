@@ -38,10 +38,27 @@ library(ggplot2)
 ```
 
 ```{r}
+set.seed(30)
 
-canvas_maze(color = colorPalette("dark1"), polar = TRUE)
+canvas_maze(color = colorPalette("tuscany2"), polar = TRUE)
 
 ```
+
+```{r}
+?canvas_flow()
+set.seed(1)
+canvas_flow(colors = colorPalette("vrolik3"), lines = 3000, lwd = 0.5,
+            iterations = 1000, stepmax = 0.1, angles = NULL)
+# see ?canvas_flow for more input parameters of this function
+```
+
+```{r}
+set.seed(1)
+canvas_flow(colors = colorPalette("vrolik3"), lines = 3000, lwd = 0.5,
+            iterations = 1000, stepmax = 0.1, angles = 'svm')
+# see ?canvas_flow for more input parameters of this function
+```
+
 
 
 ```{r}
@@ -49,3 +66,5 @@ face <- chernoffGrob(.5, .5, size = 1e3, smile = 1, colour = 'black', fill = 'ye
 grid::grid.newpage()
 grid::grid.draw(face)
 ```
+
+
