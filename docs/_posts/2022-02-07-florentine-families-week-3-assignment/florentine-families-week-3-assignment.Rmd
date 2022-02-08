@@ -1,0 +1,141 @@
+---
+title: "Florentine Families Week 3 Assignment"
+description: |
+  A short description of the post.
+author:
+  - name: Noah Milstein
+    url: {}
+date: 2022-02-07
+output:
+  distill::distill_article:
+    self_contained: false
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+
+library(aRtsy)
+
+library(network)
+
+library(igraph)
+
+library(statnet)
+
+```
+
+
+```{r}
+
+data(flo, package="network")
+
+
+statted_florentine<-as.network(flo)
+
+print(statted_florentine)
+
+```
+
+```{r}
+plot(statted_florentine)
+```
+
+```{r}
+
+sna::dyad.census(statted_florentine)
+
+```
+
+```{r}
+
+sna::triad.census(statted_florentine)
+
+```
+
+```{r}
+
+gtrans(statted_florentine)
+
+```
+
+```{r}
+
+isolates(statted_florentine)
+
+```
+
+Using the tutorial as a guide, you may use your own data or the data provided in the week 3 . Syntax dataset is Correlates of War trade network - you can read more about it online. Other datasets can also be chosen. Working from the example R syntax, calculate network density, degree centrality and centralization measures for your network data. Write up your results briefly, focusing on interpretation of the results. Don’t list statistics or provide code, the goal is to choose a few interesting results and provide an interpretation.
+
+```{r}
+
+network.density(statted_florentine)
+
+```
+
+```{r}
+
+gden(statted_florentine, diag=FALSE)
+
+```
+
+```{r}
+
+sna::degree(statted_florentine)
+
+```
+
+
+```{r}
+
+florentine.nodes<-data.frame(name=statted_florentine%v%"vertex.names",
+                             degree=sna::degree(statted_florentine))
+florentine.nodes
+
+```
+
+```{r}
+
+sna::degree(statted_florentine, cmode="indegree")
+
+sna::degree(statted_florentine, cmode="outdegree")
+
+```
+
+```{r}
+florentine.nodes <- data.frame(name=statted_florentine%v%"vertex.names",
+    totdegree=sna::degree(statted_florentine),
+    indegree=sna::degree(statted_florentine, cmode="indegree"),
+    outdegree=sna::degree(statted_florentine, cmode="outdegree"))
+
+florentine.nodes
+```
+
+```{r}
+
+summary(florentine.nodes)
+
+```
+
+
+```{r}
+
+hist(florentine.nodes$totdegree, main="Climate Influence: In-degree Distribution", xlab="Nominations Received")
+
+```
+```{r}
+
+hist(florentine.nodes$indegree, main="Climate Influence: In-degree Distribution", xlab="Nominations Received")
+```
+```{r}
+
+hist(florentine.nodes$outdegree, main="Climate Influence: In-degree Distribution", xlab="Nominations Received")
+florentine.nodes$outdegree
+```
+
+Briefly describe the dataset you are using: identify initial network format, describe and identify the nodes (including how many nodes are in the dataset), what constitutes a tie or edge (including how many ties, whether ties are directed/undirected and weighted/binary, and how to interpret the value of the tie if any), whether or not there are edge attributes that might be used to subset data or stack multiple networks (e.g., tie type, year, etc). Not every feature of the network needs to be described, but description should orient reader to the network data and provide any necessary context for the results provided.
+
+Provide at least two or three noteworthy results, including the relevant statistics and interpretation. For example, explaining which node(s) are most central and which are least central. Discuss (with any related evidence) whether or not the node(s) behavior is in line with or violates expectations based on the degree centrality measure. What do you make of network density and centralization measures?  What about differences in the binary 100 million threshold network vs valued trade flows network. Check tutorial for other ideas of results to discuss.
+
