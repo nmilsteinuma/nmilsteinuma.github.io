@@ -4,10 +4,10 @@ author:
 - name: Noah Milstein
 date: '2022-02-07'
 output:
-  html_document:
-    df_print: paged
   distill::distill_article:
     self_contained: no
+  html_document:
+    df_print: paged
 description: |
   A short description of the post.
 ---
@@ -29,12 +29,13 @@ library(statnet)
 ```
 
 
-
 ```{r}
 set.seed(5)
 canvas_flow(colors = colorPalette("retro3"), lines = 5000, lwd = 0.05,
             iterations = 1000, stepmax = 0.1, angles = NULL)
+
 ```
+
 ### Data Description: 
 
 identify initial network format, describe and identify the nodes (including how many nodes are in the dataset), what constitutes a tie or edge (including how many ties, whether ties are directed/undirected and weighted/binary, and how to interpret the value of the tie if any), whether or not there are edge attributes that might be used to subset data or stack multiple networks (e.g., tie type, year, etc). Not every feature of the network needs to be described, but description should orient reader to the network data and provide any necessary context for the results provided.
@@ -58,7 +59,7 @@ plot(statted_florentine)
 
 #### Nodes and Edges:
 
-As can be seen from the graph and summary statistics above the florentine family dataset is made u
+As can be seen from the graph and summary statistics above the florentine family dataset is made up of 40 edges and 16 vertices. Each vertex or node is a family in florence. Each edge, or tie represents a marriage between the two.
 
 ```{r}
 
