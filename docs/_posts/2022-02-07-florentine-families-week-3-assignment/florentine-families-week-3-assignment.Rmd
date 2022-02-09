@@ -1,14 +1,15 @@
 ---
 title: "Florentine Families Week 3 Assignment"
+author:
+- name: Noah Milstein
+date: '2022-02-07'
+output:
+  html_document:
+    df_print: paged
+  distill::distill_article:
+    self_contained: no
 description: |
   A short description of the post.
-author:
-  - name: Noah Milstein
-    url: {}
-date: 2022-02-07
-output:
-  distill::distill_article:
-    self_contained: false
 ---
 
 ```{r setup, include=FALSE}
@@ -28,6 +29,18 @@ library(statnet)
 ```
 
 
+
+```{r}
+set.seed(5)
+canvas_flow(colors = colorPalette("retro3"), lines = 5000, lwd = 0.05,
+            iterations = 1000, stepmax = 0.1, angles = NULL)
+```
+### Data Description: 
+
+identify initial network format, describe and identify the nodes (including how many nodes are in the dataset), what constitutes a tie or edge (including how many ties, whether ties are directed/undirected and weighted/binary, and how to interpret the value of the tie if any), whether or not there are edge attributes that might be used to subset data or stack multiple networks (e.g., tie type, year, etc). Not every feature of the network needs to be described, but description should orient reader to the network data and provide any necessary context for the results provided.
+
+Provide at least two or three noteworthy results, including the relevant statistics and interpretation. For example, explaining which node(s) are most central and which are least central. Discuss (with any related evidence) whether or not the node(s) behavior is in line with or violates expectations based on the degree centrality measure. What do you make of network density and centralization measures?  What about differences in the binary 100 million threshold network vs valued trade flows network. Check tutorial for other ideas of results to discuss.
+
 ```{r}
 
 data(flo, package="network")
@@ -42,6 +55,10 @@ print(statted_florentine)
 ```{r}
 plot(statted_florentine)
 ```
+
+#### Nodes and Edges:
+
+As can be seen from the graph and summary statistics above the florentine family dataset is made u
 
 ```{r}
 
@@ -66,8 +83,6 @@ gtrans(statted_florentine)
 isolates(statted_florentine)
 
 ```
-
-Using the tutorial as a guide, you may use your own data or the data provided in the week 3 . Syntax dataset is Correlates of War trade network - you can read more about it online. Other datasets can also be chosen. Working from the example R syntax, calculate network density, degree centrality and centralization measures for your network data. Write up your results briefly, focusing on interpretation of the results. Don’t list statistics or provide code, the goal is to choose a few interesting results and provide an interpretation.
 
 ```{r}
 
@@ -135,7 +150,4 @@ hist(florentine.nodes$outdegree, main="Climate Influence: In-degree Distribution
 florentine.nodes$outdegree
 ```
 
-Briefly describe the dataset you are using: identify initial network format, describe and identify the nodes (including how many nodes are in the dataset), what constitutes a tie or edge (including how many ties, whether ties are directed/undirected and weighted/binary, and how to interpret the value of the tie if any), whether or not there are edge attributes that might be used to subset data or stack multiple networks (e.g., tie type, year, etc). Not every feature of the network needs to be described, but description should orient reader to the network data and provide any necessary context for the results provided.
-
-Provide at least two or three noteworthy results, including the relevant statistics and interpretation. For example, explaining which node(s) are most central and which are least central. Discuss (with any related evidence) whether or not the node(s) behavior is in line with or violates expectations based on the degree centrality measure. What do you make of network density and centralization measures?  What about differences in the binary 100 million threshold network vs valued trade flows network. Check tutorial for other ideas of results to discuss.
 
