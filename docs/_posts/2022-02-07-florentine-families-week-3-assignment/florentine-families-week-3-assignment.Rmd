@@ -29,7 +29,8 @@ library(statnet)
 ```
 
 
-```{r}
+```{r, echo=FALSE}
+
 set.seed(5)
 canvas_flow(colors = colorPalette("retro3"), lines = 5000, lwd = 0.05,
             iterations = 1000, stepmax = 0.1, angles = NULL)
@@ -37,10 +38,6 @@ canvas_flow(colors = colorPalette("retro3"), lines = 5000, lwd = 0.05,
 ```
 
 ### Data Description: 
-
-identify initial network format, describe and identify the nodes (including how many nodes are in the dataset), what constitutes a tie or edge (including how many ties, whether ties are directed/undirected and weighted/binary, and how to interpret the value of the tie if any), whether or not there are edge attributes that might be used to subset data or stack multiple networks (e.g., tie type, year, etc). Not every feature of the network needs to be described, but description should orient reader to the network data and provide any necessary context for the results provided.
-
-Provide at least two or three noteworthy results, including the relevant statistics and interpretation. For example, explaining which node(s) are most central and which are least central. Discuss (with any related evidence) whether or not the node(s) behavior is in line with or violates expectations based on the degree centrality measure. What do you make of network density and centralization measures?  What about differences in the binary 100 million threshold network vs valued trade flows network. Check tutorial for other ideas of results to discuss.
 
 ```{r}
 
@@ -61,11 +58,15 @@ plot(statted_florentine)
 
 As can be seen from the graph and summary statistics above the florentine family dataset is made up of 40 edges and 16 vertices. Each vertex or node is a family in florence. Each edge, or tie represents a marriage between the two.
 
+As a result the ties are not weighted, so they are binary. However, though the dataset labels the ties are directed, they are actually all mutual so in essence, the dataset does not measure marriaage "into" a family but simply uses a mutual directed tie for every set of families with a marriage between them.
+
 ```{r}
 
 sna::dyad.census(statted_florentine)
 
 ```
+
+As can be seen from the code above the dyads within the dataset are either mutual or null, meaning that between any two nodes there are no asymmetric dyads despite the fact that the network is labeled as being directed.
 
 ```{r}
 
@@ -73,11 +74,21 @@ sna::triad.census(statted_florentine)
 
 ```
 
+As can be seen from the triad census above the types of triads in the dataset are 324 of the 003-type, 102 of the 102-type, 38 of the 201-type and 3 of the 300-type. The 324 of 003-type and 195 of the 102-type indicate that 519 of the 560 triads are vacuously transitive, the remaining 38 of the 201-type are intransitive and only the 3 300-types are transitive
+
+#### Transitivity
+
+As can be seen in the code below indicates the the transitivity of the network as a whole is 0.1914894, which follows from the results above. This would indicate a relatively low rate of transitivity and thus low inter-connectedness of the nodes and potientally lower density overall.
+
 ```{r}
 
 gtrans(statted_florentine)
 
 ```
+
+#### Isolates
+
+Though the code below indicates that there are 12 isolates in the network, the data from our plot suggests that this is likely untrue and due to the discrepancy between the un-directed true nature of the network and its label as directed as a network object.
 
 ```{r}
 
@@ -85,17 +96,19 @@ isolates(statted_florentine)
 
 ```
 
+#### Density
+
+As indicated by the code chunk below network density here is 0.1666667 indicating that only 16.67% of possible ties in the network are made.
+
 ```{r}
 
 network.density(statted_florentine)
 
 ```
 
-```{r}
+#### Degree and Interesting Results
 
-gden(statted_florentine, diag=FALSE)
-
-```
+Each of the 16 node's degrees are acquired from the code bellow in integer form, from the digits alone it is difficult to distinguish any sort of overall pattern in the data.
 
 ```{r}
 
@@ -103,6 +116,7 @@ sna::degree(statted_florentine)
 
 ```
 
+Below I create a data frame with the overall degree of each family.
 
 ```{r}
 
@@ -112,6 +126,12 @@ florentine.nodes
 
 ```
 
+Below I then calculate each individual nodes indegree and out-degree.
+
+#### Notewory Results
+
+Upon running the above code I realized that despite the network being labeled "directed" all of its ties were actually mutual and thus the in-degree and out-degree would be identical since marriage is considered mutual. Though this follows from the fact that are generally considered mutual it is interesting to observe that marriages are not considered "into" another family but are represented as a mutual, but directed ties between nodes in every case.
+
 ```{r}
 
 sna::degree(statted_florentine, cmode="indegree")
@@ -120,14 +140,20 @@ sna::degree(statted_florentine, cmode="outdegree")
 
 ```
 
+As can be seen from the code above each node has identical in-degrees and out-degrees
+
 ```{r}
+
 florentine.nodes <- data.frame(name=statted_florentine%v%"vertex.names",
     totdegree=sna::degree(statted_florentine),
     indegree=sna::degree(statted_florentine, cmode="indegree"),
     outdegree=sna::degree(statted_florentine, cmode="outdegree"))
 
 florentine.nodes
+
 ```
+
+The notion is confirmed by the degree summaries in the code below and the table above. In both cases all indicators are identical for both in-degree and out-degree and sum to the values seen in the total-degree column.
 
 ```{r}
 
@@ -135,20 +161,45 @@ summary(florentine.nodes)
 
 ```
 
+Histograms of the distribution of the degrees also illustrate that the only difference between in-degree, out-degree, and total degree is that total degree has values twice as large for marriages but the same relative frequency.
 
 ```{r}
 
-hist(florentine.nodes$totdegree, main="Climate Influence: In-degree Distribution", xlab="Nominations Received")
+hist(florentine.nodes$totdegree, main="Florentine Marriages: Total Degrees", xlab="Marriages")
 
 ```
 ```{r}
 
-hist(florentine.nodes$indegree, main="Climate Influence: In-degree Distribution", xlab="Nominations Received")
+hist(florentine.nodes$indegree, main="Florentine Marriages: In-Degrees", xlab="Marriages")
+
 ```
 ```{r}
 
-hist(florentine.nodes$outdegree, main="Climate Influence: In-degree Distribution", xlab="Nominations Received")
-florentine.nodes$outdegree
+hist(florentine.nodes$outdegree, main="Florentine Marriages: Out-Degrees", xlab="Marriages")
+
 ```
 
+These results do make degree analysis ineffectual on the dataset, but offer some potential questions. Specifically it would be useful to look at dynamics of marriages "into" other families as this would have been important at the time. Though marriage is considered symmetric in this dataset it was often used in asymmetric ways during the medieval and renaissance times as a means of diplomacy and establishing goodwill between nobility and as a result the ties between the families are not necessarily symmetric in all cases. It would be interesting to see married into what families in terms of sex and birth status hierarchy i.e. first, second, third born, etc. 
+
+```{r}
+
+flo_sorted_by_total_degree<-florentine.nodes[order(-florentine.nodes$totdegree),]
+
+flo_sorted_by_total_degree
+
+```
+
+The results above indicate that the medici family are the most "central" node in the network having the most marriages and thus the most in-degrees and out-degrees. The mean of these two degrees is 2.5 in the dataset thus they have more than double the average marriages, however 4 other families have just 2, while the pucci's have no ties.
+
+This also poses the question as to whether or not there are more families that could be included and what the criteria was for allowance in the florentine family data. In this case 4-6 marriages is the most common with 6 nodes having 4-6 marriages.
+ 
+```{r}
+
+centralization(statted_florentine, degree, cmode="indegree")
+
+```
+
+The measure of centralization above represents how concentrated edges between nodes are concentrated among actors.
+
+Provide at least two or three noteworthy results, including the relevant statistics and interpretation. For example, explaining which node(s) are most central and which are least central. Discuss (with any related evidence) whether or not the node(s) behavior is in line with or violates expectations based on the degree centrality measure. What do you make of network density and centralization measures?  What about differences in the binary 100 million threshold network vs valued trade flows network. Check tutorial for other ideas of results to discuss.
 
