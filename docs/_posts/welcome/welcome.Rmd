@@ -62,6 +62,7 @@ canvas_flow(colors = colorPalette("vrolik3"), lines = 3000, lwd = 0.5,
 
 
 ```{r}
+?chernoffGrob
 face <- chernoffGrob(.5, .5, size = 1e3, smile = 1, colour = 'black', fill = 'yellow')
 grid::grid.newpage()
 grid::grid.draw(face)
