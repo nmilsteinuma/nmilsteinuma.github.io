@@ -1486,12 +1486,6 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 
 </div>
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>5</span><span class='op'>)</span>
-<span class='fu'>canvas_flow</span><span class='op'>(</span>colors <span class='op'>=</span> <span class='fu'>colorPalette</span><span class='op'>(</span><span class='st'>"retro3"</span><span class='op'>)</span>, lines <span class='op'>=</span> <span class='fl'>5000</span>, lwd <span class='op'>=</span> <span class='fl'>0.05</span>,
-            iterations <span class='op'>=</span> <span class='fl'>1000</span>, stepmax <span class='op'>=</span> <span class='fl'>0.1</span>, angles <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>
-</code></pre>
-</div>
 <p><img src="florentine-families-week-3-assignment_files/figure-html5/unnamed-chunk-2-1.png" width="624" /></p>
 </div>
 <h3 id="data-description">Data Description:</h3>
@@ -1579,6 +1573,7 @@ No edge attributes</code></pre>
 <pre><code>[1] 0.1666667</code></pre>
 </div>
 <h4 id="degree-and-interesting-results">Degree and Interesting Results</h4>
+<p>Each of the 16 node’s degrees are acquired from the code bellow in integer form, from the digits alone it is difficult to distinguish any sort of overall pattern in the data.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>sna</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/sna/man/degree.html'>degree</a></span><span class='op'>(</span><span class='va'>statted_florentine</span><span class='op'>)</span>
@@ -1586,6 +1581,7 @@ No edge attributes</code></pre>
 </div>
 <pre><code> [1]  2  6  4  6  6  2  8  2 12  2  6  0  6  4  8  6</code></pre>
 </div>
+<p>Below I create a data frame with the overall degree of each family.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>florentine.nodes</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>name<span class='op'>=</span><span class='va'>statted_florentine</span><span class='op'>%v%</span><span class='st'>"vertex.names"</span>,
@@ -1611,6 +1607,9 @@ No edge attributes</code></pre>
 15      Strozzi      8
 16   Tornabuoni      6</code></pre>
 </div>
+<p>Below I then calculate each individual nodes indegree and out-degree.</p>
+<h4 id="notewory-results">Notewory Results</h4>
+<p>Upon running the above code I realized that despite the network being labeled “directed” all of its ties were actually mutual and thus the in-degree and out-degree would be identical since marriage is considered mutual. Though this follows from the fact that are generally considered mutual it is interesting to observe that marriages are not considered “into” another family but are represented as a mutual, but directed ties between nodes in every case.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>sna</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/sna/man/degree.html'>degree</a></span><span class='op'>(</span><span class='va'>statted_florentine</span>, cmode<span class='op'>=</span><span class='st'>"indegree"</span><span class='op'>)</span>
@@ -1623,6 +1622,7 @@ No edge attributes</code></pre>
 </div>
 <pre><code> [1] 1 3 2 3 3 1 4 1 6 1 3 0 3 2 4 3</code></pre>
 </div>
+<p>As can be seen from the code above each node has identical in-degrees and out-degrees</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>florentine.nodes</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>name<span class='op'>=</span><span class='va'>statted_florentine</span><span class='op'>%v%</span><span class='st'>"vertex.names"</span>,
@@ -1651,6 +1651,7 @@ No edge attributes</code></pre>
 15      Strozzi         8        4         4
 16   Tornabuoni         6        3         3</code></pre>
 </div>
+<p>The notion is confirmed by the degree summaries in the code below and the table above. In both cases all indicators are identical for both in-degree and out-degree and sum to the values seen in the total-degree column.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>florentine.nodes</span><span class='op'>)</span>
@@ -1664,39 +1665,29 @@ No edge attributes</code></pre>
                     3rd Qu.: 6   3rd Qu.:3.0   3rd Qu.:3.0  
                     Max.   :12   Max.   :6.0   Max.   :6.0  </code></pre>
 </div>
+<p>Histograms of the distribution of the degrees also illustrate that the only difference between in-degree, out-degree, and total degree is that total degree has values twice as large for marriages but the same relative frequency.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/graphics/hist.html'>hist</a></span><span class='op'>(</span><span class='va'>florentine.nodes</span><span class='op'>$</span><span class='va'>totdegree</span>, main<span class='op'>=</span><span class='st'>"Climate Influence: In-degree Distribution"</span>, xlab<span class='op'>=</span><span class='st'>"Nominations Received"</span><span class='op'>)</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/graphics/hist.html'>hist</a></span><span class='op'>(</span><span class='va'>florentine.nodes</span><span class='op'>$</span><span class='va'>totdegree</span>, main<span class='op'>=</span><span class='st'>"Florentine Marriages: Total Degrees"</span>, xlab<span class='op'>=</span><span class='st'>"Marriages"</span><span class='op'>)</span>
 </code></pre>
 </div>
 <p><img src="florentine-families-week-3-assignment_files/figure-html5/unnamed-chunk-15-1.png" width="624" /></p>
 </div>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/graphics/hist.html'>hist</a></span><span class='op'>(</span><span class='va'>florentine.nodes</span><span class='op'>$</span><span class='va'>indegree</span>, main<span class='op'>=</span><span class='st'>"Climate Influence: In-degree Distribution"</span>, xlab<span class='op'>=</span><span class='st'>"Nominations Received"</span><span class='op'>)</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/graphics/hist.html'>hist</a></span><span class='op'>(</span><span class='va'>florentine.nodes</span><span class='op'>$</span><span class='va'>indegree</span>, main<span class='op'>=</span><span class='st'>"Florentine Marriages: In-Degrees"</span>, xlab<span class='op'>=</span><span class='st'>"Marriages"</span><span class='op'>)</span>
 </code></pre>
 </div>
 <p><img src="florentine-families-week-3-assignment_files/figure-html5/unnamed-chunk-16-1.png" width="624" /></p>
 </div>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/graphics/hist.html'>hist</a></span><span class='op'>(</span><span class='va'>florentine.nodes</span><span class='op'>$</span><span class='va'>outdegree</span>, main<span class='op'>=</span><span class='st'>"Climate Influence: In-degree Distribution"</span>, xlab<span class='op'>=</span><span class='st'>"Nominations Received"</span><span class='op'>)</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/graphics/hist.html'>hist</a></span><span class='op'>(</span><span class='va'>florentine.nodes</span><span class='op'>$</span><span class='va'>outdegree</span>, main<span class='op'>=</span><span class='st'>"Florentine Marriages: Out-Degrees"</span>, xlab<span class='op'>=</span><span class='st'>"Marriages"</span><span class='op'>)</span>
 </code></pre>
 </div>
-<img src="florentine-families-week-3-assignment_files/figure-html5/unnamed-chunk-17-1.png" width="624" />
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>florentine.nodes</span><span class='op'>$</span><span class='va'>outdegree</span>
-</code></pre>
+<p><img src="florentine-families-week-3-assignment_files/figure-html5/unnamed-chunk-17-1.png" width="624" /></p>
 </div>
-<pre><code> [1] 1 3 2 3 3 1 4 1 6 1 3 0 3 2 4 3</code></pre>
-</div>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>centralization</span><span class='op'>(</span><span class='va'>statted_florentine</span>, <span class='va'>degree</span>, cmode<span class='op'>=</span><span class='st'>"indegree"</span><span class='op'>)</span>
-</code></pre>
-</div>
-<pre><code>[1] 0.2488889</code></pre>
-</div>
+<p>These results do make degree analysis ineffectual on the dataset, but offer some potential questions. Specifically it would be useful to look at dynamics of marriages “into” other families as this would have been important at the time. Though marriage is considered symmetric in this dataset it was often used in asymmetric ways during the medieval and renaissance times as a means of diplomacy and establishing goodwill between nobility and as a result the ties between the families are not necessarily symmetric in all cases. It would be interesting to see married into what families in terms of sex and birth status hierarchy i.e. first, second, third born, etc.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>flo_sorted_by_total_degree</span><span class='op'>&lt;-</span><span class='va'>florentine.nodes</span><span class='op'>[</span><span class='fu'><a href='https://rdrr.io/r/base/order.html'>order</a></span><span class='op'>(</span><span class='op'>-</span><span class='va'>florentine.nodes</span><span class='op'>$</span><span class='va'>totdegree</span><span class='op'>)</span>,<span class='op'>]</span>
@@ -1722,8 +1713,18 @@ No edge attributes</code></pre>
 10        Pazzi         2        1         1
 12        Pucci         0        0         0</code></pre>
 </div>
+<p>The results above indicate that the medici family are the most “central” node in the network having the most marriages and thus the most in-degrees and out-degrees. The mean of these two degrees is 2.5 in the dataset thus they have more than double the average marriages, however 4 other families have just 2, while the pucci’s have no ties.</p>
+<p>This also poses the question as to whether or not there are more families that could be included and what the criteria was for allowance in the florentine family data. In this case 4-6 marriages is the most common with 6 nodes having 4-6 marriages.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>centralization</span><span class='op'>(</span><span class='va'>statted_florentine</span>, <span class='va'>degree</span>, cmode<span class='op'>=</span><span class='st'>"indegree"</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>[1] 0.2488889</code></pre>
+</div>
+<p>The measure of centralization above represents how concentrated edges between nodes are concentrated among actors.</p>
 <p>Provide at least two or three noteworthy results, including the relevant statistics and interpretation. For example, explaining which node(s) are most central and which are least central. Discuss (with any related evidence) whether or not the node(s) behavior is in line with or violates expectations based on the degree centrality measure. What do you make of network density and centralization measures? What about differences in the binary 100 million threshold network vs valued trade flows network. Check tutorial for other ideas of results to discuss.</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>
