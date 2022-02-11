@@ -6,6 +6,7 @@ date: '2022-02-07'
 output:
   distill::distill_article:
     self_contained: no
+  pdf_document: default
   html_document:
     df_print: paged
 description: |
@@ -15,6 +16,8 @@ description: |
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
+
+
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 
@@ -28,13 +31,11 @@ library(statnet)
 
 ```
 
-
-```{r, echo=FALSE}
-
-set.seed(5)
-canvas_flow(colors = colorPalette("retro3"), lines = 5000, lwd = 0.05,
-            iterations = 1000, stepmax = 0.1, angles = NULL)
-
+```{r}
+set.seed(1)
+canvas_flow(colors = colorPalette("vrolik3"), lines = 3000, lwd = 0.5,
+            iterations = 1000, stepmax = 0.1, angles = 'svm')
+# see ?canvas_flow for more input parameters of this function
 ```
 
 ### Data Description: 
