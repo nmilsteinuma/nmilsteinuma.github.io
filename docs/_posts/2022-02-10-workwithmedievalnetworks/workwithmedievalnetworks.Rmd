@@ -62,23 +62,12 @@ plot(clp, wars_in_medieval_2.ig, vertex.size=2,  edge.arrow.size=.1, vertex.colo
 
 set.seed(2)
 
-
-wars_in_medieval_2.ig<-graph_from_data_frame(wars_in_medieval_2)
-
-clp <- cluster_label_prop(wars_in_medieval_2.ig)
-
-plot(clp, wars_in_medieval_2.ig, vertex.size=2,  edge.arrow.size=.1, vertex.color="gold", vertex.size=20, vertex.frame.color="gray", vertex.label.color="black", vertex.label.cex=0.3, vertex.label.dist=2, edge.curved=0.2)
-```
-
-```{r}
-
-set.seed(2)
-
 medieval_wars_3 <- read_excel("~/Desktop/Spring 2022/Networks/medieval_wars_2.xlsx")
 
 wars_in_medieval_3_test <- data.frame(ThreadID = c(medieval_wars_3$"In"),
                  AuthorID = c(medieval_wars_3$"Out"))
 wars_in_medieval_3_test_2 <- dplyr::inner_join(wars_in_medieval_3_test, wars_in_medieval_3_test, by = "ThreadID")[,-1]
+
 wars_in_medieval_3_test_3 <- apply(wars_in_medieval_3_test_2, 2, as.character)
 
 wars_in_medieval_3.ig<-graph_from_data_frame(medieval_wars_3)
@@ -88,6 +77,18 @@ clp_med3 <- cluster_label_prop(wars_in_medieval_3.ig)
 plot(clp_med3, wars_in_medieval_3.ig, vertex.size=2,  edge.arrow.size=.1, vertex.color="gold", vertex.size=20, vertex.frame.color="gray", vertex.label.color="black", vertex.label.cex=0.3, vertex.label.dist=2, edge.curved=0.2)
 
 ```
+
+```{r}
+
+medieval_wars_1200s <- read_excel("~/Desktop/Spring 2022/Networks/medieval_wars_1200s.xlsx")
+
+medieval_wars_1200s.ig<-graph_from_data_frame(medieval_wars_1200s)
+
+clp_wars_1200s <- cluster_label_prop(medieval_wars_1200s.ig)
+
+plot(clp_wars_1200s, medieval_wars_1200s.ig, vertex.size=2,  edge.arrow.size=.1, vertex.color="gold", vertex.size=20, vertex.frame.color="gray", vertex.label.color="black", vertex.label.cex=0.3, vertex.label.dist=2, edge.curved=0.2)
+```
+
 
 
 ```{r}
@@ -105,7 +106,10 @@ igraph::triad.census(wars_in_medieval_2.ig)
 
 transitivity(wars_in_medieval_2.ig, type="global")
 
-transitivity(wars_in_medieval_2.ig, type="average")
+transitivity(wars_in_medieval_3.ig, type="global")
+
+transitivity(medieval_wars_1200s.ig, type="global")
+
 
 ```
 
@@ -115,6 +119,8 @@ transitivity(wars_in_medieval_2.ig, type="average")
 graph.density(wars_in_medieval_2.ig, loops=TRUE)
 
 graph.density(wars_in_medieval_3.ig, loops=TRUE)
+
+graph.density(medieval_wars_1200s.ig, loops=TRUE)
 
 ```
 
@@ -129,15 +135,13 @@ medieval_network <- asNetwork(wars_in_medieval_2.ig)
 
 medieval.nodes<-data.frame(name=medieval_network%v%"vertex.names", degree=sna::degree(medieval_network))
 
-medieval.nodes
-
 summary(medieval.nodes)
 ```
 
 
 ```{r}
 
-medieval.nodes[order(-medieval.nodes$degree),]
+head(medieval.nodes[order(-medieval.nodes$degree),])
 
 ```
 
@@ -145,3 +149,23 @@ medieval.nodes[order(-medieval.nodes$degree),]
 summary(medieval.nodes)
 ```
 
+```{r}
+medieval_network
+```
+
+```{r}
+library(ggplot2)
+library(ggnetwork)
+```
+
+
+```{r}
+set.seed(777)
+ggplot(medieval_network, aes(x = x, y = y, xend = xend, yend = yend)) +
+  geom_edges(color = "grey25", alpha = 0.25) +
+  geom_nodes(color = "gold", size = 2) +
+  geom_nodetext(aes( label = vertex.names ), position = position_dodge(width=0.9),  size=1,
+  label.size = 0.01,)+
+  theme_blank()
+
+```

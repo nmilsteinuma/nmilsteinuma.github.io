@@ -2180,25 +2180,12 @@ document.addEventListener('DOMContentLoaded', function() {
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>2</span><span class='op'>)</span>
 
-
-<span class='va'>wars_in_medieval_2.ig</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/pkg/igraph/man/graph_from_data_frame.html'>graph_from_data_frame</a></span><span class='op'>(</span><span class='va'>wars_in_medieval_2</span><span class='op'>)</span>
-
-<span class='va'>clp</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/igraph/man/cluster_label_prop.html'>cluster_label_prop</a></span><span class='op'>(</span><span class='va'>wars_in_medieval_2.ig</span><span class='op'>)</span>
-
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>clp</span>, <span class='va'>wars_in_medieval_2.ig</span>, vertex.size<span class='op'>=</span><span class='fl'>2</span>,  edge.arrow.size<span class='op'>=</span><span class='fl'>.1</span>, vertex.color<span class='op'>=</span><span class='st'>"gold"</span>, vertex.size<span class='op'>=</span><span class='fl'>20</span>, vertex.frame.color<span class='op'>=</span><span class='st'>"gray"</span>, vertex.label.color<span class='op'>=</span><span class='st'>"black"</span>, vertex.label.cex<span class='op'>=</span><span class='fl'>0.3</span>, vertex.label.dist<span class='op'>=</span><span class='fl'>2</span>, edge.curved<span class='op'>=</span><span class='fl'>0.2</span><span class='op'>)</span>
-</code></pre>
-</div>
-<p><img src="workwithmedievalnetworks_files/figure-html5/unnamed-chunk-5-1.png" width="624" /></p>
-</div>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>2</span><span class='op'>)</span>
-
 <span class='va'>medieval_wars_3</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://readxl.tidyverse.org/reference/read_excel.html'>read_excel</a></span><span class='op'>(</span><span class='st'>"~/Desktop/Spring 2022/Networks/medieval_wars_2.xlsx"</span><span class='op'>)</span>
 
 <span class='va'>wars_in_medieval_3_test</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>ThreadID <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>medieval_wars_3</span><span class='op'>$</span><span class='st'>"In"</span><span class='op'>)</span>,
                  AuthorID <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>medieval_wars_3</span><span class='op'>$</span><span class='st'>"Out"</span><span class='op'>)</span><span class='op'>)</span>
 <span class='va'>wars_in_medieval_3_test_2</span> <span class='op'>&lt;-</span> <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate-joins.html'>inner_join</a></span><span class='op'>(</span><span class='va'>wars_in_medieval_3_test</span>, <span class='va'>wars_in_medieval_3_test</span>, by <span class='op'>=</span> <span class='st'>"ThreadID"</span><span class='op'>)</span><span class='op'>[</span>,<span class='op'>-</span><span class='fl'>1</span><span class='op'>]</span>
+
 <span class='va'>wars_in_medieval_3_test_3</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/apply.html'>apply</a></span><span class='op'>(</span><span class='va'>wars_in_medieval_3_test_2</span>, <span class='fl'>2</span>, <span class='va'>as.character</span><span class='op'>)</span>
 
 <span class='va'>wars_in_medieval_3.ig</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/pkg/igraph/man/graph_from_data_frame.html'>graph_from_data_frame</a></span><span class='op'>(</span><span class='va'>medieval_wars_3</span><span class='op'>)</span>
@@ -2206,6 +2193,19 @@ document.addEventListener('DOMContentLoaded', function() {
 <span class='va'>clp_med3</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/igraph/man/cluster_label_prop.html'>cluster_label_prop</a></span><span class='op'>(</span><span class='va'>wars_in_medieval_3.ig</span><span class='op'>)</span>
 
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>clp_med3</span>, <span class='va'>wars_in_medieval_3.ig</span>, vertex.size<span class='op'>=</span><span class='fl'>2</span>,  edge.arrow.size<span class='op'>=</span><span class='fl'>.1</span>, vertex.color<span class='op'>=</span><span class='st'>"gold"</span>, vertex.size<span class='op'>=</span><span class='fl'>20</span>, vertex.frame.color<span class='op'>=</span><span class='st'>"gray"</span>, vertex.label.color<span class='op'>=</span><span class='st'>"black"</span>, vertex.label.cex<span class='op'>=</span><span class='fl'>0.3</span>, vertex.label.dist<span class='op'>=</span><span class='fl'>2</span>, edge.curved<span class='op'>=</span><span class='fl'>0.2</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="workwithmedievalnetworks_files/figure-html5/unnamed-chunk-5-1.png" width="624" /></p>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>medieval_wars_1200s</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://readxl.tidyverse.org/reference/read_excel.html'>read_excel</a></span><span class='op'>(</span><span class='st'>"~/Desktop/Spring 2022/Networks/medieval_wars_1200s.xlsx"</span><span class='op'>)</span>
+
+<span class='va'>medieval_wars_1200s.ig</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/pkg/igraph/man/graph_from_data_frame.html'>graph_from_data_frame</a></span><span class='op'>(</span><span class='va'>medieval_wars_1200s</span><span class='op'>)</span>
+
+<span class='va'>clp_wars_1200s</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/igraph/man/cluster_label_prop.html'>cluster_label_prop</a></span><span class='op'>(</span><span class='va'>medieval_wars_1200s.ig</span><span class='op'>)</span>
+
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>clp_wars_1200s</span>, <span class='va'>medieval_wars_1200s.ig</span>, vertex.size<span class='op'>=</span><span class='fl'>2</span>,  edge.arrow.size<span class='op'>=</span><span class='fl'>.1</span>, vertex.color<span class='op'>=</span><span class='st'>"gold"</span>, vertex.size<span class='op'>=</span><span class='fl'>20</span>, vertex.frame.color<span class='op'>=</span><span class='st'>"gray"</span>, vertex.label.color<span class='op'>=</span><span class='st'>"black"</span>, vertex.label.cex<span class='op'>=</span><span class='fl'>0.3</span>, vertex.label.dist<span class='op'>=</span><span class='fl'>2</span>, edge.curved<span class='op'>=</span><span class='fl'>0.2</span><span class='op'>)</span>
 </code></pre>
 </div>
 <p><img src="workwithmedievalnetworks_files/figure-html5/unnamed-chunk-6-1.png" width="624" /></p>
@@ -2243,6 +2243,11 @@ $null
 </code></pre>
 </div>
 <pre><code>[1] 0.02889443</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/pkg/igraph/man/transitivity.html'>transitivity</a></span><span class='op'>(</span><span class='va'>medieval_wars_1200s.ig</span>, type<span class='op'>=</span><span class='st'>"average"</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>[1] 0.116149</code></pre>
 </div>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
@@ -2255,6 +2260,11 @@ $null
 </code></pre>
 </div>
 <pre><code>[1] 0.03698225</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/pkg/igraph/man/edge_density.html'>graph.density</a></span><span class='op'>(</span><span class='va'>medieval_wars_1200s.ig</span>, loops<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>[1] 0.01207515</code></pre>
 </div>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
@@ -2268,109 +2278,7 @@ $null
 
 <span class='va'>medieval.nodes</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>name<span class='op'>=</span><span class='va'>medieval_network</span><span class='op'><a href='https://rdrr.io/pkg/network/man/network.extraction.html'>%v%</a></span><span class='st'>"vertex.names"</span>, degree<span class='op'>=</span><span class='fu'>sna</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/sna/man/degree.html'>degree</a></span><span class='op'>(</span><span class='va'>medieval_network</span><span class='op'>)</span><span class='op'>)</span>
 
-<span class='va'>medieval.nodes</span>
-</code></pre>
-</div>
-<pre><code>                            name degree
-1               County of Apulia      7
-2               County of Aversa      5
-3              Kingdom of Sicily      8
-4                     Ghaznavids      2
-5              Kingdom of Poland      1
-6             Kingdom of Hungary      3
-7              Kingdom of Norway      1
-8               Hammudid dynasty      1
-9           High King of Ireland      3
-10                       Denmark      1
-11                        Poland      1
-12              Republic of Pisa      1
-13             Republic of Genoa      1
-14            Sardinian judicati      1
-15              Byzantine Empire     18
-16               County of Anjou      1
-17               County of Maine      1
-18                   West Frisia      1
-19           Kingdom of Scotland      1
-20        Kingdom of Strathclyde      1
-21    Mirdasid Emirate of Aleppo      1
-22            Kingdom of Georgia      5
-23                        Duklja      1
-24                  Seljuk Turks      1
-25             Holy Roman Empire     15
-26            Republic of Venice      3
-27           Great Seljuq Empire      4
-28              Sultanate of Rum     11
-29              County of Sicily      9
-30             Kingdom of Aragon      2
-31              County of Urgell      1
-32            Duchy of Aquitaine      1
-33                  Papal States      4
-34                       England      9
-35            Kingdom of Castile      2
-36                      Normandy      3
-37                Welsh kingdoms      1
-38          Principality of Kiev      2
-39     Principality of Chernigov      2
-40  Principality of Pereiaslavl&#39;      2
-41                        Cumans      3
-42                   Kievan Rus&#39;      1
-43            Kingdom of Galicia      1
-44           Kingdom of Castille      1
-45                 Seljuk Empire      7
-46               Georgian Empire      3
-47             Kingdom of France     10
-48 County of Apulia and Calabria      7
-49   Armenian Kingdom of Cilicia      7
-50       Principality of Salerno      3
-51     Principality of Benevento      3
-52         Principality of Capua      3
-53            Republic of Amalfi      3
-54               Duchy of Naples      3
-55                   Kabul Shahi      2
-56          Voivodeship of Ahtum      1
-57                Finnish tribes      1
-58          Caliphate of Córdoba      1
-59                      Leinster      1
-60                        Dublin      1
-61     Vikings of Orkney and Man      1
-62                Taifa of Dénia      3
-63               County of Blois      2
-64             Duchy of Anacopia      1
-65             Duchy of Kldekari      1
-66             Duchy of Klarjeti      1
-67              Ghaznavid Empire      1
-68              Duchy of Bohemia      1
-69                    Kievan Rus      1
-70              Empire of Nicaea      2
-71           Empire of Trebizond      2
-72               Crusader states      2
-73             Emirate of Sicily      2
-74                        Zirids      2
-75               Taifa of Lérida      4
-76             Duchy of Brittany      2
-77            Kingdom of Navarre      1
-78                        Norway      1
-79             Earldom of Orkney      1
-80       Principality of Polotsk      3
-81                     Pechenegs      1
-82                         Ouzes      1
-83                 Veche of kiev      1
-84            County of Portugal      1
-85               Kingdom of León      1
-86              Bulgarian rebels      1
-87       Kerman Seljuk Sultanate      1
-88               Duchy of Saxony      1
-89           Great Seljuk Empire      1
-90         Atabegs of Azerbaijan      1
-91                English rebels      1
-92                Saxon nobility      1
-93             Fatimid Caliphate      6
-94                 Danishmendids      6
-95      Seljuk Emirate of Aleppo      6
-96    Seljuk Emirate of Damascus      6
-97             Abbasid Caliphate      6</code></pre>
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>medieval.nodes</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>medieval.nodes</span><span class='op'>)</span>
 </code></pre>
 </div>
 <pre><code>     name               degree      
@@ -2383,107 +2291,16 @@ $null
 </div>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>medieval.nodes</span><span class='op'>[</span><span class='fu'><a href='https://rdrr.io/r/base/order.html'>order</a></span><span class='op'>(</span><span class='op'>-</span><span class='va'>medieval.nodes</span><span class='op'>$</span><span class='va'>degree</span><span class='op'>)</span>,<span class='op'>]</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>medieval.nodes</span><span class='op'>[</span><span class='fu'><a href='https://rdrr.io/r/base/order.html'>order</a></span><span class='op'>(</span><span class='op'>-</span><span class='va'>medieval.nodes</span><span class='op'>$</span><span class='va'>degree</span><span class='op'>)</span>,<span class='op'>]</span><span class='op'>)</span>
 </code></pre>
 </div>
-<pre><code>                            name degree
-15              Byzantine Empire     18
-25             Holy Roman Empire     15
-28              Sultanate of Rum     11
-47             Kingdom of France     10
-29              County of Sicily      9
-34                       England      9
-3              Kingdom of Sicily      8
-1               County of Apulia      7
-45                 Seljuk Empire      7
-48 County of Apulia and Calabria      7
-49   Armenian Kingdom of Cilicia      7
-93             Fatimid Caliphate      6
-94                 Danishmendids      6
-95      Seljuk Emirate of Aleppo      6
-96    Seljuk Emirate of Damascus      6
-97             Abbasid Caliphate      6
-2               County of Aversa      5
-22            Kingdom of Georgia      5
-27           Great Seljuq Empire      4
-33                  Papal States      4
-75               Taifa of Lérida      4
-6             Kingdom of Hungary      3
-9           High King of Ireland      3
-26            Republic of Venice      3
-36                      Normandy      3
-41                        Cumans      3
-46               Georgian Empire      3
-50       Principality of Salerno      3
-51     Principality of Benevento      3
-52         Principality of Capua      3
-53            Republic of Amalfi      3
-54               Duchy of Naples      3
-62                Taifa of Dénia      3
-80       Principality of Polotsk      3
-4                     Ghaznavids      2
-30             Kingdom of Aragon      2
-35            Kingdom of Castile      2
-38          Principality of Kiev      2
-39     Principality of Chernigov      2
-40  Principality of Pereiaslavl&#39;      2
-55                   Kabul Shahi      2
-63               County of Blois      2
-70              Empire of Nicaea      2
-71           Empire of Trebizond      2
-72               Crusader states      2
-73             Emirate of Sicily      2
-74                        Zirids      2
-76             Duchy of Brittany      2
-5              Kingdom of Poland      1
-7              Kingdom of Norway      1
-8               Hammudid dynasty      1
-10                       Denmark      1
-11                        Poland      1
-12              Republic of Pisa      1
-13             Republic of Genoa      1
-14            Sardinian judicati      1
-16               County of Anjou      1
-17               County of Maine      1
-18                   West Frisia      1
-19           Kingdom of Scotland      1
-20        Kingdom of Strathclyde      1
-21    Mirdasid Emirate of Aleppo      1
-23                        Duklja      1
-24                  Seljuk Turks      1
-31              County of Urgell      1
-32            Duchy of Aquitaine      1
-37                Welsh kingdoms      1
-42                   Kievan Rus&#39;      1
-43            Kingdom of Galicia      1
-44           Kingdom of Castille      1
-56          Voivodeship of Ahtum      1
-57                Finnish tribes      1
-58          Caliphate of Córdoba      1
-59                      Leinster      1
-60                        Dublin      1
-61     Vikings of Orkney and Man      1
-64             Duchy of Anacopia      1
-65             Duchy of Kldekari      1
-66             Duchy of Klarjeti      1
-67              Ghaznavid Empire      1
-68              Duchy of Bohemia      1
-69                    Kievan Rus      1
-77            Kingdom of Navarre      1
-78                        Norway      1
-79             Earldom of Orkney      1
-81                     Pechenegs      1
-82                         Ouzes      1
-83                 Veche of kiev      1
-84            County of Portugal      1
-85               Kingdom of León      1
-86              Bulgarian rebels      1
-87       Kerman Seljuk Sultanate      1
-88               Duchy of Saxony      1
-89           Great Seljuk Empire      1
-90         Atabegs of Azerbaijan      1
-91                English rebels      1
-92                Saxon nobility      1</code></pre>
+<pre><code>                name degree
+15  Byzantine Empire     18
+25 Holy Roman Empire     15
+28  Sultanate of Rum     11
+47 Kingdom of France     10
+29  County of Sicily      9
+34           England      9</code></pre>
 </div>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
@@ -2498,7 +2315,28 @@ $null
                     3rd Qu.: 3.000  
                     Max.   :18.000  </code></pre>
 </div>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>medieval_network</span>
+</code></pre>
+</div>
+<pre><code> Network attributes:
+  vertices = 97 
+  directed = TRUE 
+  hyper = FALSE 
+  loops = FALSE 
+  multiple = TRUE 
+  bipartite = FALSE 
+  total edges= 138 
+    missing edges= 0 
+    non-missing edges= 138 
+
+ Vertex attribute names: 
+    vertex.names 
+
+No edge attributes</code></pre>
+</div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>
