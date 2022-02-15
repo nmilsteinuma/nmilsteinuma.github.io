@@ -17,12 +17,17 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ```{r, message=FALSE, warning=FALSE}
-
+library(factoextra)
 library(readxl)
 library(igraph)
 library(statnet)
 library(network)
 library(tidyverse)
+library(ggnetwork)
+library(GGally)
+library(ggplot2)
+library(sna)
+
 ```
 
 ```{r}
@@ -87,6 +92,7 @@ medieval_wars_1200s.ig<-graph_from_data_frame(medieval_wars_1200s)
 clp_wars_1200s <- cluster_label_prop(medieval_wars_1200s.ig)
 
 plot(clp_wars_1200s, medieval_wars_1200s.ig, vertex.size=2,  edge.arrow.size=.1, vertex.color="gold", vertex.size=20, vertex.frame.color="gray", vertex.label.color="black", vertex.label.cex=0.3, vertex.label.dist=2, edge.curved=0.2)
+
 ```
 
 
@@ -153,19 +159,47 @@ summary(medieval.nodes)
 medieval_network
 ```
 
-```{r}
-library(ggplot2)
-library(ggnetwork)
-```
 
 
 ```{r}
+
+medieval_network_1000s <- asNetwork(wars_in_medieval_2.ig)
+
 set.seed(777)
-ggplot(medieval_network, aes(x = x, y = y, xend = xend, yend = yend)) +
+ggplot(medieval_network_1000s, aes(x = x, y = y, xend = xend, yend = yend)) +
   geom_edges(color = "grey25", alpha = 0.25) +
-  geom_nodes(color = "gold", size = 2) +
-  geom_nodetext(aes( label = vertex.names ), position = position_dodge(width=0.9),  size=1,
-  label.size = 0.01,)+
+  geom_nodes(color = "gold", alpha = 0.5, size = 2) +
+  geom_nodetext(aes( label = vertex.names ), size=1)+
   theme_blank()
 
 ```
+
+
+```{r}
+
+medieval_network_1100s <- asNetwork(wars_in_medieval_3.ig)
+
+set.seed(777)
+ggplot(medieval_network_1100s, aes(x = x, y = y, xend = xend, yend = yend)) +
+  geom_edges(color = "grey25", alpha = 0.25) +
+  geom_nodes(color = "gold", alpha = 0.5, size = 2) +
+  geom_nodetext(aes(label = vertex.names),colour = "Black", size=1)+
+  theme_blank()
+
+```
+
+```{r}
+
+medieval_network_1200s <- asNetwork(medieval_wars_1200s.ig)
+
+set.seed(777)
+ggplot(medieval_network_1200s, aes(x = x, y = y, xend = xend, yend = yend)) +
+  geom_edges(color = "grey25", alpha = 0.25) +
+  geom_nodes(color = "gold", alpha = 0.5, size = 2) +
+  geom_nodetext(aes( label = vertex.names ), size=1)+
+  theme_blank()
+?geom_nodetext
+
+```
+
+

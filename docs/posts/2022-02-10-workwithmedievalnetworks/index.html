@@ -133,7 +133,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <!--/radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-resource-manifest">
-  {"type":"character","attributes":{},"value":["workwithmedievalnetworks_files/anchor-4.2.2/anchor.min.js","workwithmedievalnetworks_files/bowser-1.9.3/bowser.min.js","workwithmedievalnetworks_files/distill-2.2.21/template.v2.js","workwithmedievalnetworks_files/figure-html5/unnamed-chunk-4-1.png","workwithmedievalnetworks_files/figure-html5/unnamed-chunk-5-1.png","workwithmedievalnetworks_files/figure-html5/unnamed-chunk-6-1.png","workwithmedievalnetworks_files/header-attrs-2.11/header-attrs.js","workwithmedievalnetworks_files/jquery-3.6.0/jquery-3.6.0.js","workwithmedievalnetworks_files/jquery-3.6.0/jquery-3.6.0.min.js","workwithmedievalnetworks_files/jquery-3.6.0/jquery-3.6.0.min.map","workwithmedievalnetworks_files/popper-2.6.0/popper.min.js","workwithmedievalnetworks_files/tippy-6.2.7/tippy-bundle.umd.min.js","workwithmedievalnetworks_files/tippy-6.2.7/tippy-light-border.css","workwithmedievalnetworks_files/tippy-6.2.7/tippy.css","workwithmedievalnetworks_files/tippy-6.2.7/tippy.umd.min.js","workwithmedievalnetworks_files/webcomponents-2.0.0/webcomponents.js"]}
+  {"type":"character","attributes":{},"value":["workwithmedievalnetworks_files/anchor-4.2.2/anchor.min.js","workwithmedievalnetworks_files/bowser-1.9.3/bowser.min.js","workwithmedievalnetworks_files/distill-2.2.21/template.v2.js","workwithmedievalnetworks_files/figure-html5/unnamed-chunk-17-1.png","workwithmedievalnetworks_files/figure-html5/unnamed-chunk-18-1.png","workwithmedievalnetworks_files/figure-html5/unnamed-chunk-19-1.png","workwithmedievalnetworks_files/figure-html5/unnamed-chunk-4-1.png","workwithmedievalnetworks_files/figure-html5/unnamed-chunk-5-1.png","workwithmedievalnetworks_files/figure-html5/unnamed-chunk-6-1.png","workwithmedievalnetworks_files/header-attrs-2.11/header-attrs.js","workwithmedievalnetworks_files/jquery-3.6.0/jquery-3.6.0.js","workwithmedievalnetworks_files/jquery-3.6.0/jquery-3.6.0.min.js","workwithmedievalnetworks_files/jquery-3.6.0/jquery-3.6.0.min.map","workwithmedievalnetworks_files/popper-2.6.0/popper.min.js","workwithmedievalnetworks_files/tippy-6.2.7/tippy-bundle.umd.min.js","workwithmedievalnetworks_files/tippy-6.2.7/tippy-light-border.css","workwithmedievalnetworks_files/tippy-6.2.7/tippy.css","workwithmedievalnetworks_files/tippy-6.2.7/tippy.umd.min.js","workwithmedievalnetworks_files/webcomponents-2.0.0/webcomponents.js"]}
   </script>
   <!--radix_placeholder_navigation_in_header-->
 <meta name="distill:offset" content="../.."/>
@@ -2239,15 +2239,15 @@ $null
 </div>
 <pre><code>[1] 0.06624606</code></pre>
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/pkg/igraph/man/transitivity.html'>transitivity</a></span><span class='op'>(</span><span class='va'>wars_in_medieval_2.ig</span>, type<span class='op'>=</span><span class='st'>"average"</span><span class='op'>)</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/pkg/igraph/man/transitivity.html'>transitivity</a></span><span class='op'>(</span><span class='va'>wars_in_medieval_3.ig</span>, type<span class='op'>=</span><span class='st'>"global"</span><span class='op'>)</span>
 </code></pre>
 </div>
-<pre><code>[1] 0.02889443</code></pre>
+<pre><code>[1] 0.0774983</code></pre>
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/pkg/igraph/man/transitivity.html'>transitivity</a></span><span class='op'>(</span><span class='va'>medieval_wars_1200s.ig</span>, type<span class='op'>=</span><span class='st'>"average"</span><span class='op'>)</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/pkg/igraph/man/transitivity.html'>transitivity</a></span><span class='op'>(</span><span class='va'>medieval_wars_1200s.ig</span>, type<span class='op'>=</span><span class='st'>"global"</span><span class='op'>)</span>
 </code></pre>
 </div>
-<pre><code>[1] 0.116149</code></pre>
+<pre><code>[1] 0.093224</code></pre>
 </div>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
@@ -2335,6 +2335,58 @@ $null
     vertex.names 
 
 No edge attributes</code></pre>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://ggplot2.tidyverse.org'>ggplot2</a></span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/briatte/ggnetwork'>ggnetwork</a></span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>medieval_network_1000s</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/intergraph/man/asNetwork.html'>asNetwork</a></span><span class='op'>(</span><span class='va'>wars_in_medieval_2.ig</span><span class='op'>)</span>
+
+<span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>777</span><span class='op'>)</span>
+<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>medieval_network_1000s</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>x</span>, y <span class='op'>=</span> <span class='va'>y</span>, xend <span class='op'>=</span> <span class='va'>xend</span>, yend <span class='op'>=</span> <span class='va'>yend</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/ggnetwork/man/geom_edges.html'>geom_edges</a></span><span class='op'>(</span>color <span class='op'>=</span> <span class='st'>"grey25"</span>, alpha <span class='op'>=</span> <span class='fl'>0.75</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/ggnetwork/man/geom_nodes.html'>geom_nodes</a></span><span class='op'>(</span>color <span class='op'>=</span> <span class='st'>"gold"</span>, size <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/ggnetwork/man/geom_nodetext.html'>geom_nodetext</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span> label <span class='op'>=</span> <span class='va'>vertex.names</span> <span class='op'>)</span>, position <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/position_dodge.html'>position_dodge</a></span><span class='op'>(</span>width<span class='op'>=</span><span class='fl'>0.9</span><span class='op'>)</span>,  size<span class='op'>=</span><span class='fl'>1</span>,
+  label.size <span class='op'>=</span> <span class='fl'>0.01</span>,<span class='op'>)</span><span class='op'>+</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/ggnetwork/man/theme_blank.html'>theme_blank</a></span><span class='op'>(</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="workwithmedievalnetworks_files/figure-html5/unnamed-chunk-17-1.png" width="624" /></p>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>medieval_network_1100s</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/intergraph/man/asNetwork.html'>asNetwork</a></span><span class='op'>(</span><span class='va'>wars_in_medieval_3.ig</span><span class='op'>)</span>
+
+<span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>777</span><span class='op'>)</span>
+<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>medieval_network_1100s</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>x</span>, y <span class='op'>=</span> <span class='va'>y</span>, xend <span class='op'>=</span> <span class='va'>xend</span>, yend <span class='op'>=</span> <span class='va'>yend</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/ggnetwork/man/geom_edges.html'>geom_edges</a></span><span class='op'>(</span>color <span class='op'>=</span> <span class='st'>"grey25"</span>, alpha <span class='op'>=</span> <span class='fl'>0.75</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/ggnetwork/man/geom_nodes.html'>geom_nodes</a></span><span class='op'>(</span>color <span class='op'>=</span> <span class='st'>"gold"</span>, size <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/ggnetwork/man/geom_nodetext.html'>geom_nodetext</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span> label <span class='op'>=</span> <span class='va'>vertex.names</span> <span class='op'>)</span>, position <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/position_dodge.html'>position_dodge</a></span><span class='op'>(</span>width<span class='op'>=</span><span class='fl'>0.9</span><span class='op'>)</span>,  size<span class='op'>=</span><span class='fl'>1</span>,
+  label.size <span class='op'>=</span> <span class='fl'>0.01</span>,<span class='op'>)</span><span class='op'>+</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/ggnetwork/man/theme_blank.html'>theme_blank</a></span><span class='op'>(</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="workwithmedievalnetworks_files/figure-html5/unnamed-chunk-18-1.png" width="624" /></p>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>medieval_network_1200s</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/intergraph/man/asNetwork.html'>asNetwork</a></span><span class='op'>(</span><span class='va'>medieval_wars_1200s.ig</span><span class='op'>)</span>
+
+<span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>777</span><span class='op'>)</span>
+<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>medieval_network_1200s</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>x</span>, y <span class='op'>=</span> <span class='va'>y</span>, xend <span class='op'>=</span> <span class='va'>xend</span>, yend <span class='op'>=</span> <span class='va'>yend</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/ggnetwork/man/geom_edges.html'>geom_edges</a></span><span class='op'>(</span>color <span class='op'>=</span> <span class='st'>"grey25"</span>, alpha <span class='op'>=</span> <span class='fl'>0.75</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/ggnetwork/man/geom_nodes.html'>geom_nodes</a></span><span class='op'>(</span>color <span class='op'>=</span> <span class='st'>"gold"</span>, size <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/ggnetwork/man/geom_nodetext.html'>geom_nodetext</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span> label <span class='op'>=</span> <span class='va'>vertex.names</span> <span class='op'>)</span>, position <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/position_dodge.html'>position_dodge</a></span><span class='op'>(</span>width<span class='op'>=</span><span class='fl'>0.9</span><span class='op'>)</span>,  size<span class='op'>=</span><span class='fl'>1</span>,
+  label.size <span class='op'>=</span> <span class='fl'>0.01</span>,<span class='op'>)</span><span class='op'>+</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/ggnetwork/man/theme_blank.html'>theme_blank</a></span><span class='op'>(</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="workwithmedievalnetworks_files/figure-html5/unnamed-chunk-19-1.png" width="624" /></p>
 </div>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
