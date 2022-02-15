@@ -11,12 +11,20 @@ output:
     self_contained: false
 ---
 
+Briefly describe the dataset you are using: identify initial network format, describe and identify the nodes (including how many nodes are in the dataset), what constitutes a tie or edge (including how many ties, whether ties are directed/undirected and weighted/binary, and how to interpret the value of the tie if any), whether or not there are edge attributes that might be used to subset data or stack multiple networks (e.g., tie type, year, etc).
+
+Calculate closeness, betweenness and eigenvector centrality measures for your network data, and bonachic-power if possible. Compare these measures to basic degree centrality measures. Try to interpret the results. Are there any interesting patterns in the distribution of measures or correlations between them that provide insight into the measures?
+
+You may also want to identify whether the same node(s) are more/less central using the different measures, and see if you can find any patterns in the results based on which nodes are high/low on each measures. Discuss (with any related evidence) whether or not the node(s) behavior is in line with or violates expectations based on the degree centrality measure, comparing across those measures using a data frame similar to that constructed in the syntax. Be sure to share your assignment with group members for comments.
+
+Another idea is to compare measures across two datasets, for example the two game of thrones datasets. You could also use the IMF data extraction routine and subset data for an additional years. Or use Correlates of War Trade and subset for two weeks, perhaps a year before 1900 and compare to a more recent year. Once again, try to interpret the results by looking for patterns in the distribution of a measure and/or which nodes are high/low in the historical vs recent year, and suggest any economic or political changes that might have led to shifts in the international standing of particular countries.
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ```{r, message=FALSE, warning=FALSE}
+
 library(factoextra)
 library(readxl)
 library(igraph)
@@ -27,146 +35,128 @@ library(ggnetwork)
 library(GGally)
 library(ggplot2)
 library(sna)
-
-```
-
-```{r}
-
-wars_in_medieval_2 <- read_excel("~/Desktop/Spring 2022/Networks/wars_in_medieval_2.xlsx")
-
-wars_in_medieval_2$"Out-list" <- sapply(wars_in_medieval_2$"Out-list",
-                                    function(x) { gsub("[\r\n]", "", x) })
-wars_in_medieval_2$"In-list"<- sapply(wars_in_medieval_2$"In-list",
-                                    function(x) { gsub("[\r\n]", "", x) })
-
-wars_in_medieval_2
-```
-
-```{r}
-
-wars_in_medieval_2_test <- data.frame(ThreadID = c(wars_in_medieval_2$"In-list"),
-                 AuthorID = c(wars_in_medieval_2$"Out-list"))
-wars_in_medieval_2_test_2 <- dplyr::inner_join(wars_in_medieval_2_test, wars_in_medieval_2_test, by = "ThreadID")[,-1]
-wars_in_medieval_2_test_3 <- apply(wars_in_medieval_2_test_2, 2, as.character)
-
-```
-
-```{r}
-
-set.seed(2)
-
-wars_in_medieval_2.ig<-graph_from_data_frame(wars_in_medieval_2)
-
-clp <- cluster_label_prop(wars_in_medieval_2.ig)
-
-plot(clp, wars_in_medieval_2.ig, vertex.size=2,  edge.arrow.size=.1, vertex.color="gold", vertex.size=20, vertex.frame.color="gray", vertex.label.color="black", vertex.label.cex=0.3, vertex.label.dist=2, edge.curved=0.2)
-
-```
-
-```{r}
-
-set.seed(2)
-
-medieval_wars_3 <- read_excel("~/Desktop/Spring 2022/Networks/medieval_wars_2.xlsx")
-
-wars_in_medieval_3_test <- data.frame(ThreadID = c(medieval_wars_3$"In"),
-                 AuthorID = c(medieval_wars_3$"Out"))
-wars_in_medieval_3_test_2 <- dplyr::inner_join(wars_in_medieval_3_test, wars_in_medieval_3_test, by = "ThreadID")[,-1]
-
-wars_in_medieval_3_test_3 <- apply(wars_in_medieval_3_test_2, 2, as.character)
-
-wars_in_medieval_3.ig<-graph_from_data_frame(medieval_wars_3)
-
-clp_med3 <- cluster_label_prop(wars_in_medieval_3.ig)
-
-plot(clp_med3, wars_in_medieval_3.ig, vertex.size=2,  edge.arrow.size=.1, vertex.color="gold", vertex.size=20, vertex.frame.color="gray", vertex.label.color="black", vertex.label.cex=0.3, vertex.label.dist=2, edge.curved=0.2)
-
-```
-
-```{r}
-
-medieval_wars_1200s <- read_excel("~/Desktop/Spring 2022/Networks/medieval_wars_1200s.xlsx")
-
-medieval_wars_1200s.ig<-graph_from_data_frame(medieval_wars_1200s)
-
-clp_wars_1200s <- cluster_label_prop(medieval_wars_1200s.ig)
-
-plot(clp_wars_1200s, medieval_wars_1200s.ig, vertex.size=2,  edge.arrow.size=.1, vertex.color="gold", vertex.size=20, vertex.frame.color="gray", vertex.label.color="black", vertex.label.cex=0.3, vertex.label.dist=2, edge.curved=0.2)
-
-```
-
-
-
-```{r}
-
-igraph::dyad.census(wars_in_medieval_2.ig)
-
-```
-```{r}
-
-igraph::triad.census(wars_in_medieval_2.ig)
-
-```
-
-```{r}
-
-transitivity(wars_in_medieval_2.ig, type="global")
-
-transitivity(wars_in_medieval_3.ig, type="global")
-
-transitivity(medieval_wars_1200s.ig, type="global")
-
-
-```
-
-
-```{r}
-
-graph.density(wars_in_medieval_2.ig, loops=TRUE)
-
-graph.density(wars_in_medieval_3.ig, loops=TRUE)
-
-graph.density(medieval_wars_1200s.ig, loops=TRUE)
-
-```
-
-```{r}
-
 library(intergraph)
 
 ```
 
-```{r}
-medieval_network <- asNetwork(wars_in_medieval_2.ig)
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
 
-medieval.nodes<-data.frame(name=medieval_network%v%"vertex.names", degree=sna::degree(medieval_network))
+wars_in_1000s <- read_excel("~/Desktop/Spring 2022/Networks/wars_in_1000s.xlsx")
 
-summary(medieval.nodes)
+wars_in_1000s$"Out-list" <- sapply(wars_in_1000s$"Out-list",
+                                    function(x) { gsub("[\r\n]", "", x) })
+wars_in_1000s$"In-list"<- sapply(wars_in_1000s$"In-list",
+                                    function(x) { gsub("[\r\n]", "", x) })
+
+wars_in_1100s <- read_excel("~/Desktop/Spring 2022/Networks/wars_in_1100s.xlsx")
+
+wars_in_1200s <- read_excel("~/Desktop/Spring 2022/Networks/wars_in_1200s.xlsx")
+
+```
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+
+wars_in_1000s.ig<-graph_from_data_frame(wars_in_1000s)
+
+wars_in_1000s_network <- asNetwork(wars_in_1000s.ig)
+
+wars_in_1100s.ig<-graph_from_data_frame(wars_in_1100s)
+
+wars_in_1100s_network <- asNetwork(wars_in_1100s.ig)
+
+wars_in_1200s.ig<-graph_from_data_frame(wars_in_1200s)
+
+wars_in_1200s_network <- asNetwork(wars_in_1200s.ig)
+
+```
+
+```{r, echo=FALSE}
+
+set.seed(2)
+
+clp_1000s <- cluster_label_prop(wars_in_1000s.ig)
+
+plot(clp_1000s, wars_in_1000s.ig, vertex.size=2,  edge.arrow.size=.1, vertex.color="gold", vertex.size=20, vertex.frame.color="gray", vertex.label.color="black", vertex.label.cex=0.3, vertex.label.dist=2, edge.curved=0.2)
+
+```
+
+```{r,  echo=FALSE}
+
+clp_1100s <- cluster_label_prop(wars_in_1100s.ig)
+
+plot(clp_1100s, wars_in_1100s.ig, vertex.size=2,  edge.arrow.size=.1, vertex.color="gold", vertex.size=20, vertex.frame.color="gray", vertex.label.color="black", vertex.label.cex=0.3, vertex.label.dist=2, edge.curved=0.2)
+
+```
+
+```{r,  echo=FALSE}
+
+clp_1200s <- cluster_label_prop(wars_in_1200s.ig)
+
+plot(clp_1200s, wars_in_1200s.ig, vertex.size=2,  edge.arrow.size=.1, vertex.color="gold", vertex.size=20, vertex.frame.color="gray", vertex.label.color="black", vertex.label.cex=0.3, vertex.label.dist=2, edge.curved=0.2)
+
 ```
 
 
-```{r}
 
-head(medieval.nodes[order(-medieval.nodes$degree),])
+```{r,  echo=FALSE}
+
+igraph::dyad.census(wars_in_1000s.ig)
+
+```
+```{r,  echo=FALSE}
+
+igraph::triad.census(wars_in_1000s.ig)
 
 ```
 
-```{r}
-summary(medieval.nodes)
+```{r,  echo=FALSE}
+
+transitivity(wars_in_1000s.ig, type="global")
+
+transitivity(wars_in_1100s.ig, type="global")
+
+transitivity(wars_in_1200s.ig, type="global")
+
+
 ```
 
-```{r}
-medieval_network
+
+```{r,  echo=FALSE}
+
+graph.density(wars_in_1000s.ig, loops=TRUE)
+
+graph.density(wars_in_1100s.ig, loops=TRUE)
+
+graph.density(wars_in_1200s.ig, loops=TRUE)
+
 ```
 
 
 
-```{r}
+```{r, echo=FALSE}
 
-medieval_network_1000s <- asNetwork(wars_in_medieval_2.ig)
+medieval_1000s.nodes<-data.frame(name=wars_in_1000s_network%v%"vertex.names", degree=sna::degree(wars_in_1000s_network))
+
+summary(medieval_1000s.nodes)
+```
+
+
+```{r, echo=FALSE}
+
+head(medieval_1000s.nodes[order(-medieval_1000s.nodes$degree),])
+
+```
+
+```{r, echo=FALSE}
+summary(medieval_1000s.nodes)
+```
+
+
+
+```{r, echo=FALSE}
 
 set.seed(777)
-ggplot(medieval_network_1000s, aes(x = x, y = y, xend = xend, yend = yend)) +
+ggplot(wars_in_1000s_network, aes(x = x, y = y, xend = xend, yend = yend)) +
   geom_edges(color = "grey25", alpha = 0.25) +
   geom_nodes(color = "gold", alpha = 0.5, size = 2) +
   geom_nodetext(aes( label = vertex.names ), size=1)+
@@ -175,12 +165,10 @@ ggplot(medieval_network_1000s, aes(x = x, y = y, xend = xend, yend = yend)) +
 ```
 
 
-```{r}
-
-medieval_network_1100s <- asNetwork(wars_in_medieval_3.ig)
+```{r, echo=FALSE}
 
 set.seed(777)
-ggplot(medieval_network_1100s, aes(x = x, y = y, xend = xend, yend = yend)) +
+ggplot(wars_in_1100s_network, aes(x = x, y = y, xend = xend, yend = yend)) +
   geom_edges(color = "grey25", alpha = 0.25) +
   geom_nodes(color = "gold", alpha = 0.5, size = 2) +
   geom_nodetext(aes(label = vertex.names),colour = "Black", size=1)+
@@ -188,18 +176,16 @@ ggplot(medieval_network_1100s, aes(x = x, y = y, xend = xend, yend = yend)) +
 
 ```
 
-```{r}
-
-medieval_network_1200s <- asNetwork(medieval_wars_1200s.ig)
+```{r, echo=FALSE}
 
 set.seed(777)
-ggplot(medieval_network_1200s, aes(x = x, y = y, xend = xend, yend = yend)) +
+ggplot(wars_in_1200s_network, aes(x = x, y = y, xend = xend, yend = yend)) +
   geom_edges(color = "grey25", alpha = 0.25) +
   geom_nodes(color = "gold", alpha = 0.5, size = 2) +
   geom_nodetext(aes( label = vertex.names ), size=1)+
   theme_blank()
-?geom_nodetext
 
 ```
+
 
 
