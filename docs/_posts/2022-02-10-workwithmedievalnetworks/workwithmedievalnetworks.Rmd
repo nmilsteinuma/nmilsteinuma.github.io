@@ -160,6 +160,7 @@ ggplot(wars_in_1000s_network, aes(x = x, y = y, xend = xend, yend = yend)) +
   geom_edges(color = "grey25", alpha = 0.25) +
   geom_nodes(color = "gold", alpha = 0.5, size = 2) +
   geom_nodetext(aes( label = vertex.names ), size=1)+
+    ggtitle("Networks of Wars in the 1000s") +
   theme_blank()
 
 ```
@@ -172,6 +173,7 @@ ggplot(wars_in_1100s_network, aes(x = x, y = y, xend = xend, yend = yend)) +
   geom_edges(color = "grey25", alpha = 0.25) +
   geom_nodes(color = "gold", alpha = 0.5, size = 2) +
   geom_nodetext(aes(label = vertex.names),colour = "Black", size=1)+
+      ggtitle("Networks of Wars in the 1100s") +
   theme_blank()
 
 ```
@@ -183,7 +185,8 @@ ggplot(wars_in_1200s_network, aes(x = x, y = y, xend = xend, yend = yend)) +
   geom_edges(color = "grey25", alpha = 0.25) +
   geom_nodes(color = "gold", alpha = 0.5, size = 2) +
   geom_nodetext(aes( label = vertex.names ), size=1)+
-  theme_blank()
+        ggtitle("Networks of Wars in the 1200s") +
+theme_blank()
 
 ```
 
