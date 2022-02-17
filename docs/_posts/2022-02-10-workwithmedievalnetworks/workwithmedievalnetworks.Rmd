@@ -141,6 +141,12 @@ head(wars_in_1000s.nodes.stat) %>% kable()
 
 ```{r, echo=FALSE}
 
+hist(wars_in_1000s.nodes.stat$totdegree, main="Distribution of Total Degree of Wars in the 1000s", ylab="Frequency", xlab="Number of Wars in Terms of Total Degrees") 
+```
+
+
+```{r, echo=FALSE}
+
 wars_1000s<-as.matrix(as_adjacency_matrix(wars_in_1000s.ig))
 
 #square the adjacency matrix
@@ -195,6 +201,13 @@ wars_in_1100s.nodes.stat$eigen<-evcent(wars_in_1100s_network)
 head(wars_in_1100s.nodes.stat) %>% kable()
 
 ```
+
+```{r, echo=FALSE}
+
+hist(wars_in_1100s.nodes.stat$totdegree, main="Distribution of Total Degree of Wars in the 1100s", ylab="Frequency", xlab="Number of Wars in Terms of Total Degrees") 
+
+```
+
 ```{r, echo=FALSE}
 
 wars_1100s<-as.matrix(as_adjacency_matrix(wars_in_1100s.ig))
@@ -249,6 +262,11 @@ wars_in_1200s.nodes.stat$eigen<-evcent(wars_in_1200s_network)
 head(wars_in_1200s.nodes.stat) %>% kable()
 
 ```
+
+```{r, echo=FALSE}
+hist(wars_in_1200s.nodes.stat$totdegree, main="Distribution of Total Degree of Wars in the 1200s", ylab="Frequency", xlab="Number of Wars in Terms of Total Degrees") 
+```
+
 
 ```{r, echo=FALSE}
 
@@ -394,12 +412,11 @@ plot(clp_1000s, wars_in_1000s.ig, vertex.size=2,  edge.arrow.size=.1, vertex.col
 
 set.seed(777)
 ggplot(wars_in_1000s_network, aes(x = x, y = y, xend = xend, yend = yend)) +
-  geom_edges(color = "grey25", alpha = 0.25) +
+  geom_edges(color = "grey25", alpha = 0.25, arrow = arrow(length = unit(2, "pt"), type = "closed"))+
   geom_nodes(color = "gold", alpha = 0.5, size = 2) +
   geom_nodetext(aes( label = vertex.names ), size=1)+
     ggtitle("Networks of Wars in the 1000s") +
   theme_blank()
-
 ```
 
 **Graph 4:**
@@ -426,7 +443,7 @@ plot(clp_1100s, wars_in_1100s.ig, vertex.size=2,  edge.arrow.size=.1, vertex.col
 
 set.seed(777)
 ggplot(wars_in_1100s_network, aes(x = x, y = y, xend = xend, yend = yend)) +
-  geom_edges(color = "grey25", alpha = 0.25) +
+ geom_edges(color = "grey25", alpha = 0.25, arrow = arrow(length = unit(2, "pt"), type = "closed"))+
   geom_nodes(color = "gold", alpha = 0.5, size = 2) +
   geom_nodetext(aes(label = vertex.names),colour = "Black", size=1)+
       ggtitle("Networks of Wars in the 1100s") +
@@ -458,7 +475,7 @@ plot(clp_1200s, wars_in_1200s.ig, vertex.size=2,  edge.arrow.size=.1, vertex.col
 
 set.seed(777)
 ggplot(wars_in_1200s_network, aes(x = x, y = y, xend = xend, yend = yend)) +
-  geom_edges(color = "grey25", alpha = 0.25) +
+ geom_edges(color = "grey25", alpha = 0.25, arrow = arrow(length = unit(2, "pt"), type = "closed"))+
   geom_nodes(color = "gold", alpha = 0.5, size = 2) +
   geom_nodetext(aes( label = vertex.names ), size=1)+
         ggtitle("Networks of Wars in the 1200s") +
