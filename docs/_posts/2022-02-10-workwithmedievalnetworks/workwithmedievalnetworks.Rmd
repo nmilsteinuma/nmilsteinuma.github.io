@@ -31,9 +31,15 @@ library(ggplot2)
 library(sna)
 library(intergraph)
 library(knitr)
-
+library(aRtsy)
+library(nord)
 ```
 
+```{r, echo=FALSE}
+
+canvas_forest(colors = colorPalette("boogy2"), n = 2000, resolution = 500)
+
+```
 
 
 ```{r setup, include=FALSE}
