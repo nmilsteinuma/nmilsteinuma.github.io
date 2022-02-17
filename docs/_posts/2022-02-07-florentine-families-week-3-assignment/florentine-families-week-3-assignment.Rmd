@@ -14,7 +14,9 @@ description: |
 ---
 
 ```{r setup, include=FALSE}
+
 knitr::opts_chunk$set(echo = TRUE)
+
 ```
 
 
@@ -32,10 +34,11 @@ library(statnet)
 ```
 
 ```{r}
+
 set.seed(1)
 canvas_flow(colors = colorPalette("vrolik3"), lines = 3000, lwd = 0.5,
             iterations = 1000, stepmax = 0.1, angles = 'svm')
-# see ?canvas_flow for more input parameters of this function
+
 ```
 
 ### Data Description: 
@@ -43,7 +46,6 @@ canvas_flow(colors = colorPalette("vrolik3"), lines = 3000, lwd = 0.5,
 ```{r}
 
 data(flo, package="network")
-
 
 statted_florentine<-as.network(flo)
 
@@ -169,11 +171,13 @@ Histograms of the distribution of the degrees also illustrate that the only diff
 hist(florentine.nodes$totdegree, main="Florentine Marriages: Total Degrees", xlab="Marriages")
 
 ```
+
 ```{r}
 
 hist(florentine.nodes$indegree, main="Florentine Marriages: In-Degrees", xlab="Marriages")
 
 ```
+
 ```{r}
 
 hist(florentine.nodes$outdegree, main="Florentine Marriages: Out-Degrees", xlab="Marriages")

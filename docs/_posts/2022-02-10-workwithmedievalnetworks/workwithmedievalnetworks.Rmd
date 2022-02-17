@@ -1,7 +1,7 @@
 ---
-title: "Work_with_Medieval_Networks"
+title: "Work with Medieval Networks"
 description: |
-  A short description of the post.
+  A Brief Analysis of Networks of Medieval Conflict.
 author:
   - name: Noah Milstein
     url: {}
@@ -11,19 +11,13 @@ output:
     self_contained: false
 ---
 
-Briefly describe the dataset you are using: identify initial network format, describe and identify the nodes (including how many nodes are in the dataset), what constitutes a tie or edge (including how many ties, whether ties are directed/undirected and weighted/binary, and how to interpret the value of the tie if any), whether or not there are edge attributes that might be used to subset data or stack multiple networks (e.g., tie type, year, etc).
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
 
-Calculate closeness, betweenness and eigenvector centrality measures for your network data, and bonachic-power if possible. Compare these measures to basic degree centrality measures. Try to interpret the results. Are there any interesting patterns in the distribution of measures or correlations between them that provide insight into the measures?
-
-You may also want to identify whether the same node(s) are more/less central using the different measures, and see if you can find any patterns in the results based on which nodes are high/low on each measures. Discuss (with any related evidence) whether or not the node(s) behavior is in line with or violates expectations based on the degree centrality measure, comparing across those measures using a data frame similar to that constructed in the syntax. Be sure to share your assignment with group members for comments.
-
-Another idea is to compare measures across two datasets, for example the two game of thrones datasets. You could also use the IMF data extraction routine and subset data for an additional years. Or use Correlates of War Trade and subset for two weeks, perhaps a year before 1900 and compare to a more recent year. Once again, try to interpret the results by looking for patterns in the distribution of a measure and/or which nodes are high/low in the historical vs recent year, and suggest any economic or political changes that might have led to shifts in the international standing of particular countries.
-
-```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+
 ```
 
-```{r, message=FALSE, warning=FALSE}
+```{r,echo=FALSE, message=FALSE, warning=FALSE}
 
 library(factoextra)
 library(readxl)
@@ -36,10 +30,13 @@ library(GGally)
 library(ggplot2)
 library(sna)
 library(intergraph)
+library(knitr)
 
 ```
 
-```{r, echo=FALSE, message=FALSE, warning=FALSE}
+
+
+```{r setup, include=FALSE}
 
 wars_in_1000s <- read_excel("~/Desktop/Spring 2022/Networks/wars_in_1000s.xlsx")
 
@@ -54,21 +51,330 @@ wars_in_1200s <- read_excel("~/Desktop/Spring 2022/Networks/wars_in_1200s.xlsx")
 
 ```
 
-```{r, echo=FALSE, message=FALSE, warning=FALSE}
+## Briefly Describe the Dataset You Are Using:
+
+**Question: Identify initial network format**
+
+```{r, echo=FALSE}
+
+wars_in_1000s_edgelist <- as.matrix(wars_in_1000s)
+
+wars_in_1000s_edgelist_network_edgelist <- graph.edgelist(wars_in_1000s_edgelist, directed=TRUE)
 
 wars_in_1000s.ig<-graph_from_data_frame(wars_in_1000s)
 
 wars_in_1000s_network <- asNetwork(wars_in_1000s.ig)
 
+wars_in_1100s_edgelist <- as.matrix(wars_in_1100s)
+
+wars_in_1100s_edgelist_network_edgelist <- graph.edgelist(wars_in_1100s_edgelist, directed=TRUE)
+
 wars_in_1100s.ig<-graph_from_data_frame(wars_in_1100s)
 
 wars_in_1100s_network <- asNetwork(wars_in_1100s.ig)
+
+wars_in_1200s_edgelist <- as.matrix(wars_in_1200s)
+
+wars_in_1200s_edgelist_network_edgelist <- graph.edgelist(wars_in_1200s_edgelist, directed=TRUE)
 
 wars_in_1200s.ig<-graph_from_data_frame(wars_in_1200s)
 
 wars_in_1200s_network <- asNetwork(wars_in_1200s.ig)
 
 ```
+
+### Network Structure: Wars Startings in the 1000s
+
+```{r, echo=FALSE}
+
+print(wars_in_1000s_network)
+
+```
+
+### Network Structure: Wars Startings in the 1100s
+
+```{r, echo=FALSE}
+
+print(wars_in_1100s_network)
+
+```
+
+### Network Structure: Wars Startings in the 1200s
+
+```{r, echo=FALSE}
+
+print(wars_in_1200s_network)
+
+```
+
+**Question:** Describe and identify the nodes (including how many nodes are in the dataset)
+
+**Answer:** Nodes or vertices in these datasets represent belligerents in wars throughout history, the involved parties in each conflict can be a nation, province, individual, or group so long as they are listed as involved in the conflict.
+
+**Question:** What constitutes a tie or edge (including how many ties, whether ties are directed/undirected and weighted/binary, and how to interpret the value of the tie if any)
+
+**Answer:** A tie or edge in this dataset represents a war, this war can be between two nations or groups within a nation. These edges can represent a war that involved many more nations but are always tied to each and every party involved on both sides. These edges are directed and the direction indicates which side "won" the conflict.
+
+**Question:** Whether or not there are edge attributes that might be used to subset data or stack multiple networks (e.g., tie type, year, etc).
+
+**Answer:** There are a number of attributes that could be used to subset the data, years that the conflict began or the length of time it lasted are available. Aspects like each side's religion and the area where the conflict took place.
+
+## Closeness Betweeness and Eigenvector Centrality
+
+**Question:** Calculate closeness, betweenness and eigenvector centrality measures for your network data, and bonachic-power if possible. Compare these measures to basic degree centrality measures. Try to interpret the results. Are there any interesting patterns in the distribution of measures or correlations between them that provide insight into the measures?
+
+
+### Centralization: Wars Startings in the 1000s
+
+```{r,  echo=FALSE}
+
+wars_in_1000s.nodes.stat<-data.frame(name=wars_in_1000s_network%v%"vertex.names",
+    totdegree=sna::degree(wars_in_1000s_network),
+    indegree=sna::degree(wars_in_1000s_network, cmode="indegree"),
+    outdegree=sna::degree(wars_in_1000s_network, cmode="outdegree"))
+
+wars_in_1000s.nodes.stat$eigen<-evcent(wars_in_1000s_network)
+
+head(wars_in_1000s.nodes.stat) %>% kable()
+
+```
+
+```{r, echo=FALSE}
+
+wars_1000s<-as.matrix(as_adjacency_matrix(wars_in_1000s.ig))
+
+#square the adjacency matrix
+
+wars_1000s_sq<-t(wars_1000s) %*% wars_1000s
+
+#Calculate the proportion of reflected centrality.
+
+wars_in_1000s.nodes.stat$rc<-diag(wars_1000s_sq)/rowSums(wars_1000s_sq)
+
+#replace missing values with 0
+
+wars_in_1000s.nodes.stat$rc<-ifelse(is.nan(wars_in_1000s.nodes.stat$rc),0,wars_in_1000s.nodes.stat$rc)
+
+#Calculate received eigenvalue centrality
+wars_in_1000s.nodes.stat$eigen.rc<-wars_in_1000s.nodes.stat$eigen*wars_in_1000s.nodes.stat$rc
+
+#Calculate the proportion of derived centrality.
+wars_in_1000s.nodes.stat$dc<-1-diag(wars_1000s_sq)/rowSums(wars_1000s_sq)
+#replace missing values with 0
+wars_in_1000s.nodes.stat$dc<-ifelse(is.nan(wars_in_1000s.nodes.stat$dc),1,wars_in_1000s.nodes.stat$dc)
+#Calculate received eigenvalue centrality
+wars_in_1000s.nodes.stat$eigen.dc<-wars_in_1000s.nodes.stat$eigen*wars_in_1000s.nodes.stat$dc
+
+
+```
+
+
+```{r}
+
+centralization(wars_in_1000s_network, degree, cmode="outdegree") %>% kable()
+
+centralization(wars_in_1000s_network, degree, cmode="indegree") %>% kable()
+
+centralization(wars_in_1000s_network, degree) %>% kable()
+
+```
+
+As can be seen above I have coded measures of indegree, outdegree, and total centralization in the wars in the 1000s dataset.
+
+### Centralization: Wars Startings in the 1100s
+
+```{r, echo=FALSE}
+
+wars_in_1100s.nodes.stat<-data.frame(name=wars_in_1100s_network%v%"vertex.names",
+    totdegree=sna::degree(wars_in_1100s_network),
+    indegree=sna::degree(wars_in_1100s_network, cmode="indegree"),
+    outdegree=sna::degree(wars_in_1100s_network, cmode="outdegree"))
+
+wars_in_1100s.nodes.stat$eigen<-evcent(wars_in_1100s_network)
+
+head(wars_in_1100s.nodes.stat) %>% kable()
+
+```
+```{r, echo=FALSE}
+
+wars_1100s<-as.matrix(as_adjacency_matrix(wars_in_1100s.ig))
+
+#square the adjacency matrix
+
+wars_1100s_sq<-t(wars_1100s) %*% wars_1100s
+
+#Calculate the proportion of reflected centrality.
+
+wars_in_1100s.nodes.stat$rc<-diag(wars_1100s_sq)/rowSums(wars_1100s_sq)
+
+#replace missing values with 0
+
+wars_in_1100s.nodes.stat$rc<-ifelse(is.nan(wars_in_1100s.nodes.stat$rc),0,wars_in_1100s.nodes.stat$rc)
+
+#Calculate received eigenvalue centrality
+wars_in_1100s.nodes.stat$eigen.rc<-wars_in_1100s.nodes.stat$eigen*wars_in_1100s.nodes.stat$rc
+
+#Calculate the proportion of derived centrality.
+wars_in_1100s.nodes.stat$dc<-1-diag(wars_1100s_sq)/rowSums(wars_1100s_sq)
+#replace missing values with 0
+wars_in_1100s.nodes.stat$dc<-ifelse(is.nan(wars_in_1100s.nodes.stat$dc),1,wars_in_1100s.nodes.stat$dc)
+#Calculate received eigenvalue centrality
+wars_in_1100s.nodes.stat$eigen.dc<-wars_in_1100s.nodes.stat$eigen*wars_in_1100s.nodes.stat$dc
+
+```
+
+```{r}
+
+centralization(wars_in_1100s_network, degree, cmode="outdegree") %>% kable()
+
+centralization(wars_in_1100s_network, degree, cmode="indegree") %>% kable()
+
+centralization(wars_in_1100s_network, degree) %>% kable()
+
+```
+
+I do the same above and calculate measures of indegree, outdegree, and total centralization in the wars in the 1100s dataset.
+
+### Centralization: Wars Startings in the 1200s
+
+```{r, echo=FALSE}
+
+wars_in_1200s.nodes.stat<-data.frame(name=wars_in_1200s_network%v%"vertex.names",
+    totdegree=sna::degree(wars_in_1200s_network),
+    indegree=sna::degree(wars_in_1200s_network, cmode="indegree"),
+    outdegree=sna::degree(wars_in_1200s_network, cmode="outdegree"))
+
+wars_in_1200s.nodes.stat$eigen<-evcent(wars_in_1200s_network)
+
+head(wars_in_1200s.nodes.stat) %>% kable()
+
+```
+
+```{r, echo=FALSE}
+
+wars_1200s<-as.matrix(as_adjacency_matrix(wars_in_1200s.ig))
+
+#square the adjacency matrix
+
+wars_1200s_sq<-t(wars_1200s) %*% wars_1200s
+
+#Calculate the proportion of reflected centrality.
+
+wars_in_1200s.nodes.stat$rc<-diag(wars_1200s_sq)/rowSums(wars_1200s_sq)
+
+#replace missing values with 0
+
+wars_in_1200s.nodes.stat$rc<-ifelse(is.nan(wars_in_1200s.nodes.stat$rc),0,wars_in_1200s.nodes.stat$rc)
+
+#Calculate received eigenvalue centrality
+wars_in_1200s.nodes.stat$eigen.rc<-wars_in_1200s.nodes.stat$eigen*wars_in_1200s.nodes.stat$rc
+
+#Calculate the proportion of derived centrality.
+wars_in_1200s.nodes.stat$dc<-1-diag(wars_1200s_sq)/rowSums(wars_1200s_sq)
+#replace missing values with 0
+wars_in_1200s.nodes.stat$dc<-ifelse(is.nan(wars_in_1200s.nodes.stat$dc),1,wars_in_1200s.nodes.stat$dc)
+#Calculate received eigenvalue centrality
+wars_in_1200s.nodes.stat$eigen.dc<-wars_in_1200s.nodes.stat$eigen*wars_in_1200s.nodes.stat$dc
+
+```
+
+```{r}
+
+centralization(wars_in_1200s_network, degree, cmode="outdegree") %>% kable()
+
+centralization(wars_in_1200s_network, degree, cmode="indegree") %>% kable()
+
+centralization(wars_in_1200s_network, degree) %>% kable()
+
+```
+
+Finally I calculate measures of indegree, outdegree, and total centralization in the wars in the 1200s dataset.
+
+#### Eigenvector Centralization
+
+**Question:** You may also want to identify whether the same node(s) are more/less central using the different measures, and see if you can find any patterns in the results based on which nodes are high/low on each measures. Discuss (with any related evidence) whether or not the node(s) behavior is in line with or violates expectations based on the degree centrality measure, comparing across those measures using a data frame similar to that constructed in the syntax. Be sure to share your assignment with group members for comments.
+
+```{r, echo=FALSE}
+arrange(wars_in_1000s.nodes.stat, desc(eigen))%>%
+  slice(1:5) %>% kable()
+arrange(wars_in_1100s.nodes.stat, desc(eigen))%>%
+  slice(1:5) %>% kable()
+arrange(wars_in_1200s.nodes.stat, desc(eigen))%>%
+  slice(1:5) %>% kable()
+```
+
+**Answer:** Looking at the outputs above we see that regular eigenvector centrality, which accounts for the centrality of nodes attached to our node of interest. Here we see the top 5 highest observations in each dataset, in the 1000s the Byzantine Empire has the highest war, which is logical historically as they represented a bridge between major fighting factions in the Crusades between the Muslim Middle East and European west. The Kingdom of Jerusalem in the 1100s would also be connected, through its wars to other important powers being contested territory between Muslim empires like the Ayyubid Dynasty	and crusading states like the Holy Roman Empire.
+
+```{r}
+arrange(wars_in_1000s.nodes.stat, desc(eigen.rc
+))%>%
+  slice(1:5) %>% kable()
+arrange(wars_in_1100s.nodes.stat, desc(eigen.rc
+))%>%
+  slice(1:5) %>% kable()
+arrange(wars_in_1200s.nodes.stat, desc(eigen.rc
+))%>%
+  slice(1:5) %>% kable()
+```
+
+**Answer:** Reflected centrality represents the centrality one nation receives from another another that is attributable to the first nations contribution to the other nations score. Looking at reflected centrality through wars we see relatively similar trends. In the 1000s the Holy Roman Empire	and Byzantine Empire play a distinct role in the crusades so in this case we see how central a nation is in conflict dependent on how much centrality they contribute to a nation they have a conflict with. Being focal points in the center of Europe in the case of the HRE and the focal point of Christian, Muslim conflict in the case of the Byzantine empire. For both fighting minor nations gives the two a great deal of centrality to other, potentially less central groups that they fight. The Ayyubids and Kingdom of Jerusalem that each occupy a central position in conflict. Into the 1200s the Knights Templar and Ayyubids occupy this position.
+
+```{r}
+arrange(wars_in_1000s.nodes.stat, desc(eigen.dc
+
+))%>%
+  slice(1:5) %>% kable()
+arrange(wars_in_1100s.nodes.stat, desc(eigen.dc
+
+))%>%
+  slice(1:5) %>% kable()
+arrange(wars_in_1200s.nodes.stat, desc(eigen.dc
+
+))%>%
+  slice(1:5) %>% kable()
+```
+
+**Answer:** Finally Derived Centrality measures the centrality a nation receives from fighting another nation that is not a reflection of the first nation's contribution of centrality to the others. Here the Byzantine Empire remains one of the largest, potentially suggesting their status as a cosmopolitan being high in both derived and reflected centrality. However, nations like the Mirdasid Emirate of Aleppo have little to no reflected centrality by high derived centrality suggesting that they are are a pure bridge.  
+
+```{r}
+
+wars_in_1000s.nodes<-data.frame(name=V(wars_in_1000s.ig)$name,
+    totdegree=igraph::degree(wars_in_1000s.ig, loops=FALSE),
+    indegree=igraph::degree(wars_in_1000s.ig, mode="in", loops=FALSE),
+    outdegree=igraph::degree(wars_in_1000s.ig, mode="out", loops=FALSE))
+
+wars_in_1100s.nodes<-data.frame(name=V(wars_in_1100s.ig)$name,
+    totdegree=igraph::degree(wars_in_1100s.ig, loops=FALSE),
+    indegree=igraph::degree(wars_in_1100s.ig, mode="in", loops=FALSE),
+    outdegree=igraph::degree(wars_in_1100s.ig, mode="out", loops=FALSE))
+
+wars_in_1200s.nodes<-data.frame(name=V(wars_in_1200s.ig)$name,
+    totdegree=igraph::degree(wars_in_1200s.ig, loops=FALSE),
+    indegree=igraph::degree(wars_in_1200s.ig, mode="in", loops=FALSE),
+    outdegree=igraph::degree(wars_in_1200s.ig, mode="out", loops=FALSE))
+
+eigen_cent_wars_in_1000s<-centr_eigen(wars_in_1000s.ig,directed=T)
+
+eigen_cent_wars_in_1100s<-centr_eigen(wars_in_1100s.ig,directed=T)
+
+eigen_cent_wars_in_1200s<-centr_eigen(wars_in_1200s.ig,directed=T)
+
+```
+
+### Some Attempts at Visualization
+
+**Graph 1:**
+
+**Explanation:** Below I have graphed the network for the 1000s dataset using base plot and an edgelist
+
+```{r}
+
+plot(wars_in_1000s_edgelist_network_edgelist, vertex.size=2,  edge.arrow.size=.2, vertex.color="gold", vertex.size=20, vertex.frame.color="gray", vertex.label.color="black", vertex.label.cex=0.25, vertex.label.dist=2, edge.curved=0.2)
+
+```
+**Graph 2:**
+
+**Explanation:** Next I used the igraph network object and graphed it using the automatic, proportional clustering.
 
 ```{r, echo=FALSE}
 
@@ -80,6 +386,32 @@ plot(clp_1000s, wars_in_1000s.ig, vertex.size=2,  edge.arrow.size=.1, vertex.col
 
 ```
 
+**Graph 3:**
+
+**Explanation:** Finally I used the ggplot network and graphed it using a generic network object. This order follows for the visualization of the 1100s datasets and 1200s.
+
+```{r, echo=FALSE}
+
+set.seed(777)
+ggplot(wars_in_1000s_network, aes(x = x, y = y, xend = xend, yend = yend)) +
+  geom_edges(color = "grey25", alpha = 0.25) +
+  geom_nodes(color = "gold", alpha = 0.5, size = 2) +
+  geom_nodetext(aes( label = vertex.names ), size=1)+
+    ggtitle("Networks of Wars in the 1000s") +
+  theme_blank()
+
+```
+
+**Graph 4:**
+
+```{r}
+
+plot(wars_in_1100s_edgelist_network_edgelist, vertex.size=2,  edge.arrow.size=.2, vertex.color="gold", vertex.size=20, vertex.frame.color="gray", vertex.label.color="black", vertex.label.cex=0.25, vertex.label.dist=2, edge.curved=0.2)
+
+```
+
+**Graph 5:**
+
 ```{r,  echo=FALSE}
 
 clp_1100s <- cluster_label_prop(wars_in_1100s.ig)
@@ -87,6 +419,30 @@ clp_1100s <- cluster_label_prop(wars_in_1100s.ig)
 plot(clp_1100s, wars_in_1100s.ig, vertex.size=2,  edge.arrow.size=.1, vertex.color="gold", vertex.size=20, vertex.frame.color="gray", vertex.label.color="black", vertex.label.cex=0.3, vertex.label.dist=2, edge.curved=0.2)
 
 ```
+
+**Graph 6:**
+
+```{r, echo=FALSE}
+
+set.seed(777)
+ggplot(wars_in_1100s_network, aes(x = x, y = y, xend = xend, yend = yend)) +
+  geom_edges(color = "grey25", alpha = 0.25) +
+  geom_nodes(color = "gold", alpha = 0.5, size = 2) +
+  geom_nodetext(aes(label = vertex.names),colour = "Black", size=1)+
+      ggtitle("Networks of Wars in the 1100s") +
+  theme_blank()
+
+```
+
+**Graph 7:**
+
+```{r}
+
+plot(wars_in_1200s_edgelist_network_edgelist, vertex.size=2,  edge.arrow.size=.2, vertex.color="gold", vertex.size=20, vertex.frame.color="gray", vertex.label.color="black", vertex.label.cex=0.25, vertex.label.dist=2, edge.curved=0.2)
+
+```
+
+**Graph 8:**
 
 ```{r,  echo=FALSE}
 
@@ -96,13 +452,25 @@ plot(clp_1200s, wars_in_1200s.ig, vertex.size=2,  edge.arrow.size=.1, vertex.col
 
 ```
 
+**Graph 9:**
 
+```{r, echo=FALSE}
 
+set.seed(777)
+ggplot(wars_in_1200s_network, aes(x = x, y = y, xend = xend, yend = yend)) +
+  geom_edges(color = "grey25", alpha = 0.25) +
+  geom_nodes(color = "gold", alpha = 0.5, size = 2) +
+  geom_nodetext(aes( label = vertex.names ), size=1)+
+        ggtitle("Networks of Wars in the 1200s") +
+theme_blank()
+
+```
 ```{r,  echo=FALSE}
 
 igraph::dyad.census(wars_in_1000s.ig)
 
 ```
+
 ```{r,  echo=FALSE}
 
 igraph::triad.census(wars_in_1000s.ig)
@@ -153,42 +521,12 @@ summary(medieval_1000s.nodes)
 
 
 
-```{r, echo=FALSE}
-
-set.seed(777)
-ggplot(wars_in_1000s_network, aes(x = x, y = y, xend = xend, yend = yend)) +
-  geom_edges(color = "grey25", alpha = 0.25) +
-  geom_nodes(color = "gold", alpha = 0.5, size = 2) +
-  geom_nodetext(aes( label = vertex.names ), size=1)+
-    ggtitle("Networks of Wars in the 1000s") +
-  theme_blank()
-
-```
 
 
-```{r, echo=FALSE}
 
-set.seed(777)
-ggplot(wars_in_1100s_network, aes(x = x, y = y, xend = xend, yend = yend)) +
-  geom_edges(color = "grey25", alpha = 0.25) +
-  geom_nodes(color = "gold", alpha = 0.5, size = 2) +
-  geom_nodetext(aes(label = vertex.names),colour = "Black", size=1)+
-      ggtitle("Networks of Wars in the 1100s") +
-  theme_blank()
 
-```
 
-```{r, echo=FALSE}
 
-set.seed(777)
-ggplot(wars_in_1200s_network, aes(x = x, y = y, xend = xend, yend = yend)) +
-  geom_edges(color = "grey25", alpha = 0.25) +
-  geom_nodes(color = "gold", alpha = 0.5, size = 2) +
-  geom_nodetext(aes( label = vertex.names ), size=1)+
-        ggtitle("Networks of Wars in the 1200s") +
-theme_blank()
-
-```
 
 
 
