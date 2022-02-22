@@ -1,0 +1,343 @@
+---
+title: "Week 5 Interpretaive Assignment"
+description: |
+  A short description of the post.
+author:
+  - name: Noah Milstein
+    url: {}
+date: 2022-02-21
+output:
+  distill::distill_article:
+    self_contained: false
+---
+
+
+
+```{r}
+library(readxl)
+library(igraph)
+library(statnet)
+library(network)
+library(tidyverse)
+library(ggnetwork)
+library(GGally)
+library(ggplot2)
+library(sna)
+library(intergraph)
+library(knitr)
+```
+
+```{r setup, include=FALSE}
+
+wars_in_1000s <- read_excel("~/Desktop/Spring 2022/Networks/wars_in_1000s.xlsx")
+
+wars_in_1000s$"Out-list" <- sapply(wars_in_1000s$"Out-list",
+                                    function(x) { gsub("[\r\n]", "", x) })
+wars_in_1000s$"In-list"<- sapply(wars_in_1000s$"In-list",
+                                    function(x) { gsub("[\r\n]", "", x) })
+
+wars_in_1100s <- read_excel("~/Desktop/Spring 2022/Networks/wars_in_1100s.xlsx")
+
+wars_in_1200s <- read_excel("~/Desktop/Spring 2022/Networks/wars_in_1200s.xlsx")
+
+```
+
+```{r, echo=FALSE}
+
+wars_in_1000s_edgelist <- as.matrix(wars_in_1000s)
+
+wars_in_1000s_edgelist_network_edgelist <- graph.edgelist(wars_in_1000s_edgelist, directed=TRUE)
+
+wars_in_1000s.ig<-graph_from_data_frame(wars_in_1000s)
+
+wars_in_1000s_network <- asNetwork(wars_in_1000s.ig)
+
+wars_in_1100s_edgelist <- as.matrix(wars_in_1100s)
+
+wars_in_1100s_edgelist_network_edgelist <- graph.edgelist(wars_in_1100s_edgelist, directed=TRUE)
+
+wars_in_1100s.ig<-graph_from_data_frame(wars_in_1100s)
+
+wars_in_1100s_network <- asNetwork(wars_in_1100s.ig)
+
+wars_in_1200s_edgelist <- as.matrix(wars_in_1200s)
+
+wars_in_1200s_edgelist_network_edgelist <- graph.edgelist(wars_in_1200s_edgelist, directed=TRUE)
+
+wars_in_1200s.ig<-graph_from_data_frame(wars_in_1200s)
+
+wars_in_1200s_network <- asNetwork(wars_in_1200s.ig)
+
+```
+
+
+## Part 1: 
+
+### Describe the Dataset You Are Using:
+
+**The Dataset Being Used:** The dataset that I am using is wikipedia list of wars throughout history, this article is the "List of wars: 1000–1499" which acts as a subset of the "2nd-millennium conflicts" I chose this dataset as an exemplar of popular history's depiction of the centralization of worldwide conflict. Wikipedia, being an accessible source generally created from relevant citations makes it a good case study to see where historical writers and academics center their world are relevant conflicts.
+
+### Identify initial network format:
+
+**Answer:** The initial network format is as an edge list, the first, **in** column contains the winners of each war while the second, **out** column contains the losers of each. These sets of belligerents are directed 
+
+### Network Structure: Wars Startings in the 1000s
+
+```{r, echo=FALSE}
+
+print(wars_in_1000s_network)
+
+```
+
+### Network Structure: Wars Startings in the 1100s
+
+```{r, echo=FALSE}
+
+print(wars_in_1100s_network)
+
+```
+
+### Network Structure: Wars Startings in the 1200s
+
+```{r, echo=FALSE}
+
+print(wars_in_1200s_network)
+
+```
+
+**Identify Nodes:** Describe and identify the nodes (including how many nodes are in the dataset)
+
+**Answer:** Nodes or vertices in these datasets represent belligerents in wars throughout history, the involved parties in each conflict can be a nation, province, individual, or group so long as they are listed as involved in the conflict. In the 1000s there are 117, in the 1100s there are 78 and in the 1200s there are 161.
+
+**What Constitutes a Tie:** What constitutes a tie or edge (including how many ties, whether ties are directed/undirected and weighted/binary, and how to interpret the value of the tie if any)
+
+**Answer:** A tie or edge in this dataset represents a war, this war can be between two nations or groups within a nation. These edges can represent a war that involved many more nations but are always tied to each and every party involved on both sides. These edges are directed and the direction indicates which side "won" the conflict (if an edge has an arrow pointing to another the node that originated that arrow won the war against them. There are 153 edges in the 1000s, 225 edges in 1100s and 313 edges in the 1200s.
+
+**Edge Attributes and Subset:** Whether or not there are edge attributes that might be used to subset data or stack multiple networks (e.g., tie type, year, etc).
+
+**Answer:** There are a number of attributes that could be used to subset the data, year that the conflict began or the length of time it lasted are available. Aspects like each side's religion and the area where the conflict took place could be used to subset the data itself.
+
+## Part 2: 
+
+### Brokerage and Betweeness centrality 
+
+**What are betweeness and brokerage cenrrality** Calculate brokerage and betweenneess centrality measures for one or more subsets of your network data, and write up the results and your interpretation of them. 
+
+**Answer:** I will be calculating these measures for wars in 1000-1099, 1100-1199, and 1200-1399.
+
+
+```{r,echo=FALSE}
+
+wars_in_1000s.nodes.stat<-data.frame(name=wars_in_1000s_network%v%"vertex.names",
+    totdegree=sna::degree(wars_in_1000s_network),
+    indegree=sna::degree(wars_in_1000s_network, cmode="indegree"),
+    outdegree=sna::degree(wars_in_1000s_network, cmode="outdegree"))
+
+wars_in_1000s.nodes.stat$eigen<-evcent(wars_in_1000s_network)
+
+wars_in_1000s.nodes.stat$close<-sna::closeness(wars_in_1000s_network, cmode="suminvdir")
+
+wars_1000s<-as.matrix(as_adjacency_matrix(wars_in_1000s.ig))
+
+#square the adjacency matrix
+
+wars_1000s_sq<-t(wars_1000s) %*% wars_1000s
+
+#Calculate the proportion of reflected centrality.
+
+wars_in_1000s.nodes.stat$rc<-diag(wars_1000s_sq)/rowSums(wars_1000s_sq)
+
+#replace missing values with 0
+
+wars_in_1000s.nodes.stat$rc<-ifelse(is.nan(wars_in_1000s.nodes.stat$rc),0,wars_in_1000s.nodes.stat$rc)
+
+#Calculate received eigenvalue centrality
+wars_in_1000s.nodes.stat$eigen.rc<-wars_in_1000s.nodes.stat$eigen*wars_in_1000s.nodes.stat$rc
+
+#Calculate the proportion of derived centrality.
+wars_in_1000s.nodes.stat$dc<-1-diag(wars_1000s_sq)/rowSums(wars_1000s_sq)
+#replace missing values with 0
+wars_in_1000s.nodes.stat$dc<-ifelse(is.nan(wars_in_1000s.nodes.stat$dc),1,wars_in_1000s.nodes.stat$dc)
+#Calculate received eigenvalue centrality
+wars_in_1000s.nodes.stat$eigen.dc<-wars_in_1000s.nodes.stat$eigen*wars_in_1000s.nodes.stat$dc
+```
+
+#### Brokerage scores in the 1000s
+
+```{r,echo=FALSE}
+
+temp<-data.frame(brokerage(wars_in_1000s_network, cl = wars_in_1000s.nodes.stat$totdegree)$z.nli)
+
+wars_in_1000s.nodes.stat_2<-wars_in_1000s.nodes.stat %>%
+  mutate(broker.tot = temp$t,
+         broker.coord = temp$w_I,
+         broker.itin = temp$w_O,
+         broker.rep = temp$b_IO,
+         broker.gate = temp$b_OI,
+         broker.lia = temp$b_O)
+```
+
+```{r}
+(wars_in_1000s.nodes.stat_2%>%
+  arrange(desc(broker.tot))%>%
+  slice(1:10))[,c(1,10:14)] %>%kable()
+
+```
+
+#### Brokerage scores in the 1100s
+
+```{r, echo=FALSE}
+
+wars_in_1100s.nodes.stat<-data.frame(name=wars_in_1100s_network%v%"vertex.names",
+    totdegree=sna::degree(wars_in_1100s_network),
+    indegree=sna::degree(wars_in_1100s_network, cmode="indegree"),
+    outdegree=sna::degree(wars_in_1100s_network, cmode="outdegree"))
+
+wars_in_1100s.nodes.stat$eigen<-evcent(wars_in_1100s_network)
+
+wars_1100s<-as.matrix(as_adjacency_matrix(wars_in_1100s.ig))
+
+#square the adjacency matrix
+
+wars_1100s_sq<-t(wars_1100s) %*% wars_1100s
+
+#Calculate the proportion of reflected centrality.
+
+wars_in_1100s.nodes.stat$rc<-diag(wars_1100s_sq)/rowSums(wars_1100s_sq)
+
+#replace missing values with 0
+
+wars_in_1100s.nodes.stat$rc<-ifelse(is.nan(wars_in_1100s.nodes.stat$rc),0,wars_in_1100s.nodes.stat$rc)
+
+#Calculate received eigenvalue centrality
+wars_in_1100s.nodes.stat$eigen.rc<-wars_in_1100s.nodes.stat$eigen*wars_in_1100s.nodes.stat$rc
+
+#Calculate the proportion of derived centrality.
+wars_in_1100s.nodes.stat$dc<-1-diag(wars_1100s_sq)/rowSums(wars_1100s_sq)
+#replace missing values with 0
+wars_in_1100s.nodes.stat$dc<-ifelse(is.nan(wars_in_1100s.nodes.stat$dc),1,wars_in_1100s.nodes.stat$dc)
+#Calculate received eigenvalue centrality
+wars_in_1100s.nodes.stat$eigen.dc<-wars_in_1100s.nodes.stat$eigen*wars_in_1100s.nodes.stat$dc
+```
+
+```{r, echo=FALSE}
+
+temp<-data.frame(brokerage(wars_in_1100s_network, cl = wars_in_1100s.nodes.stat$totdegree)$z.nli)
+
+wars_in_1100s.nodes.stat_2<-wars_in_1100s.nodes.stat %>%
+  mutate(broker.tot = temp$t,
+         broker.coord = temp$w_I,
+         broker.itin = temp$w_O,
+         broker.rep = temp$b_IO,
+         broker.gate = temp$b_OI,
+         broker.lia = temp$b_O)
+
+```
+
+```{r}
+(wars_in_1100s.nodes.stat_2%>%
+  arrange(desc(broker.tot))%>%
+  slice(1:10))[,c(1,10:14)] %>%kable()
+
+```
+
+#### Brokerage scores in the 1200s
+
+```{r, echo=FALSE}
+
+wars_in_1200s.nodes.stat<-data.frame(name=wars_in_1200s_network%v%"vertex.names",
+    totdegree=sna::degree(wars_in_1200s_network),
+    indegree=sna::degree(wars_in_1200s_network, cmode="indegree"),
+    outdegree=sna::degree(wars_in_1200s_network, cmode="outdegree"))
+
+wars_in_1200s.nodes.stat$eigen<-evcent(wars_in_1200s_network)
+
+```
+
+```{r, echo=FALSE}
+
+wars_1200s<-as.matrix(as_adjacency_matrix(wars_in_1200s.ig))
+
+#square the adjacency matrix
+
+wars_1200s_sq<-t(wars_1200s) %*% wars_1200s
+
+#Calculate the proportion of reflected centrality.
+
+wars_in_1200s.nodes.stat$rc<-diag(wars_1200s_sq)/rowSums(wars_1200s_sq)
+
+#replace missing values with 0
+
+wars_in_1200s.nodes.stat$rc<-ifelse(is.nan(wars_in_1200s.nodes.stat$rc),0,wars_in_1200s.nodes.stat$rc)
+
+#Calculate received eigenvalue centrality
+wars_in_1200s.nodes.stat$eigen.rc<-wars_in_1200s.nodes.stat$eigen*wars_in_1200s.nodes.stat$rc
+
+#Calculate the proportion of derived centrality.
+wars_in_1200s.nodes.stat$dc<-1-diag(wars_1200s_sq)/rowSums(wars_1200s_sq)
+#replace missing values with 0
+wars_in_1200s.nodes.stat$dc<-ifelse(is.nan(wars_in_1200s.nodes.stat$dc),1,wars_in_1200s.nodes.stat$dc)
+#Calculate received eigenvalue centrality
+wars_in_1200s.nodes.stat$eigen.dc<-wars_in_1200s.nodes.stat$eigen*wars_in_1200s.nodes.stat$dc
+
+```
+
+```{r, echo=FALSE}
+
+temp<-data.frame(brokerage(wars_in_1200s_network, cl = wars_in_1200s.nodes.stat$totdegree)$z.nli)
+
+wars_in_1200s.nodes.stat_2<-wars_in_1200s.nodes.stat %>%
+  mutate(broker.tot = temp$t,
+         broker.coord = temp$w_I,
+         broker.itin = temp$w_O,
+         broker.rep = temp$b_IO,
+         broker.gate = temp$b_OI,
+         broker.lia = temp$b_O)
+
+```
+
+```{r, echo=FALSE}
+
+(wars_in_1200s.nodes.stat_2%>%
+  arrange(desc(broker.tot))%>%
+  slice(1:10))[,c(1,10:14)] %>%kable()
+
+```
+
+```{r, echo=FALSE}
+
+(wars_in_1000s.nodes.stat_2%>%
+  arrange(desc(broker.gate
+))%>%
+  slice(1:10))[,c(1,15)] %>%kable()
+
+(wars_in_1000s.nodes.stat_2%>%
+  arrange(desc(broker.tot
+))%>%
+  slice(1:10))[,c(1,11)] %>%kable()
+
+```
+Option 2.A If you have a specific research question, please feel free to use that to guide your analysis. Otherwise, you may want to orient your analysis as follows in order to identify a compelling question or noteworthy pattern in the data that can be interpreted.
+
+```{r}
+
+(wars_in_1100s.nodes.stat_2%>%
+  arrange(desc(broker.gate
+))%>%
+  slice(1:10))[,c(1,15)] %>%kable()
+
+(wars_in_1100s.nodes.stat_2%>%
+  arrange(desc(broker.tot
+))%>%
+  slice(1:10))[,c(1,11)] %>%kable()
+
+```
+
+Option 2.B: Briefly describe the various brokerage positions of nodes in the network, identifying which actors are most central and which are least central. Interpret your results as best you can. Discuss (with any related evidence) whether or not the node behavior is in line with or violates expectations.
+
+In this example it is interesting to see that the 
+
+Option 2.C Compare brokerage/betweenness scores to other centrality measures, again providing an interpretation for changes in the relative centrality of actors depending on which measure is used. Discuss (with any related evidence) whether or not the node behavior is in line with or violates expectations.
+
+
+
