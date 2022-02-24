@@ -11,9 +11,7 @@ output:
     self_contained: false
 ---
 
-
-
-```{r}
+```{r, echo=FALSE}
 library(readxl)
 library(igraph)
 library(statnet)
@@ -25,6 +23,14 @@ library(ggplot2)
 library(sna)
 library(intergraph)
 library(knitr)
+library(aRtsy)
+```
+
+```{r, echo=FALSE}
+
+set.seed(78)
+canvas_maze(color = "bisque", walls = "gray8", resolution = 50)
+?canvas_maze()
 ```
 
 ```{r setup, include=FALSE}
@@ -41,6 +47,19 @@ wars_in_1100s <- read_excel("~/Desktop/Spring 2022/Networks/wars_in_1100s.xlsx")
 wars_in_1200s <- read_excel("~/Desktop/Spring 2022/Networks/wars_in_1200s.xlsx")
 
 ```
+
+### Background and Research Question:
+
+  Wikipedia is self-described as a "free content, multilingual online encyclopedia written and maintained by a community of volunteers through a model of open collaboration," information on the website i shared and maintained "using a wiki-based editing system. [and] Individual contributors," being the 5th most visited website in the world it is also the largest and most-read reference work in history." ("https://en.wikipedia.org/wiki/Wikipedia") Because of Wikipedia's position, as an arbiter of information and reference for a number of subjects, it is essential to understand the nature of the required citations and how they inform the websites portrayal of history and information. (Chase 2021)
+
+  Conflict is a defining feature of history, the results of war and the groups involved are essential to understanding dynamics of power globally. A war can represent the transfer of material, territorial, and strategic power between groups. As a result the networks of wars between nations can give some notion of power centrality among warring nations. 
+
+  Since wikipedia has become a widely accepted (if often critiqued) source of information, its citations and the information resulting from them can give us a sense of how where the center of global conflict, and thus the most central nations, according to popular and accessible academic literature.
+
+https://www.visualcapitalist.com/the-50-most-visited-websites-in-the-world/
+
+Chase, Matt. "Wikipedia is 20, and its reputation has never been higher". The Economist. January 9, 2021. Retrieved February 25, 2021.
+
 
 ```{r, echo=FALSE}
 
@@ -180,7 +199,7 @@ wars_in_1000s.nodes.stat_2<-wars_in_1000s.nodes.stat %>%
 ```{r}
 (wars_in_1000s.nodes.stat_2%>%
   arrange(desc(broker.tot))%>%
-  slice(1:10))[,c(1,10:14)] %>%kable()
+  slice(1:10))[,c(1,11:15)] %>%kable()
 
 ```
 
@@ -317,27 +336,97 @@ wars_in_1200s.nodes.stat_2<-wars_in_1200s.nodes.stat %>%
   slice(1:10))[,c(1,11)] %>%kable()
 
 ```
-Option 2.A If you have a specific research question, please feel free to use that to guide your analysis. Otherwise, you may want to orient your analysis as follows in order to identify a compelling question or noteworthy pattern in the data that can be interpreted.
 
-```{r}
+## Option 2.A 
 
-(wars_in_1100s.nodes.stat_2%>%
-  arrange(desc(broker.gate
-))%>%
-  slice(1:10))[,c(1,15)] %>%kable()
+**For a Specific Research Question:** If you have a specific research question, please feel free to use that to guide your analysis. Otherwise, you may want to orient your analysis as follows in order to identify a compelling question or noteworthy pattern in the data that can be interpreted.
 
-(wars_in_1100s.nodes.stat_2%>%
-  arrange(desc(broker.tot
-))%>%
-  slice(1:10))[,c(1,11)] %>%kable()
+**Answer:** Since I am interested in the relative power of nations by their relative position ad centrality in the worldwide conflict, network brokerage can be used to illustrate significant positions in global conflict. Below I wanted to look at 4 kinds of brokerage, these are broker.gate or gatekeeper, coordinator, liason, and itinerant. I am interested to see if these specific coordination types are primarily done by specific nations.
+
+```{r, echo=FALSE}
+
+set.seed(777)
+ggplot(wars_in_1000s_network, aes(x = x, y = y, xend = xend, yend = yend)) +
+  geom_edges(color = "grey25", alpha = 0.25, arrow = arrow(length = unit(2, "pt"), type = "closed"))+
+  geom_nodes(color = "blue", alpha = 0.3, size = 2) +
+  geom_nodetext(aes( label = vertex.names ), size=1)+
+    ggtitle("Networks of Wars in the 1000s") +
+  theme_blank()
+```
+
+#### Total Brokerage
+
+**Explanation:** Looking at total brokerage in this dataset gives a sense of which factions were responsible for highest connection of unconnected actors through conflict. Given the crusades igniting conflict between Europe and the middle east it is sensible that the Byzantine Empire in the center of both connects the most unconnected actors through conflict closely followed by the Sultanate of Rum, a major Muslim faction that fought against the crusades and third being the Holy Roman Empire who participated in many conflicts inclduing the crusades. These are followed by England who centered the wars in the British isles and the Kingdom of Sicily who were also in a position of conflict.
+
+```{r, echo=FALSE}
+
+(wars_in_1000s.nodes.stat_2%>%
+  arrange(desc(broker.tot))%>%
+  slice(0:5))[,c(1,11)] %>%kable()
 
 ```
 
-Option 2.B: Briefly describe the various brokerage positions of nodes in the network, identifying which actors are most central and which are least central. Interpret your results as best you can. Discuss (with any related evidence) whether or not the node behavior is in line with or violates expectations.
+#### Coordinator Brokerage
 
-In this example it is interesting to see that the 
+**Explanation:** In this case no particular country is very high above any other in terms of their coordinator brokerage, meaning that within groups no particular nations appear to be brokering more within the groups.
 
-Option 2.C Compare brokerage/betweenness scores to other centrality measures, again providing an interpretation for changes in the relative centrality of actors depending on which measure is used. Discuss (with any related evidence) whether or not the node behavior is in line with or violates expectations.
+```{r, echo=FALSE}
 
+(wars_in_1000s.nodes.stat_2%>%
+  arrange(desc(broker.coord))%>%
+  slice(0:5))[,c(1,12)] %>%kable()
+
+```
+
+#### Itinerant Brokerage
+
+**Explanation:** Itinerant brokerage represents when a non-group actor connects 2 actors in a group it is no in to each other, in this case England has the highest score. Looking at the network graph they do appear to connect 2 actors in a group together.
+
+```{r, echo=FALSE}
+
+(wars_in_1000s.nodes.stat_2%>%
+  arrange(desc(broker.itin))%>%
+  slice(0:5))[,c(1,13)] %>%kable()
+
+```
+
+
+#### Representative Brokerage
+
+**Explanation:** Representative brokerage indicates that the broker, or nation in question loses a war to another in their group, but wins another against a faction outside of their group. This can be though of as their directed connections to them. In this case the Seljuk Empire	and Kingdom of Aragon	have instances in which they lose to factions within their group before beating those outside of it.
+
+```{r, echo=FALSE}
+
+(wars_in_1000s.nodes.stat_2%>%
+  arrange(desc(broker.rep))%>%
+  slice(0:5))[,c(1,14)] %>%kable()
+
+```
+#### Gatekeeper Brokerage
+
+**Explanation:** The Papal states being ranked highest in gatekeeper brokerage is an interesting observation as no other nation in the dataset appears to be close to their level as most are negative in this category. In this cae being a gatekeeper means that they are in at conflict in a group with another while the nation in a different group of conflicts is only at war with them from the group. This is an interesting observation given the Papal states role as a coordinator of the war, but not a participant in the conflcit as directly as other belligerents. (This being the crusade given the period)
+
+```{r, echo=FALSE}
+
+(wars_in_1000s.nodes.stat_2%>%
+  arrange(desc(broker.gate))%>%
+  slice(0:5))[,c(1,15)] %>%kable()
+
+```
+
+#### Liaison Brokerage
+
+**Explanation:** A liaison broker, in this case, is a faction that loses a war to a group they do not belong to and wins a war against a different group than the first that they also do not belong to. The Byzantine Empire, Sultanate of Rum, and Holy Roman Empire	are highest in this category likely owing to their frequent states of conflict beyond the crusades against a variety of groups.
+
+
+```{r, echo=FALSE}
+
+(wars_in_1000s.nodes.stat_2%>%
+  arrange(desc(broker.lia))%>%
+  slice(0:5))[,c(1,16)] %>%kable()
+
+```
+
+(information regarding the meaning of each type of brokerage was acquired from https://edis.ifas.ufl.edu/publication/WC197)
 
 

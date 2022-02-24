@@ -117,7 +117,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   <!--/radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-resource-manifest">
-  {"type":"character","attributes":{},"value":["week-5-interpretaive-assignment_files/anchor-4.2.2/anchor.min.js","week-5-interpretaive-assignment_files/bowser-1.9.3/bowser.min.js","week-5-interpretaive-assignment_files/distill-2.2.21/template.v2.js","week-5-interpretaive-assignment_files/header-attrs-2.11/header-attrs.js","week-5-interpretaive-assignment_files/jquery-3.6.0/jquery-3.6.0.js","week-5-interpretaive-assignment_files/jquery-3.6.0/jquery-3.6.0.min.js","week-5-interpretaive-assignment_files/jquery-3.6.0/jquery-3.6.0.min.map","week-5-interpretaive-assignment_files/popper-2.6.0/popper.min.js","week-5-interpretaive-assignment_files/tippy-6.2.7/tippy-bundle.umd.min.js","week-5-interpretaive-assignment_files/tippy-6.2.7/tippy-light-border.css","week-5-interpretaive-assignment_files/tippy-6.2.7/tippy.css","week-5-interpretaive-assignment_files/tippy-6.2.7/tippy.umd.min.js","week-5-interpretaive-assignment_files/webcomponents-2.0.0/webcomponents.js"]}
+  {"type":"character","attributes":{},"value":["week-5-interpretaive-assignment_files/anchor-4.2.2/anchor.min.js","week-5-interpretaive-assignment_files/bowser-1.9.3/bowser.min.js","week-5-interpretaive-assignment_files/distill-2.2.21/template.v2.js","week-5-interpretaive-assignment_files/figure-html5/unnamed-chunk-17-1.png","week-5-interpretaive-assignment_files/figure-html5/unnamed-chunk-18-1.png","week-5-interpretaive-assignment_files/figure-html5/unnamed-chunk-2-1.png","week-5-interpretaive-assignment_files/header-attrs-2.11/header-attrs.js","week-5-interpretaive-assignment_files/jquery-3.6.0/jquery-3.6.0.js","week-5-interpretaive-assignment_files/jquery-3.6.0/jquery-3.6.0.min.js","week-5-interpretaive-assignment_files/jquery-3.6.0/jquery-3.6.0.min.map","week-5-interpretaive-assignment_files/popper-2.6.0/popper.min.js","week-5-interpretaive-assignment_files/tippy-6.2.7/tippy-bundle.umd.min.js","week-5-interpretaive-assignment_files/tippy-6.2.7/tippy-light-border.css","week-5-interpretaive-assignment_files/tippy-6.2.7/tippy.css","week-5-interpretaive-assignment_files/tippy-6.2.7/tippy.umd.min.js","week-5-interpretaive-assignment_files/webcomponents-2.0.0/webcomponents.js"]}
   </script>
   <!--radix_placeholder_navigation_in_header-->
   <!--/radix_placeholder_navigation_in_header-->
@@ -1483,30 +1483,64 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 
 <div class="d-article">
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://readxl.tidyverse.org'>readxl</a></span><span class='op'>)</span>
-<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://igraph.org'>igraph</a></span><span class='op'>)</span>
-<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='http://statnet.org'>statnet</a></span><span class='op'>)</span>
-<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='http://statnet.org/'>network</a></span><span class='op'>)</span>
-<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://tidyverse.tidyverse.org'>tidyverse</a></span><span class='op'>)</span>
-<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/briatte/ggnetwork'>ggnetwork</a></span><span class='op'>)</span>
-<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://ggobi.github.io/ggally/'>GGally</a></span><span class='op'>)</span>
-<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://ggplot2.tidyverse.org'>ggplot2</a></span><span class='op'>)</span>
-<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='http://statnet.org'>sna</a></span><span class='op'>)</span>
-<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='http://mbojan.github.io/intergraph'>intergraph</a></span><span class='op'>)</span>
-<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://yihui.org/knitr/'>knitr</a></span><span class='op'>)</span>
-</code></pre>
+
 </div>
+<div class="layout-chunk" data-layout="l-body">
+<p><img src="week-5-interpretaive-assignment_files/figure-html5/unnamed-chunk-2-1.png" width="624" /></p>
 </div>
+<h3 id="background-and-research-question">Background and Research
+Question:</h3>
+<p>Wikipedia is self-described as a “free content, multilingual online
+encyclopedia written and maintained by a community of volunteers through
+a model of open collaboration,” information on the website i shared and
+maintained “using a wiki-based editing system. [and] Individual
+contributors,” being the 5th most visited website in the world it is
+also the largest and most-read reference work in history.” (“<a
+href="https://en.wikipedia.org/wiki/Wikipedia"
+class="uri">https://en.wikipedia.org/wiki/Wikipedia</a>”) Because of
+Wikipedia’s position, as an arbiter of information and reference for a
+number of subjects, it is essential to understand the nature of the
+required citations and how they inform the websites portrayal of history
+and information. (Chase 2021)</p>
+<p>Conflict is a defining feature of history, the results of war and the
+groups involved are essential to understanding dynamics of power
+globally. A war can represent the transfer of material, territorial, and
+strategic power between groups. As a result the networks of wars between
+nations can give some notion of power centrality among warring
+nations.</p>
+<p>Since wikipedia has become a widely accepted (if often critiqued)
+source of information, its citations and the information resulting from
+them can give us a sense of how where the center of global conflict, and
+thus the most central nations, according to popular and accessible
+academic literature.</p>
+<p><a
+href="https://www.visualcapitalist.com/the-50-most-visited-websites-in-the-world/"
+class="uri">https://www.visualcapitalist.com/the-50-most-visited-websites-in-the-world/</a></p>
+<p>Chase, Matt. “Wikipedia is 20, and its reputation has never been
+higher”. The Economist. January 9, 2021. Retrieved February 25,
+2021.</p>
 <div class="layout-chunk" data-layout="l-body">
 
 </div>
 <h2 id="part-1">Part 1:</h2>
-<h3 id="describe-the-dataset-you-are-using">Describe the Dataset You Are Using:</h3>
-<p><strong>The Dataset Being Used:</strong> The dataset that I am using is wikipedia list of wars throughout history, this article is the “List of wars: 1000–1499” which acts as a subset of the “2nd-millennium conflicts” I chose this dataset as an exemplar of popular history’s depiction of the centralization of worldwide conflict. Wikipedia, being an accessible source generally created from relevant citations makes it a good case study to see where historical writers and academics center their world are relevant conflicts.</p>
-<h3 id="identify-initial-network-format">Identify initial network format:</h3>
-<p><strong>Answer:</strong> The initial network format is as an edge list, the first, <strong>in</strong> column contains the winners of each war while the second, <strong>out</strong> column contains the losers of each. These sets of belligerents are directed</p>
-<h3 id="network-structure-wars-startings-in-the-1000s">Network Structure: Wars Startings in the 1000s</h3>
+<h3 id="describe-the-dataset-you-are-using">Describe the Dataset You Are
+Using:</h3>
+<p><strong>The Dataset Being Used:</strong> The dataset that I am using
+is wikipedia list of wars throughout history, this article is the “List
+of wars: 1000–1499” which acts as a subset of the “2nd-millennium
+conflicts” I chose this dataset as an exemplar of popular history’s
+depiction of the centralization of worldwide conflict. Wikipedia, being
+an accessible source generally created from relevant citations makes it
+a good case study to see where historical writers and academics center
+their world are relevant conflicts.</p>
+<h3 id="identify-initial-network-format">Identify initial network
+format:</h3>
+<p><strong>Answer:</strong> The initial network format is as an edge
+list, the first, <strong>in</strong> column contains the winners of each
+war while the second, <strong>out</strong> column contains the losers of
+each. These sets of belligerents are directed</p>
+<h3 id="network-structure-wars-startings-in-the-1000s">Network
+Structure: Wars Startings in the 1000s</h3>
 <div class="layout-chunk" data-layout="l-body">
 <pre><code> Network attributes:
   vertices = 117 
@@ -1524,7 +1558,8 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 
 No edge attributes</code></pre>
 </div>
-<h3 id="network-structure-wars-startings-in-the-1100s">Network Structure: Wars Startings in the 1100s</h3>
+<h3 id="network-structure-wars-startings-in-the-1100s">Network
+Structure: Wars Startings in the 1100s</h3>
 <div class="layout-chunk" data-layout="l-body">
 <pre><code> Network attributes:
   vertices = 78 
@@ -1542,7 +1577,8 @@ No edge attributes</code></pre>
 
 No edge attributes</code></pre>
 </div>
-<h3 id="network-structure-wars-startings-in-the-1200s">Network Structure: Wars Startings in the 1200s</h3>
+<h3 id="network-structure-wars-startings-in-the-1200s">Network
+Structure: Wars Startings in the 1200s</h3>
 <div class="layout-chunk" data-layout="l-body">
 <pre><code> Network attributes:
   vertices = 161 
@@ -1560,126 +1596,161 @@ No edge attributes</code></pre>
 
 No edge attributes</code></pre>
 </div>
-<p><strong>Identify Nodes:</strong> Describe and identify the nodes (including how many nodes are in the dataset)</p>
-<p><strong>Answer:</strong> Nodes or vertices in these datasets represent belligerents in wars throughout history, the involved parties in each conflict can be a nation, province, individual, or group so long as they are listed as involved in the conflict. In the 1000s there are 117, in the 1100s there are 78 and in the 1200s there are 161.</p>
-<p><strong>What Constitutes a Tie:</strong> What constitutes a tie or edge (including how many ties, whether ties are directed/undirected and weighted/binary, and how to interpret the value of the tie if any)</p>
-<p><strong>Answer:</strong> A tie or edge in this dataset represents a war, this war can be between two nations or groups within a nation. These edges can represent a war that involved many more nations but are always tied to each and every party involved on both sides. These edges are directed and the direction indicates which side “won” the conflict (if an edge has an arrow pointing to another the node that originated that arrow won the war against them. There are 153 edges in the 1000s, 225 edges in 1100s and 313 edges in the 1200s.</p>
-<p><strong>Edge Attributes and Subset:</strong> Whether or not there are edge attributes that might be used to subset data or stack multiple networks (e.g., tie type, year, etc).</p>
-<p><strong>Answer:</strong> There are a number of attributes that could be used to subset the data, year that the conflict began or the length of time it lasted are available. Aspects like each side’s religion and the area where the conflict took place could be used to subset the data itself.</p>
+<p><strong>Identify Nodes:</strong> Describe and identify the nodes
+(including how many nodes are in the dataset)</p>
+<p><strong>Answer:</strong> Nodes or vertices in these datasets
+represent belligerents in wars throughout history, the involved parties
+in each conflict can be a nation, province, individual, or group so long
+as they are listed as involved in the conflict. In the 1000s there are
+117, in the 1100s there are 78 and in the 1200s there are 161.</p>
+<p><strong>What Constitutes a Tie:</strong> What constitutes a tie or
+edge (including how many ties, whether ties are directed/undirected and
+weighted/binary, and how to interpret the value of the tie if any)</p>
+<p><strong>Answer:</strong> A tie or edge in this dataset represents a
+war, this war can be between two nations or groups within a nation.
+These edges can represent a war that involved many more nations but are
+always tied to each and every party involved on both sides. These edges
+are directed and the direction indicates which side “won” the conflict
+(if an edge has an arrow pointing to another the node that originated
+that arrow won the war against them. There are 153 edges in the 1000s,
+225 edges in 1100s and 313 edges in the 1200s.</p>
+<p><strong>Edge Attributes and Subset:</strong> Whether or not there are
+edge attributes that might be used to subset data or stack multiple
+networks (e.g., tie type, year, etc).</p>
+<p><strong>Answer:</strong> There are a number of attributes that could
+be used to subset the data, year that the conflict began or the length
+of time it lasted are available. Aspects like each side’s religion and
+the area where the conflict took place could be used to subset the data
+itself.</p>
 <h2 id="part-2">Part 2:</h2>
-<h3 id="brokerage-and-betweeness-centrality">Brokerage and Betweeness centrality</h3>
-<p><strong>What are betweeness and brokerage cenrrality</strong> Calculate brokerage and betweenneess centrality measures for one or more subsets of your network data, and write up the results and your interpretation of them.</p>
-<p><strong>Answer:</strong> I will be calculating these measures for wars in 1000-1099, 1100-1199, and 1200-1399.</p>
+<h3 id="brokerage-and-betweeness-centrality">Brokerage and Betweeness
+centrality</h3>
+<p><strong>What are betweeness and brokerage cenrrality</strong>
+Calculate brokerage and betweenneess centrality measures for one or more
+subsets of your network data, and write up the results and your
+interpretation of them.</p>
+<p><strong>Answer:</strong> I will be calculating these measures for
+wars in 1000-1099, 1100-1199, and 1200-1399.</p>
 <div class="layout-chunk" data-layout="l-body">
 
 </div>
-<h4 id="brokerage-scores-in-the-1000s">Brokerage scores in the 1000s</h4>
+<h4 id="brokerage-scores-in-the-1000s">Brokerage scores in the
+1000s</h4>
 <div class="layout-chunk" data-layout="l-body">
 
 </div>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='op'>(</span><span class='va'>wars_in_1000s.nodes.stat_2</span><span class='op'><a href='https://rdrr.io/pkg/igraph/man/pipe.html'>%&gt;%</a></span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/arrange.html'>arrange</a></span><span class='op'>(</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/desc.html'>desc</a></span><span class='op'>(</span><span class='va'>broker.tot</span><span class='op'>)</span><span class='op'>)</span><span class='op'><a href='https://rdrr.io/pkg/igraph/man/pipe.html'>%&gt;%</a></span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span><span class='op'>)</span><span class='op'>)</span><span class='op'>[</span>,<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>10</span><span class='op'>:</span><span class='fl'>14</span><span class='op'>)</span><span class='op'>]</span> <span class='op'><a href='https://rdrr.io/pkg/igraph/man/pipe.html'>%&gt;%</a></span><span class='fu'><a href='https://rdrr.io/pkg/knitr/man/kable.html'>kable</a></span><span class='op'>(</span><span class='op'>)</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='op'>(</span><span class='va'>wars_in_1000s.nodes.stat_2</span><span class='op'>%&gt;%</span>
+  <span class='fu'>arrange</span><span class='op'>(</span><span class='fu'>desc</span><span class='op'>(</span><span class='va'>broker.tot</span><span class='op'>)</span><span class='op'>)</span><span class='op'>%&gt;%</span>
+  <span class='fu'>slice</span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span><span class='op'>)</span><span class='op'>)</span><span class='op'>[</span>,<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>11</span><span class='op'>:</span><span class='fl'>15</span><span class='op'>)</span><span class='op'>]</span> <span class='op'>%&gt;%</span><span class='fu'>kable</span><span class='op'>(</span><span class='op'>)</span>
 </code></pre>
 </div>
-<table>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 24%" />
+<col style="width: 14%" />
+<col style="width: 16%" />
+<col style="width: 15%" />
+<col style="width: 14%" />
+<col style="width: 15%" />
+</colgroup>
 <thead>
 <tr class="header">
 <th style="text-align: left;">name</th>
-<th style="text-align: right;">eigen.dc</th>
 <th style="text-align: right;">broker.tot</th>
 <th style="text-align: right;">broker.coord</th>
 <th style="text-align: right;">broker.itin</th>
 <th style="text-align: right;">broker.rep</th>
+<th style="text-align: right;">broker.gate</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">Byzantine Empire</td>
-<td style="text-align: right;">0.3075621</td>
 <td style="text-align: right;">25.2728731</td>
 <td style="text-align: right;">NaN</td>
 <td style="text-align: right;">3.9930250</td>
 <td style="text-align: right;">NaN</td>
+<td style="text-align: right;">NaN</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Sultanate of Rum</td>
-<td style="text-align: right;">0.2606046</td>
 <td style="text-align: right;">10.4364880</td>
 <td style="text-align: right;">NaN</td>
 <td style="text-align: right;">-0.5014965</td>
 <td style="text-align: right;">NaN</td>
+<td style="text-align: right;">NaN</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Holy Roman Empire</td>
-<td style="text-align: right;">0.0000000</td>
 <td style="text-align: right;">10.0243662</td>
 <td style="text-align: right;">NaN</td>
 <td style="text-align: right;">4.8919293</td>
 <td style="text-align: right;">NaN</td>
+<td style="text-align: right;">NaN</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">England</td>
-<td style="text-align: right;">0.0000000</td>
 <td style="text-align: right;">7.5516353</td>
 <td style="text-align: right;">NaN</td>
 <td style="text-align: right;">6.6906430</td>
 <td style="text-align: right;">-0.0800286</td>
+<td style="text-align: right;">-0.0800286</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Kingdom of Sicily</td>
-<td style="text-align: right;">0.0000000</td>
 <td style="text-align: right;">5.4910263</td>
 <td style="text-align: right;">NaN</td>
 <td style="text-align: right;">3.9930250</td>
 <td style="text-align: right;">NaN</td>
+<td style="text-align: right;">NaN</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Kingdom of France</td>
-<td style="text-align: right;">0.1638394</td>
 <td style="text-align: right;">2.1940518</td>
 <td style="text-align: right;">NaN</td>
 <td style="text-align: right;">-0.5014965</td>
 <td style="text-align: right;">NaN</td>
+<td style="text-align: right;">NaN</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Seljuk Empire</td>
-<td style="text-align: right;">0.0000000</td>
 <td style="text-align: right;">1.7819300</td>
 <td style="text-align: right;">-0.0271615</td>
 <td style="text-align: right;">-0.5004595</td>
 <td style="text-align: right;">6.3140099</td>
+<td style="text-align: right;">-0.1374029</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Kingdom of Georgia</td>
-<td style="text-align: right;">0.2729409</td>
 <td style="text-align: right;">0.5455645</td>
 <td style="text-align: right;">-0.0158536</td>
 <td style="text-align: right;">-0.5009747</td>
+<td style="text-align: right;">-0.1126843</td>
 <td style="text-align: right;">-0.1126843</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Papal States</td>
-<td style="text-align: right;">0.0000000</td>
 <td style="text-align: right;">0.5455645</td>
 <td style="text-align: right;">-0.0158536</td>
 <td style="text-align: right;">-0.5009747</td>
 <td style="text-align: right;">-0.1126843</td>
+<td style="text-align: right;">11.6872209</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Normandy</td>
-<td style="text-align: right;">0.0000000</td>
 <td style="text-align: right;">0.1334427</td>
 <td style="text-align: right;">-0.1256118</td>
 <td style="text-align: right;">0.4229345</td>
+<td style="text-align: right;">-0.2730778</td>
 <td style="text-align: right;">-0.2730778</td>
 </tr>
 </tbody>
 </table>
 </div>
-<h4 id="brokerage-scores-in-the-1100s">Brokerage scores in the 1100s</h4>
+<h4 id="brokerage-scores-in-the-1100s">Brokerage scores in the
+1100s</h4>
 <div class="layout-chunk" data-layout="l-body">
 
 </div>
@@ -1688,12 +1759,20 @@ No edge attributes</code></pre>
 </div>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='op'>(</span><span class='va'>wars_in_1100s.nodes.stat_2</span><span class='op'><a href='https://rdrr.io/pkg/igraph/man/pipe.html'>%&gt;%</a></span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/arrange.html'>arrange</a></span><span class='op'>(</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/desc.html'>desc</a></span><span class='op'>(</span><span class='va'>broker.tot</span><span class='op'>)</span><span class='op'>)</span><span class='op'><a href='https://rdrr.io/pkg/igraph/man/pipe.html'>%&gt;%</a></span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span><span class='op'>)</span><span class='op'>)</span><span class='op'>[</span>,<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>10</span><span class='op'>:</span><span class='fl'>14</span><span class='op'>)</span><span class='op'>]</span> <span class='op'><a href='https://rdrr.io/pkg/igraph/man/pipe.html'>%&gt;%</a></span><span class='fu'><a href='https://rdrr.io/pkg/knitr/man/kable.html'>kable</a></span><span class='op'>(</span><span class='op'>)</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='op'>(</span><span class='va'>wars_in_1100s.nodes.stat_2</span><span class='op'>%&gt;%</span>
+  <span class='fu'>arrange</span><span class='op'>(</span><span class='fu'>desc</span><span class='op'>(</span><span class='va'>broker.tot</span><span class='op'>)</span><span class='op'>)</span><span class='op'>%&gt;%</span>
+  <span class='fu'>slice</span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span><span class='op'>)</span><span class='op'>)</span><span class='op'>[</span>,<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>10</span><span class='op'>:</span><span class='fl'>14</span><span class='op'>)</span><span class='op'>]</span> <span class='op'>%&gt;%</span><span class='fu'>kable</span><span class='op'>(</span><span class='op'>)</span>
 </code></pre>
 </div>
 <table>
+<colgroup>
+<col style="width: 26%" />
+<col style="width: 13%" />
+<col style="width: 16%" />
+<col style="width: 15%" />
+<col style="width: 13%" />
+<col style="width: 15%" />
+</colgroup>
 <thead>
 <tr class="header">
 <th style="text-align: left;">name</th>
@@ -1788,7 +1867,8 @@ No edge attributes</code></pre>
 </tbody>
 </table>
 </div>
-<h4 id="brokerage-scores-in-the-1200s">Brokerage scores in the 1200s</h4>
+<h4 id="brokerage-scores-in-the-1200s">Brokerage scores in the
+1200s</h4>
 <div class="layout-chunk" data-layout="l-body">
 
 </div>
@@ -1800,6 +1880,14 @@ No edge attributes</code></pre>
 </div>
 <div class="layout-chunk" data-layout="l-body">
 <table>
+<colgroup>
+<col style="width: 28%" />
+<col style="width: 13%" />
+<col style="width: 15%" />
+<col style="width: 14%" />
+<col style="width: 13%" />
+<col style="width: 14%" />
+</colgroup>
 <thead>
 <tr class="header">
 <th style="text-align: left;">name</th>
@@ -1996,11 +2084,265 @@ No edge attributes</code></pre>
 </tbody>
 </table>
 </div>
-<p>Option 2.A If you have a specific research question, please feel free to use that to guide your analysis. Otherwise, you may want to orient your analysis as follows in order to identify a compelling question or noteworthy pattern in the data that can be interpreted.</p>
-<p>Option 2.B: Briefly describe the various brokerage positions of nodes in the network, identifying which actors are most central and which are least central. Interpret your results as best you can. Discuss (with any related evidence) whether or not the node behavior is in line with or violates expectations.</p>
-<p>In this example it is interesting to see that the</p>
-<p>Option 2.C Compare brokerage/betweenness scores to other centrality measures, again providing an interpretation for changes in the relative centrality of actors depending on which measure is used. Discuss (with any related evidence) whether or not the node behavior is in line with or violates expectations.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<h2 id="option-2.a">Option 2.A</h2>
+<p><strong>For a Specific Research Question:</strong> If you have a
+specific research question, please feel free to use that to guide your
+analysis. Otherwise, you may want to orient your analysis as follows in
+order to identify a compelling question or noteworthy pattern in the
+data that can be interpreted.</p>
+<p><strong>Answer:</strong> Since I am interested in the relative power
+of nations by their relative position ad centrality in the worldwide
+conflict, network brokerage can be used to illustrate significant
+positions in global conflict. Below I wanted to look at 4 kinds of
+brokerage, these are broker.gate or gatekeeper, coordinator, liason, and
+itinerant. I am interested to see if these specific coordination types
+are primarily done by specific nations.</p>
+<div class="layout-chunk" data-layout="l-body">
+<p><img src="week-5-interpretaive-assignment_files/figure-html5/unnamed-chunk-18-1.png" width="624" /></p>
+</div>
+<h4 id="total-brokerage">Total Brokerage</h4>
+<p><strong>Explanation:</strong> Looking at total brokerage in this
+dataset gives a sense of which factions were responsible for highest
+connection of unconnected actors through conflict. Given the crusades
+igniting conflict between Europe and the middle east it is sensible that
+the Byzantine Empire in the center of both connects the most unconnected
+actors through conflict closely followed by the Sultanate of Rum, a
+major Muslim faction that fought against the crusades and third being
+the Holy Roman Empire who participated in many conflicts inclduing the
+crusades. These are followed by England who centered the wars in the
+British isles and the Kingdom of Sicily who were also in a position of
+conflict.</p>
+<div class="layout-chunk" data-layout="l-body">
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">name</th>
+<th style="text-align: right;">broker.tot</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Byzantine Empire</td>
+<td style="text-align: right;">25.272873</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Sultanate of Rum</td>
+<td style="text-align: right;">10.436488</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Holy Roman Empire</td>
+<td style="text-align: right;">10.024366</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">England</td>
+<td style="text-align: right;">7.551635</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Kingdom of Sicily</td>
+<td style="text-align: right;">5.491026</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h4 id="coordinator-brokerage">Coordinator Brokerage</h4>
+<p><strong>Explanation:</strong> In this case no particular country is
+very high above any other in terms of their coordinator brokerage,
+meaning that within groups no particular nations appear to be brokering
+more within the groups.</p>
+<div class="layout-chunk" data-layout="l-body">
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">name</th>
+<th style="text-align: right;">broker.coord</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">County of Aversa</td>
+<td style="text-align: right;">-0.0158536</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Kingdom of Georgia</td>
+<td style="text-align: right;">-0.0158536</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Great Seljuq Empire</td>
+<td style="text-align: right;">-0.0158536</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Papal States</td>
+<td style="text-align: right;">-0.0158536</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Chola Empire</td>
+<td style="text-align: right;">-0.0158536</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h4 id="itinerant-brokerage">Itinerant Brokerage</h4>
+<p><strong>Explanation:</strong> Itinerant brokerage represents when a
+non-group actor connects 2 actors in a group it is no in to each other,
+in this case England has the highest score. Looking at the network graph
+they do appear to connect 2 actors in a group together.</p>
+<div class="layout-chunk" data-layout="l-body">
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">name</th>
+<th style="text-align: right;">broker.itin</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">England</td>
+<td style="text-align: right;">6.6906430</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Holy Roman Empire</td>
+<td style="text-align: right;">4.8919293</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Kingdom of Sicily</td>
+<td style="text-align: right;">3.9930250</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Byzantine Empire</td>
+<td style="text-align: right;">3.9930250</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Principality of Kiev</td>
+<td style="text-align: right;">0.4413428</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h4 id="representative-brokerage">Representative Brokerage</h4>
+<p><strong>Explanation:</strong> Representative brokerage indicates that
+the broker, or nation in question loses a war to another in their group,
+but wins another against a faction outside of their group. This can be
+though of as their directed connections to them. In this case the Seljuk
+Empire and Kingdom of Aragon have instances in which they lose to
+factions within their group before beating those outside of it.</p>
+<div class="layout-chunk" data-layout="l-body">
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">name</th>
+<th style="text-align: right;">broker.rep</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Seljuk Empire</td>
+<td style="text-align: right;">6.3140099</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Kingdom of Aragon</td>
+<td style="text-align: right;">1.1415607</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">County of Sicily</td>
+<td style="text-align: right;">-0.0800286</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">England</td>
+<td style="text-align: right;">-0.0800286</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">County of Aversa</td>
+<td style="text-align: right;">-0.1126843</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h4 id="gatekeeper-brokerage">Gatekeeper Brokerage</h4>
+<p><strong>Explanation:</strong> The Papal states being ranked highest
+in gatekeeper brokerage is an interesting observation as no other nation
+in the dataset appears to be close to their level as most are negative
+in this category. In this cae being a gatekeeper means that they are in
+at conflict in a group with another while the nation in a different
+group of conflicts is only at war with them from the group. This is an
+interesting observation given the Papal states role as a coordinator of
+the war, but not a participant in the conflcit as directly as other
+belligerents. (This being the crusade given the period)</p>
+<div class="layout-chunk" data-layout="l-body">
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">name</th>
+<th style="text-align: right;">broker.gate</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Papal States</td>
+<td style="text-align: right;">11.6872209</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">County of Sicily</td>
+<td style="text-align: right;">-0.0800286</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">England</td>
+<td style="text-align: right;">-0.0800286</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">County of Aversa</td>
+<td style="text-align: right;">-0.1126843</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Kingdom of Georgia</td>
+<td style="text-align: right;">-0.1126843</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h4 id="liaison-brokerage">Liaison Brokerage</h4>
+<p><strong>Explanation:</strong> A liaison broker, in this case, is a
+faction that loses a war to a group they do not belong to and wins a war
+against a different group than the first that they also do not belong
+to. The Byzantine Empire, Sultanate of Rum, and Holy Roman Empire are
+highest in this category likely owing to their frequent states of
+conflict beyond the crusades against a variety of groups.</p>
+<div class="layout-chunk" data-layout="l-body">
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">name</th>
+<th style="text-align: right;">broker.lia</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Byzantine Empire</td>
+<td style="text-align: right;">31.767840</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Sultanate of Rum</td>
+<td style="text-align: right;">14.454659</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Holy Roman Empire</td>
+<td style="text-align: right;">10.545231</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">England</td>
+<td style="text-align: right;">6.202342</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Kingdom of Sicily</td>
+<td style="text-align: right;">4.960334</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>(information regarding the meaning of each type of brokerage was
+acquired from <a href="https://edis.ifas.ufl.edu/publication/WC197"
+class="uri">https://edis.ifas.ufl.edu/publication/WC197</a>)</p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>
