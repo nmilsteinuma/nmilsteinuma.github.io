@@ -7,7 +7,16 @@
     <description>Noah_Milstein_Blog
 </description>
     <generator>Distill</generator>
-    <lastBuildDate>Mon, 21 Feb 2022 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 03 Mar 2022 00:00:00 +0000</lastBuildDate>
+    <item>
+      <title>Text as Data Blog Post 2</title>
+      <dc:creator>Noah Milstein</dc:creator>
+      <link>https://nmilsteinuma.github.io/posts/2022-03-03-text-as-data-blog-post-2</link>
+      <description>A short description of the post.</description>
+      <guid>https://nmilsteinuma.github.io/posts/2022-03-03-text-as-data-blog-post-2</guid>
+      <pubDate>Thu, 03 Mar 2022 00:00:00 +0000</pubDate>
+      <media:content url="https://nmilsteinuma.github.io/posts/2022-03-03-text-as-data-blog-post-2/text-as-data-blog-post-2_files/figure-html5/unnamed-chunk-5-1.png" medium="image" type="image/png" width="1248" height="768"/>
+    </item>
     <item>
       <title>Week 5 Interpretaive Assignment</title>
       <dc:creator>Noah Milstein</dc:creator>

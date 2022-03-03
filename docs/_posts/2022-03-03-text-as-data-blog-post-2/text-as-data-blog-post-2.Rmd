@@ -1,0 +1,262 @@
+---
+title: "Text as Data Blog Post 2"
+description: |
+  A short description of the post.
+author:
+  - name: Noah Milstein
+    url: {}
+date: 2022-03-03
+output:
+  distill::distill_article:
+    self_contained: false
+---
+
+
+---
+title: "Reddit_Scraping_Attempt"
+author: "Noah"
+date: "2/17/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(rmarkdown)
+library(RedditExtractoR)
+library(jsonlite)
+library(tidyverse)
+library(dplyr)
+library(httr)
+library(tm)
+#install.packages("textclean")
+#install.packages("tmap")
+#library(tmap)
+library(corpus)
+library(quanteda)
+library(textclean)
+library(knitr)
+library(lubridate)
+library(cleanNLP)
+library(quanteda.textstats)
+library("SnowballC")
+library("wordcloud")
+library("RColorBrewer")
+library("stopwords")
+library(tidyverse)
+library(rvest)
+library(tidytext)
+# colors from RColorBrewer::brewer.pal(6, "Set1")
+palette(c("#E41A1C", "#377EB8", "#4DAF4A", "#984EA3", "#FF7F00", "#FFFF33"))
+
+```
+
+### Blog Post 2:
+
+**Question:** For your second blog post, consider the following points. You can
+write about all of them, or select one question, depending on where
+you’re now.
+
+**Answer and Explanation:** My second blog post concerns the first of the two research ideas I had decided 
+The characteristics include
+(1) its ‘content’ and/or (2) how it can be scraped.
+I Summon up your knowledge of some useful packages we’ve reviewed
+and/or NLP tools in relation to your research project.
+F Sorting out adjectives?
+F Extracting major verbs or named entities? ...
+I Specify a research paper or two regarding your research domain/topic.
+Focus on their ‘data,’ analytic strategy, and findings. If they use
+text-as-data methods, use them as a friendly example. If they have
+nothing to do with text-as-data methods, imagine what you can do
+differently.
+I Grab partial data of your project, if you’re ready. to do so. Report your
+success and failure!
+
+```{r, results='hide'}
+#top_guns_urls <- find_thread_urls(subreddit="guns", sort_by="top")
+
+load("/Users/noahmilstein/Desktop/Spring 2022/Textasdata/text_as_data_work/df_guns.RData")
+
+str(top_guns_urls)
+
+top_guns_urls_df=top_guns_urls[,c("title", "date_utc", "comments")]
+
+#guns_contents <- get_thread_content(top_guns_urls_df$url[1:1000])
+#str(guns_contents$threads)
+
+```
+
+```{r, results='hide'}
+
+top_guns_urls_df=top_guns_urls[,c("title", "date_utc", "comments")]
+
+top_guns_corpus<-corpus(top_guns_urls_df$title)
+
+cnlp_init_udpipe()
+
+text_for_top_guns <- as.character(top_guns_corpus)
+
+top_guns_corpus_2 <- docvars(top_guns_corpus)
+
+top_guns_corpus_2$text <- text_for_top_guns
+
+annotated.guns_corpus <- cnlp_annotate(top_guns_corpus_2)
+
+```
+
+```{r}
+
+head(annotated.guns_corpus$token)
+
+head(annotated.guns_corpus$document)
+doc_id_guns<-annotated.guns_corpus$document
+doc_id_guns$date<-top_guns_urls_df$date_utc
+
+annoData <- left_join(doc_id_guns, annotated.guns_corpus$token, by = "doc_id")
+
+annoData$date<-as.Date(annoData$date)
+
+```
+
+```{r}
+annoData %>% 
+  group_by(date) %>% 
+  summarize(Sentences = max(sid)) %>%
+  ggplot(aes(date, Sentences)) +
+    geom_line() +
+    geom_smooth() +
+    theme_bw()
+```
+
+
+```{r}
+# calculate readability
+readability <- textstat_readability(top_guns_corpus, 
+                                    measure = c("Flesch.Kincaid")) 
+
+# add in a chapter number
+readability$chapter <- c(1:nrow(readability))
+
+# plot results
+ggplot(readability, aes(x = chapter, y = Flesch.Kincaid)) +
+  geom_line() + 
+  geom_smooth() + 
+  theme_bw()
+```
+
+
+```{r}
+readability <- textstat_readability(top_guns_corpus, 
+                                    measure = c("Flesch.Kincaid", "FOG", "Coleman.Liau.grade")) 
+
+# add in a chapter number
+
+readability$post <- c(1:nrow(readability))
+
+# plot results
+ggplot(readability, aes(x = post)) +
+  geom_line(aes(y = Flesch.Kincaid), color = "black") + 
+  geom_line(aes(y = FOG), color = "red") + 
+  geom_line(aes(y = Coleman.Liau.grade), color = "blue") + 
+  theme_bw()
+```
+
+```{r}
+
+annoData$date<-as.Date(annoData$date)
+
+readability$added_dates<-as.Date(top_guns_urls_df$date_utc)
+
+ggplot(readability, aes(x = added_dates)) +
+  geom_smooth(aes(y = Flesch.Kincaid), color = "black") + 
+  geom_smooth(aes(y = FOG), color = "red") + 
+  geom_smooth(aes(y = Coleman.Liau.grade), color = "blue") + 
+  theme_minimal()
+
+```
+
+
+```{r}
+cor(readability$Flesch.Kincaid, readability$FOG, use = "complete.obs")
+```
+
+```{r}
+list_of_wars_1000 <- "https://en.wikipedia.org/wiki/List_of_wars:_1000%E2%80%931499"
+
+wars_1000s_df <- read_html(list_of_wars_1000) 
+
+wars_1000s<- wars_1000s_df %>% 
+  html_nodes("table") %>% `[[`(2) %>% html_table()
+```
+
+```{r}
+
+wars_1000s_subset <- wars_1000s[,1:5]
+wars_1000s_subset
+
+```
+
+```{r}
+
+wars_1100s<- wars_1000s_df %>% 
+  html_nodes("table") %>% `[[`(3) %>% html_table()
+
+
+wars_1100s_subset <- wars_1100s[,1:5]
+wars_1100s_subset
+
+```
+
+```{r}
+
+wars_1100s<- wars_1000s_df %>% 
+  html_nodes("table") %>% `[[`(3) %>% html_table()
+
+
+wars_1100s_subset <- wars_1100s[,1:5]
+wars_1100s_subset
+
+```
+
+```{r}
+wars_1200s<- wars_1000s_df %>% 
+  html_nodes("table") %>% `[[`(4) %>% html_table()
+
+
+wars_1200s_subset <- wars_1200s[,1:5]
+wars_1200s_subset
+```
+
+```{r}
+wars_1300s<- wars_1000s_df %>% 
+  html_nodes("table") %>% `[[`(5) %>% html_table()
+
+
+wars_1300s_subset <- wars_1300s[,1:5]
+wars_1300s_subset
+```
+```{r}
+wars_1400s<- wars_1000s_df %>% 
+  html_nodes("table") %>% `[[`(6) %>% html_table()
+
+
+wars_1400s_subset <- wars_1400s[,1:5]
+wars_1400s_subset
+```
+
+```{r}
+
+list_of_wars_1500 <- "https://en.wikipedia.org/wiki/List_of_wars:_1500%E2%80%931799"
+
+wars_1500s_df <- read_html(list_of_wars_1500) 
+
+wars_1500s <- wars_1500s_df %>% 
+  html_nodes("table") %>% `[[`(1) %>% html_table()
+
+wars_1500s_subset <- wars_1500s[,1:5]
+
+wars_1500s_subset
+```
+

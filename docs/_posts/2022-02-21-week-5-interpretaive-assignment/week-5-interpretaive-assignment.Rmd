@@ -12,6 +12,7 @@ output:
 ---
 
 ```{r, echo=FALSE}
+
 library(readxl)
 library(igraph)
 library(statnet)
@@ -23,6 +24,7 @@ library(ggplot2)
 library(sna)
 library(intergraph)
 library(knitr)
+library(GGally)
 library(aRtsy)
 ```
 
@@ -356,7 +358,7 @@ ggplot(wars_in_1000s_network, aes(x = x, y = y, xend = xend, yend = yend)) +
 
 #### Total Brokerage
 
-**Explanation:** Looking at total brokerage in this dataset gives a sense of which factions were responsible for highest connection of unconnected actors through conflict. Given the crusades igniting conflict between Europe and the middle east it is sensible that the Byzantine Empire in the center of both connects the most unconnected actors through conflict closely followed by the Sultanate of Rum, a major Muslim faction that fought against the crusades and third being the Holy Roman Empire who participated in many conflicts inclduing the crusades. These are followed by England who centered the wars in the British isles and the Kingdom of Sicily who were also in a position of conflict.
+**Explanation:** Looking at total brokerage in this dataset gives a sense of which factions were responsible for highest connection of unconnected actors through conflict. Given the crusades igniting conflict between Europe and the middle east it is sensible that the Byzantine Empire in the center of both connects the most unconnected actors through conflict closely followed by the Sultanate of Rum, a major Muslim faction that fought against the crusades and third being the Holy Roman Empire who participated in many conflicts including the crusades. These are followed by England who centered the wars in the British isles and the Kingdom of Sicily who were also in a position of conflict.
 
 ```{r, echo=FALSE}
 
@@ -427,6 +429,65 @@ ggplot(wars_in_1000s_network, aes(x = x, y = y, xend = xend, yend = yend)) +
 
 ```
 
+wars_in_1000s_edgelist <- as.matrix(wars_in_1000s)
+
+wars_in_1000s_edgelist_network_edgelist <- graph.edgelist(wars_in_1000s_edgelist, directed=TRUE)
+
+wars_in_1000s.ig<-graph_from_data_frame(wars_in_1000s)
+
+wars_in_1000s_network <- asNetwork(wars_in_1000s.ig)
+
+```{r}
+
+pls_work<-as.network(wars_in_1000s_edgelist, matrix.type = "edgelist", directed = FALSE,  hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = FALSE, vertex.attrnames=wars_in_1000s_network%v%"vertex.names")
+
+flomarr.se<-equiv.clust(pls_work, equiv.fun="sedist", method="hamming", mode="graph")
+plot(flomarr.se, labels=flomarr.se$glabels,  cex=0.3)
+rect.hclust(flomarr.se$cluster, h=5)
+
+?plot()
+```
+```{r}
+#blockmodel and select partitions
+blk_mod<-blockmodel(pls_work,flomarr.se,k=5)
+#assign block membership to vertex attribute
+V(wars_in_1000s.ig)$role<-blk_mod$block.membership[match(V(wars_in_1000s.ig)$name,blk_mod$plabels)]
+wars_in_1000s_network%v%"role"<-blk_mod$block.membership[match(wars_in_1000s_network%v%"vertex.names", blk_mod$glabels)]
+
+```
+
+```{r}
+?blockmodel()
+set.seed(2)
+#blockmodel and select partitions
+blk_mod<-blockmodel(pls_work, flomarr.se, k=5)
+#assign block membership to vertex attribute
+pls_work%v%"role"<-blk_mod$block.membership[match(pls_work%v%"vertex.names", blk_mod$glabels)]
+#plot network using "role" to color nodes: statnet
+GGally::ggnet2(pls_work,
+               node.color="role", 
+               node.size=degree(pls_work, gmode="graph"),
+               node.label = "vertex.names",
+               label.size= 1,
+               node.alpha = .5)
+?ggnet2()
+```
+
+```{r}
+plot.block<-function(x=blk_mod, main=NULL, cex.lab=1){
+  plot.sociomatrix(x$blocked.data, labels=list(x$plabels,x$plabels),
+                   main=main, drawlines = FALSE, cex.lab=cex.lab)
+  for (j in 2:length(x$plabels)) if (x$block.membership[j] !=
+                                     x$block.membership[j-1]) 
+    abline(v = j - 0.5, h = j - 0.5, lty = 3, xpd=FALSE)
+}
+```
+
+
+```{r}
+
+plot.block(blk_mod, cex.lab=.35)
+
+```
+
 (information regarding the meaning of each type of brokerage was acquired from https://edis.ifas.ufl.edu/publication/WC197)
-
-
