@@ -46,8 +46,19 @@ wars_in_1000s$"In-list"<- sapply(wars_in_1000s$"In-list",
 
 wars_in_1100s <- read_excel("~/Desktop/Spring 2022/Networks/wars_in_1100s.xlsx")
 
+wars_in_1100s$"Out" <- sapply(wars_in_1100s$"Out",
+                                    function(x) { gsub("[\r\n]", "", x) })
+wars_in_1100s$"In"<- sapply(wars_in_1100s$"In",
+                                    function(x) { gsub("[\r\n]", "", x) })
+
 wars_in_1200s <- read_excel("~/Desktop/Spring 2022/Networks/wars_in_1200s.xlsx")
 
+
+wars_in_1200s$"Out" <- sapply(wars_in_1200s$"Out",
+                                    function(x) { gsub("[\r\n]", "", x) })
+wars_in_1200s$"In"<- sapply(wars_in_1200s$"In",  
+                                    function(x) { gsub("[\r\n]", "", x) })
+                            
 ```
 
 ### Background and Research Question:
@@ -356,6 +367,26 @@ ggplot(wars_in_1000s_network, aes(x = x, y = y, xend = xend, yend = yend)) +
   theme_blank()
 ```
 
+```{r}
+set.seed(777)
+ggplot(wars_in_1100s_network, aes(x = x, y = y, xend = xend, yend = yend)) +
+  geom_edges(color = "grey25", alpha = 0.25, arrow = arrow(length = unit(2, "pt"), type = "closed"))+
+  geom_nodes(color = "peru", alpha = 0.3, size = 2) +
+  geom_nodetext(aes( label = vertex.names ), size=1)+
+    ggtitle("Networks of Wars in the 1100s") +
+  theme_blank()
+```
+
+```{r}
+set.seed(777)
+ggplot(wars_in_1200s_network, aes(x = x, y = y, xend = xend, yend = yend)) +
+  geom_edges(color = "grey25", alpha = 0.25, arrow = arrow(length = unit(2, "pt"), type = "closed"))+
+  geom_nodes(color = "peru", alpha = 0.3, size = 2) +
+  geom_nodetext(aes( label = vertex.names ), size=1)+
+    ggtitle("Networks of Wars in the 1200s") +
+  theme_blank()
+```
+
 #### Total Brokerage
 
 **Explanation:** Looking at total brokerage in this dataset gives a sense of which factions were responsible for highest connection of unconnected actors through conflict. Given the crusades igniting conflict between Europe and the middle east it is sensible that the Byzantine Empire in the center of both connects the most unconnected actors through conflict closely followed by the Sultanate of Rum, a major Muslim faction that fought against the crusades and third being the Holy Roman Empire who participated in many conflicts including the crusades. These are followed by England who centered the wars in the British isles and the Kingdom of Sicily who were also in a position of conflict.
@@ -404,6 +435,7 @@ ggplot(wars_in_1000s_network, aes(x = x, y = y, xend = xend, yend = yend)) +
   slice(0:5))[,c(1,14)] %>%kable()
 
 ```
+
 #### Gatekeeper Brokerage
 
 **Explanation:** The Papal states being ranked highest in gatekeeper brokerage is an interesting observation as no other nation in the dataset appears to be close to their level as most are negative in this category. In this cae being a gatekeeper means that they are in at conflict in a group with another while the nation in a different group of conflicts is only at war with them from the group. This is an interesting observation given the Papal states role as a coordinator of the war, but not a participant in the conflcit as directly as other belligerents. (This being the crusade given the period)
@@ -474,6 +506,76 @@ GGally::ggnet2(pls_work,
 ```
 
 ```{r}
+
+pls_work_2<-as.network(wars_in_1100s_edgelist, matrix.type = "edgelist", directed = FALSE,  hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = FALSE, vertex.attrnames=wars_in_1100s_network%v%"vertex.names")
+
+flomarr.se_2<-equiv.clust(pls_work_2, equiv.fun="sedist", method="hamming", mode="graph")
+plot(flomarr.se_2, labels=flomarr.se_2$glabels,  cex=0.3)
+rect.hclust(flomarr.se_2$cluster, h=5)
+
+```
+
+```{r}
+#blockmodel and select partitions
+blk_mod<-blockmodel(pls_work_2,flomarr.se_2,k=5)
+#assign block membership to vertex attribute
+V(wars_in_1100s.ig)$role<-blk_mod$block.membership[match(V(wars_in_1100s.ig)$name,blk_mod$plabels)]
+wars_in_1100s_network%v%"role"<-blk_mod$block.membership[match(wars_in_1100s_network%v%"vertex.names", blk_mod$glabels)]
+
+```
+
+
+```{r}
+
+set.seed(2)
+#blockmodel and select partitions
+blk_mod<-blockmodel(pls_work_2, flomarr.se_2, k=5)
+#assign block membership to vertex attribute
+pls_work_2%v%"role"<-blk_mod$block.membership[match(pls_work_2%v%"vertex.names", blk_mod$glabels)]
+#plot network using "role" to color nodes: statnet
+GGally::ggnet2(pls_work_2,
+               node.color="role", 
+               node.size=degree(pls_work_2, gmode="graph"),
+               node.label = "vertex.names",
+               label.size= 1,
+               node.alpha = .5)
+```
+```{r}
+
+pls_work_3<-as.network(wars_in_1200s_edgelist, matrix.type = "edgelist", directed = FALSE,  hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = FALSE, vertex.attrnames=wars_in_1200s_network%v%"vertex.names")
+
+flomarr.se_3<-equiv.clust(pls_work_3, equiv.fun="sedist", method="hamming", mode="graph")
+plot(flomarr.se_3, labels=flomarr.se_3$glabels,  cex=0.3)
+rect.hclust(flomarr.se_3$cluster, h=5)
+
+```
+
+```{r}
+#blockmodel and select partitions
+blk_mod<-blockmodel(pls_work_3,flomarr.se_3,k=5)
+#assign block membership to vertex attribute
+V(wars_in_1200s.ig)$role<-blk_mod$block.membership[match(V(wars_in_1200s.ig)$name,blk_mod$plabels)]
+wars_in_1200s_network%v%"role"<-blk_mod$block.membership[match(wars_in_1200s_network%v%"vertex.names", blk_mod$glabels)]
+
+```
+
+```{r}
+
+set.seed(2)
+#blockmodel and select partitions
+blk_mod<-blockmodel(pls_work_3, flomarr.se_2, k=5)
+#assign block membership to vertex attribute
+pls_work_3%v%"role"<-blk_mod$block.membership[match(pls_work_3%v%"vertex.names", blk_mod$glabels)]
+#plot network using "role" to color nodes: statnet
+GGally::ggnet2(pls_work_3,
+               node.color="role", 
+               node.size=degree(pls_work_3, gmode="graph"),
+               node.label = "vertex.names",
+               label.size= 1,
+               node.alpha = .5)
+```
+
+```{r}
 plot.block<-function(x=blk_mod, main=NULL, cex.lab=1){
   plot.sociomatrix(x$blocked.data, labels=list(x$plabels,x$plabels),
                    main=main, drawlines = FALSE, cex.lab=cex.lab)
@@ -489,5 +591,7 @@ plot.block<-function(x=blk_mod, main=NULL, cex.lab=1){
 plot.block(blk_mod, cex.lab=.35)
 
 ```
+
+
 
 (information regarding the meaning of each type of brokerage was acquired from https://edis.ifas.ufl.edu/publication/WC197)

@@ -46,9 +46,11 @@ palette(c("#E41A1C", "#377EB8", "#4DAF4A", "#984EA3", "#FF7F00", "#FFFF33"))
 ```
 
 ```{r, echo=FALSE}
+
 library(aRtsy)
+
 set.seed(2300)
-?canvas_ant
+
 canvas_ant(colors = colorPalette("boogy2"), iterations = 4000000,
            resolution = 500)
 
@@ -184,12 +186,14 @@ cor(readability$Flesch.Kincaid, readability$FOG, use = "complete.obs")
 ```
 
 ```{r}
+
 list_of_wars_1000 <- "https://en.wikipedia.org/wiki/List_of_wars:_1000%E2%80%931499"
 
 wars_1000s_df <- read_html(list_of_wars_1000) 
 
 wars_1000s<- wars_1000s_df %>% 
   html_nodes("table") %>% `[[`(2) %>% html_table()
+
 ```
 
 ```{r}
