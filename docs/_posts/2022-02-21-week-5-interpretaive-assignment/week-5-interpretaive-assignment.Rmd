@@ -1,5 +1,5 @@
 ---
-title: "Week 5 Interpretaive Assignment"
+title: "Week 5 (and 6) Interpretaive Assignment"
 description: |
   A short description of the post.
 author:
@@ -356,7 +356,7 @@ wars_in_1200s.nodes.stat_2<-wars_in_1200s.nodes.stat %>%
 
 **Answer:** Since I am interested in the relative power of nations by their relative position ad centrality in the worldwide conflict, network brokerage can be used to illustrate significant positions in global conflict. Below I wanted to look at 4 kinds of brokerage, these are broker.gate or gatekeeper, coordinator, liason, and itinerant. I am interested to see if these specific coordination types are primarily done by specific nations.
 
-```{r, echo=FALSE}
+```{r, echo=FALSE, warning=FALSE}
 
 set.seed(777)
 ggplot(wars_in_1000s_network, aes(x = x, y = y, xend = xend, yend = yend)) +
@@ -365,9 +365,11 @@ ggplot(wars_in_1000s_network, aes(x = x, y = y, xend = xend, yend = yend)) +
   geom_nodetext(aes( label = vertex.names ), size=1)+
     ggtitle("Networks of Wars in the 1000s") +
   theme_blank()
+
 ```
 
-```{r}
+```{r, echo=FALSE, warning=FALSE}
+
 set.seed(777)
 ggplot(wars_in_1100s_network, aes(x = x, y = y, xend = xend, yend = yend)) +
   geom_edges(color = "grey25", alpha = 0.25, arrow = arrow(length = unit(2, "pt"), type = "closed"))+
@@ -375,13 +377,14 @@ ggplot(wars_in_1100s_network, aes(x = x, y = y, xend = xend, yend = yend)) +
   geom_nodetext(aes( label = vertex.names ), size=1)+
     ggtitle("Networks of Wars in the 1100s") +
   theme_blank()
+
 ```
 
-```{r}
+```{r, echo=FALSE, warning=FALSE}
 set.seed(777)
 ggplot(wars_in_1200s_network, aes(x = x, y = y, xend = xend, yend = yend)) +
   geom_edges(color = "grey25", alpha = 0.25, arrow = arrow(length = unit(2, "pt"), type = "closed"))+
-  geom_nodes(color = "peru", alpha = 0.3, size = 2) +
+  geom_nodes(color = "lightpink", alpha = 0.3, size = 2) +
   geom_nodetext(aes( label = vertex.names ), size=1)+
     ggtitle("Networks of Wars in the 1200s") +
   theme_blank()
@@ -461,15 +464,7 @@ ggplot(wars_in_1200s_network, aes(x = x, y = y, xend = xend, yend = yend)) +
 
 ```
 
-wars_in_1000s_edgelist <- as.matrix(wars_in_1000s)
-
-wars_in_1000s_edgelist_network_edgelist <- graph.edgelist(wars_in_1000s_edgelist, directed=TRUE)
-
-wars_in_1000s.ig<-graph_from_data_frame(wars_in_1000s)
-
-wars_in_1000s_network <- asNetwork(wars_in_1000s.ig)
-
-```{r}
+```{r, echo=FALSE}
 
 pls_work<-as.network(wars_in_1000s_edgelist, matrix.type = "edgelist", directed = FALSE,  hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = FALSE, vertex.attrnames=wars_in_1000s_network%v%"vertex.names")
 
@@ -477,9 +472,9 @@ flomarr.se<-equiv.clust(pls_work, equiv.fun="sedist", method="hamming", mode="gr
 plot(flomarr.se, labels=flomarr.se$glabels,  cex=0.3)
 rect.hclust(flomarr.se$cluster, h=5)
 
-?plot()
 ```
-```{r}
+
+```{r, echo=FALSE}
 #blockmodel and select partitions
 blk_mod<-blockmodel(pls_work,flomarr.se,k=5)
 #assign block membership to vertex attribute
@@ -488,8 +483,7 @@ wars_in_1000s_network%v%"role"<-blk_mod$block.membership[match(wars_in_1000s_net
 
 ```
 
-```{r}
-?blockmodel()
+```{r, echo=FALSE}
 set.seed(2)
 #blockmodel and select partitions
 blk_mod<-blockmodel(pls_work, flomarr.se, k=5)
@@ -502,10 +496,9 @@ GGally::ggnet2(pls_work,
                node.label = "vertex.names",
                label.size= 1,
                node.alpha = .5)
-?ggnet2()
 ```
 
-```{r}
+```{r, echo=FALSE}
 
 pls_work_2<-as.network(wars_in_1100s_edgelist, matrix.type = "edgelist", directed = FALSE,  hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = FALSE, vertex.attrnames=wars_in_1100s_network%v%"vertex.names")
 
@@ -515,23 +508,23 @@ rect.hclust(flomarr.se_2$cluster, h=5)
 
 ```
 
-```{r}
+```{r, echo=FALSE}
 #blockmodel and select partitions
-blk_mod<-blockmodel(pls_work_2,flomarr.se_2,k=5)
+blk_mod_2<-blockmodel(pls_work_2,flomarr.se_2,k=5)
 #assign block membership to vertex attribute
-V(wars_in_1100s.ig)$role<-blk_mod$block.membership[match(V(wars_in_1100s.ig)$name,blk_mod$plabels)]
-wars_in_1100s_network%v%"role"<-blk_mod$block.membership[match(wars_in_1100s_network%v%"vertex.names", blk_mod$glabels)]
+V(wars_in_1100s.ig)$role<-blk_mod_2$block.membership[match(V(wars_in_1100s.ig)$name,blk_mod_2$plabels)]
+wars_in_1100s_network%v%"role"<-blk_mod_2$block.membership[match(wars_in_1100s_network%v%"vertex.names", blk_mod_2$glabels)]
 
 ```
 
 
-```{r}
+```{r, echo=FALSE}
 
 set.seed(2)
 #blockmodel and select partitions
-blk_mod<-blockmodel(pls_work_2, flomarr.se_2, k=5)
+blk_mod_2<-blockmodel(pls_work_2, flomarr.se_2, k=5)
 #assign block membership to vertex attribute
-pls_work_2%v%"role"<-blk_mod$block.membership[match(pls_work_2%v%"vertex.names", blk_mod$glabels)]
+pls_work_2%v%"role"<-blk_mod_2$block.membership[match(pls_work_2%v%"vertex.names", blk_mod_2$glabels)]
 #plot network using "role" to color nodes: statnet
 GGally::ggnet2(pls_work_2,
                node.color="role", 
@@ -540,7 +533,7 @@ GGally::ggnet2(pls_work_2,
                label.size= 1,
                node.alpha = .5)
 ```
-```{r}
+```{r, echo=FALSE}
 
 pls_work_3<-as.network(wars_in_1200s_edgelist, matrix.type = "edgelist", directed = FALSE,  hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = FALSE, vertex.attrnames=wars_in_1200s_network%v%"vertex.names")
 
@@ -550,22 +543,22 @@ rect.hclust(flomarr.se_3$cluster, h=5)
 
 ```
 
-```{r}
+```{r, echo=FALSE}
 #blockmodel and select partitions
-blk_mod<-blockmodel(pls_work_3,flomarr.se_3,k=5)
+blk_mod_3<-blockmodel(pls_work_3,flomarr.se_3,k=5)
 #assign block membership to vertex attribute
-V(wars_in_1200s.ig)$role<-blk_mod$block.membership[match(V(wars_in_1200s.ig)$name,blk_mod$plabels)]
-wars_in_1200s_network%v%"role"<-blk_mod$block.membership[match(wars_in_1200s_network%v%"vertex.names", blk_mod$glabels)]
+V(wars_in_1200s.ig)$role<-blk_mod_3$block.membership[match(V(wars_in_1200s.ig)$name,blk_mod_3$plabels)]
+wars_in_1200s_network%v%"role"<-blk_mod_3$block.membership[match(wars_in_1200s_network%v%"vertex.names", blk_mod_3$glabels)]
 
 ```
 
-```{r}
+```{r, echo=FALSE}
 
 set.seed(2)
 #blockmodel and select partitions
-blk_mod<-blockmodel(pls_work_3, flomarr.se_2, k=5)
+blk_mod_3<-blockmodel(pls_work_3, flomarr.se_3, k=5)
 #assign block membership to vertex attribute
-pls_work_3%v%"role"<-blk_mod$block.membership[match(pls_work_3%v%"vertex.names", blk_mod$glabels)]
+pls_work_3%v%"role"<-blk_mod_3$block.membership[match(pls_work_3%v%"vertex.names", blk_mod$glabels)]
 #plot network using "role" to color nodes: statnet
 GGally::ggnet2(pls_work_3,
                node.color="role", 
@@ -573,9 +566,11 @@ GGally::ggnet2(pls_work_3,
                node.label = "vertex.names",
                label.size= 1,
                node.alpha = .5)
+
 ```
 
-```{r}
+```{r, echo=FALSE}
+
 plot.block<-function(x=blk_mod, main=NULL, cex.lab=1){
   plot.sociomatrix(x$blocked.data, labels=list(x$plabels,x$plabels),
                    main=main, drawlines = FALSE, cex.lab=cex.lab)
@@ -583,15 +578,24 @@ plot.block<-function(x=blk_mod, main=NULL, cex.lab=1){
                                      x$block.membership[j-1]) 
     abline(v = j - 0.5, h = j - 0.5, lty = 3, xpd=FALSE)
 }
+
 ```
 
 
-```{r}
+```{r, echo=FALSE}
 
 plot.block(blk_mod, cex.lab=.35)
 
 ```
 
+```{r, echo=FALSE}
 
+plot.block(blk_mod_2, cex.lab=.35)
 
+```
+```{r, echo=FALSE}
+
+plot.block(blk_mod_3, cex.lab=.35)
+
+```
 (information regarding the meaning of each type of brokerage was acquired from https://edis.ifas.ufl.edu/publication/WC197)
