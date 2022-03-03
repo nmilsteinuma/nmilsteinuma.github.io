@@ -11,19 +11,11 @@ output:
     self_contained: false
 ---
 
-
----
-title: "Reddit_Scraping_Attempt"
-author: "Noah"
-date: "2/17/2022"
-output: html_document
----
-
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-```{r}
+```{r, echo=FALSE}
 library(rmarkdown)
 library(RedditExtractoR)
 library(jsonlite)
@@ -50,6 +42,15 @@ library(rvest)
 library(tidytext)
 # colors from RColorBrewer::brewer.pal(6, "Set1")
 palette(c("#E41A1C", "#377EB8", "#4DAF4A", "#984EA3", "#FF7F00", "#FFFF33"))
+
+```
+
+```{r, echo=FALSE}
+library(aRtsy)
+set.seed(2300)
+?canvas_ant
+canvas_ant(colors = colorPalette("boogy2"), iterations = 4000000,
+           resolution = 500)
 
 ```
 

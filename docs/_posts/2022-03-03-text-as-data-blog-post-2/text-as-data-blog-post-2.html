@@ -117,7 +117,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   <!--/radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-resource-manifest">
-  {"type":"character","attributes":{},"value":["text-as-data-blog-post-2_files/figure-html5/unnamed-chunk-5-1.png","text-as-data-blog-post-2_files/figure-html5/unnamed-chunk-6-1.png","text-as-data-blog-post-2_files/figure-html5/unnamed-chunk-7-1.png","text-as-data-blog-post-2_files/figure-html5/unnamed-chunk-8-1.png"]}
+  {"type":"character","attributes":{},"value":["text-as-data-blog-post-2_files/anchor-4.2.2/anchor.min.js","text-as-data-blog-post-2_files/bowser-1.9.3/bowser.min.js","text-as-data-blog-post-2_files/distill-2.2.21/template.v2.js","text-as-data-blog-post-2_files/figure-html5/unnamed-chunk-2-1.png","text-as-data-blog-post-2_files/figure-html5/unnamed-chunk-5-1.png","text-as-data-blog-post-2_files/figure-html5/unnamed-chunk-6-1.png","text-as-data-blog-post-2_files/figure-html5/unnamed-chunk-7-1.png","text-as-data-blog-post-2_files/figure-html5/unnamed-chunk-8-1.png","text-as-data-blog-post-2_files/figure-html5/unnamed-chunk-9-1.png","text-as-data-blog-post-2_files/header-attrs-2.11/header-attrs.js","text-as-data-blog-post-2_files/jquery-3.6.0/jquery-3.6.0.js","text-as-data-blog-post-2_files/jquery-3.6.0/jquery-3.6.0.min.js","text-as-data-blog-post-2_files/jquery-3.6.0/jquery-3.6.0.min.map","text-as-data-blog-post-2_files/popper-2.6.0/popper.min.js","text-as-data-blog-post-2_files/tippy-6.2.7/tippy-bundle.umd.min.js","text-as-data-blog-post-2_files/tippy-6.2.7/tippy-light-border.css","text-as-data-blog-post-2_files/tippy-6.2.7/tippy.css","text-as-data-blog-post-2_files/tippy-6.2.7/tippy.umd.min.js","text-as-data-blog-post-2_files/webcomponents-2.0.0/webcomponents.js"]}
   </script>
   <!--radix_placeholder_navigation_in_header-->
   <!--/radix_placeholder_navigation_in_header-->
@@ -1469,50 +1469,24 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <!--/radix_placeholder_site_before_body-->
 
 <div class="d-title">
-<h1>Reddit_Scraping_Attempt</h1>
+<h1>Text as Data Blog Post 2</h1>
 <!--radix_placeholder_categories-->
 <!--/radix_placeholder_categories-->
 <p><p>A short description of the post.</p></p>
 </div>
 
 <div class="d-byline">
+  Noah Milstein true 
   
-  Noah
-  
-<br/>2/17/2022
+<br/>2022-03-03
 </div>
 
 <div class="d-article">
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/rstudio/rmarkdown'>rmarkdown</a></span><span class='op'>)</span>
-<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'>RedditExtractoR</span><span class='op'>)</span>
-<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://arxiv.org/abs/1403.2805'>jsonlite</a></span><span class='op'>)</span>
-<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://tidyverse.tidyverse.org'>tidyverse</a></span><span class='op'>)</span>
-<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://dplyr.tidyverse.org'>dplyr</a></span><span class='op'>)</span>
-<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://httr.r-lib.org/'>httr</a></span><span class='op'>)</span>
-<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='http://tm.r-forge.r-project.org/'>tm</a></span><span class='op'>)</span>
-<span class='co'>#install.packages("textclean")</span>
-<span class='co'>#install.packages("tmap")</span>
-<span class='co'>#library(tmap)</span>
-<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://leslie-huang.github.io/r-corpus/'>corpus</a></span><span class='op'>)</span>
-<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://quanteda.io'>quanteda</a></span><span class='op'>)</span>
-<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/trinker/textclean'>textclean</a></span><span class='op'>)</span>
-<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://yihui.org/knitr/'>knitr</a></span><span class='op'>)</span>
-<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://lubridate.tidyverse.org'>lubridate</a></span><span class='op'>)</span>
-<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://statsmaths.github.io/cleanNLP/'>cleanNLP</a></span><span class='op'>)</span>
-<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://quanteda.io'>quanteda.textstats</a></span><span class='op'>)</span>
-<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='st'><a href='https://github.com/nalimilan/R.TeMiS'>"SnowballC"</a></span><span class='op'>)</span>
-<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='st'><a href='http://blog.fellstat.com/?cat=11'>"wordcloud"</a></span><span class='op'>)</span>
-<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='st'>"RColorBrewer"</span><span class='op'>)</span>
-<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='st'><a href='https://github.com/quanteda/stopwords'>"stopwords"</a></span><span class='op'>)</span>
-<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://tidyverse.tidyverse.org'>tidyverse</a></span><span class='op'>)</span>
-<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://rvest.tidyverse.org/'>rvest</a></span><span class='op'>)</span>
-<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/juliasilge/tidytext'>tidytext</a></span><span class='op'>)</span>
-<span class='co'># colors from RColorBrewer::brewer.pal(6, "Set1")</span>
-<span class='fu'><a href='https://rdrr.io/r/grDevices/palette.html'>palette</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"#E41A1C"</span>, <span class='st'>"#377EB8"</span>, <span class='st'>"#4DAF4A"</span>, <span class='st'>"#984EA3"</span>, <span class='st'>"#FF7F00"</span>, <span class='st'>"#FFFF33"</span><span class='op'>)</span><span class='op'>)</span>
-</code></pre>
+
 </div>
+<div class="layout-chunk" data-layout="l-body">
+<p><img src="text-as-data-blog-post-2_files/figure-html5/unnamed-chunk-2-1.png" width="624" /></p>
 </div>
 <h3 id="blog-post-2">Blog Post 2:</h3>
 <p><strong>Question:</strong> For your second blog post, consider the
@@ -1549,17 +1523,17 @@ failure!</p>
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>top_guns_urls_df</span><span class='op'>=</span><span class='va'>top_guns_urls</span><span class='op'>[</span>,<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"title"</span>, <span class='st'>"date_utc"</span>, <span class='st'>"comments"</span><span class='op'>)</span><span class='op'>]</span>
 
-<span class='va'>top_guns_corpus</span><span class='op'>&lt;-</span><span class='fu'><a href='https://leslie-huang.github.io/r-corpus/reference/corpus-package.html'>corpus</a></span><span class='op'>(</span><span class='va'>top_guns_urls_df</span><span class='op'>$</span><span class='va'>title</span><span class='op'>)</span>
+<span class='va'>top_guns_corpus</span><span class='op'>&lt;-</span><span class='fu'>corpus</span><span class='op'>(</span><span class='va'>top_guns_urls_df</span><span class='op'>$</span><span class='va'>title</span><span class='op'>)</span>
 
-<span class='fu'><a href='https://rdrr.io/pkg/cleanNLP/man/cnlp_init_udpipe.html'>cnlp_init_udpipe</a></span><span class='op'>(</span><span class='op'>)</span>
+<span class='fu'>cnlp_init_udpipe</span><span class='op'>(</span><span class='op'>)</span>
 
 <span class='va'>text_for_top_guns</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/character.html'>as.character</a></span><span class='op'>(</span><span class='va'>top_guns_corpus</span><span class='op'>)</span>
 
-<span class='va'>top_guns_corpus_2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/quanteda/man/docvars.html'>docvars</a></span><span class='op'>(</span><span class='va'>top_guns_corpus</span><span class='op'>)</span>
+<span class='va'>top_guns_corpus_2</span> <span class='op'>&lt;-</span> <span class='fu'>docvars</span><span class='op'>(</span><span class='va'>top_guns_corpus</span><span class='op'>)</span>
 
 <span class='va'>top_guns_corpus_2</span><span class='op'>$</span><span class='va'>text</span> <span class='op'>&lt;-</span> <span class='va'>text_for_top_guns</span>
 
-<span class='va'>annotated.guns_corpus</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/cleanNLP/man/cnlp_annotate.html'>cnlp_annotate</a></span><span class='op'>(</span><span class='va'>top_guns_corpus_2</span><span class='op'>)</span>
+<span class='va'>annotated.guns_corpus</span> <span class='op'>&lt;-</span> <span class='fu'>cnlp_annotate</span><span class='op'>(</span><span class='va'>top_guns_corpus_2</span><span class='op'>)</span>
 </code></pre>
 </div>
 </div>
@@ -1593,7 +1567,7 @@ failure!</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>doc_id_guns</span><span class='op'>&lt;-</span><span class='va'>annotated.guns_corpus</span><span class='op'>$</span><span class='va'>document</span>
 <span class='va'>doc_id_guns</span><span class='op'>$</span><span class='va'>date</span><span class='op'>&lt;-</span><span class='va'>top_guns_urls_df</span><span class='op'>$</span><span class='va'>date_utc</span>
 
-<span class='va'>annoData</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate-joins.html'>left_join</a></span><span class='op'>(</span><span class='va'>doc_id_guns</span>, <span class='va'>annotated.guns_corpus</span><span class='op'>$</span><span class='va'>token</span>, by <span class='op'>=</span> <span class='st'>"doc_id"</span><span class='op'>)</span>
+<span class='va'>annoData</span> <span class='op'>&lt;-</span> <span class='fu'>left_join</span><span class='op'>(</span><span class='va'>doc_id_guns</span>, <span class='va'>annotated.guns_corpus</span><span class='op'>$</span><span class='va'>token</span>, by <span class='op'>=</span> <span class='st'>"doc_id"</span><span class='op'>)</span>
 
 <span class='va'>annoData</span><span class='op'>$</span><span class='va'>date</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/r/base/as.Date.html'>as.Date</a></span><span class='op'>(</span><span class='va'>annoData</span><span class='op'>$</span><span class='va'>date</span><span class='op'>)</span>
 </code></pre>
@@ -1601,38 +1575,38 @@ failure!</p>
 </div>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>annoData</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> 
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>date</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> 
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarize</a></span><span class='op'>(</span>Sentences <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>max</a></span><span class='op'>(</span><span class='va'>sid</span><span class='op'>)</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
-  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span><span class='va'>date</span>, <span class='va'>Sentences</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
-    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_path.html'>geom_line</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span>
-    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_smooth.html'>geom_smooth</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span>
-    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggtheme.html'>theme_bw</a></span><span class='op'>(</span><span class='op'>)</span>
-</code></pre>
-</div>
-<p><img src="text-as-data-blog-post-2_files/figure-html5/unnamed-chunk-5-1.png" width="624" /></p>
-</div>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># calculate readability</span>
-<span class='va'>readability</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/quanteda.textstats/man/textstat_readability.html'>textstat_readability</a></span><span class='op'>(</span><span class='va'>top_guns_corpus</span>, 
-                                    measure <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Flesch.Kincaid"</span><span class='op'>)</span><span class='op'>)</span> 
-
-<span class='co'># add in a chapter number</span>
-<span class='va'>readability</span><span class='op'>$</span><span class='va'>chapter</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span><span class='op'>(</span><span class='va'>readability</span><span class='op'>)</span><span class='op'>)</span>
-
-<span class='co'># plot results</span>
-<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>readability</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>chapter</span>, y <span class='op'>=</span> <span class='va'>Flesch.Kincaid</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
-  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_path.html'>geom_line</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span> 
-  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_smooth.html'>geom_smooth</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span> 
-  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggtheme.html'>theme_bw</a></span><span class='op'>(</span><span class='op'>)</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>annoData</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'>group_by</span><span class='op'>(</span><span class='va'>date</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'>summarize</span><span class='op'>(</span>Sentences <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>max</a></span><span class='op'>(</span><span class='va'>sid</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>ggplot</span><span class='op'>(</span><span class='fu'>aes</span><span class='op'>(</span><span class='va'>date</span>, <span class='va'>Sentences</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+    <span class='fu'>geom_line</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span>
+    <span class='fu'>geom_smooth</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span>
+    <span class='fu'>theme_bw</span><span class='op'>(</span><span class='op'>)</span>
 </code></pre>
 </div>
 <p><img src="text-as-data-blog-post-2_files/figure-html5/unnamed-chunk-6-1.png" width="624" /></p>
 </div>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>readability</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/quanteda.textstats/man/textstat_readability.html'>textstat_readability</a></span><span class='op'>(</span><span class='va'>top_guns_corpus</span>, 
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># calculate readability</span>
+<span class='va'>readability</span> <span class='op'>&lt;-</span> <span class='fu'>textstat_readability</span><span class='op'>(</span><span class='va'>top_guns_corpus</span>, 
+                                    measure <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Flesch.Kincaid"</span><span class='op'>)</span><span class='op'>)</span> 
+
+<span class='co'># add in a chapter number</span>
+<span class='va'>readability</span><span class='op'>$</span><span class='va'>chapter</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span><span class='op'>(</span><span class='va'>readability</span><span class='op'>)</span><span class='op'>)</span>
+
+<span class='co'># plot results</span>
+<span class='fu'>ggplot</span><span class='op'>(</span><span class='va'>readability</span>, <span class='fu'>aes</span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>chapter</span>, y <span class='op'>=</span> <span class='va'>Flesch.Kincaid</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'>geom_line</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span> 
+  <span class='fu'>geom_smooth</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span> 
+  <span class='fu'>theme_bw</span><span class='op'>(</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="text-as-data-blog-post-2_files/figure-html5/unnamed-chunk-7-1.png" width="624" /></p>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>readability</span> <span class='op'>&lt;-</span> <span class='fu'>textstat_readability</span><span class='op'>(</span><span class='va'>top_guns_corpus</span>, 
                                     measure <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Flesch.Kincaid"</span>, <span class='st'>"FOG"</span>, <span class='st'>"Coleman.Liau.grade"</span><span class='op'>)</span><span class='op'>)</span> 
 
 <span class='co'># add in a chapter number</span>
@@ -1640,14 +1614,14 @@ failure!</p>
 <span class='va'>readability</span><span class='op'>$</span><span class='va'>post</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span><span class='op'>(</span><span class='va'>readability</span><span class='op'>)</span><span class='op'>)</span>
 
 <span class='co'># plot results</span>
-<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>readability</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>post</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
-  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_path.html'>geom_line</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>y <span class='op'>=</span> <span class='va'>Flesch.Kincaid</span><span class='op'>)</span>, color <span class='op'>=</span> <span class='st'>"black"</span><span class='op'>)</span> <span class='op'>+</span> 
-  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_path.html'>geom_line</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>y <span class='op'>=</span> <span class='va'>FOG</span><span class='op'>)</span>, color <span class='op'>=</span> <span class='st'>"red"</span><span class='op'>)</span> <span class='op'>+</span> 
-  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_path.html'>geom_line</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>y <span class='op'>=</span> <span class='va'>Coleman.Liau.grade</span><span class='op'>)</span>, color <span class='op'>=</span> <span class='st'>"blue"</span><span class='op'>)</span> <span class='op'>+</span> 
-  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggtheme.html'>theme_bw</a></span><span class='op'>(</span><span class='op'>)</span>
+<span class='fu'>ggplot</span><span class='op'>(</span><span class='va'>readability</span>, <span class='fu'>aes</span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>post</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'>geom_line</span><span class='op'>(</span><span class='fu'>aes</span><span class='op'>(</span>y <span class='op'>=</span> <span class='va'>Flesch.Kincaid</span><span class='op'>)</span>, color <span class='op'>=</span> <span class='st'>"black"</span><span class='op'>)</span> <span class='op'>+</span> 
+  <span class='fu'>geom_line</span><span class='op'>(</span><span class='fu'>aes</span><span class='op'>(</span>y <span class='op'>=</span> <span class='va'>FOG</span><span class='op'>)</span>, color <span class='op'>=</span> <span class='st'>"red"</span><span class='op'>)</span> <span class='op'>+</span> 
+  <span class='fu'>geom_line</span><span class='op'>(</span><span class='fu'>aes</span><span class='op'>(</span>y <span class='op'>=</span> <span class='va'>Coleman.Liau.grade</span><span class='op'>)</span>, color <span class='op'>=</span> <span class='st'>"blue"</span><span class='op'>)</span> <span class='op'>+</span> 
+  <span class='fu'>theme_bw</span><span class='op'>(</span><span class='op'>)</span>
 </code></pre>
 </div>
-<p><img src="text-as-data-blog-post-2_files/figure-html5/unnamed-chunk-7-1.png" width="624" /></p>
+<p><img src="text-as-data-blog-post-2_files/figure-html5/unnamed-chunk-8-1.png" width="624" /></p>
 </div>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
@@ -1655,14 +1629,14 @@ failure!</p>
 
 <span class='va'>readability</span><span class='op'>$</span><span class='va'>added_dates</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/r/base/as.Date.html'>as.Date</a></span><span class='op'>(</span><span class='va'>top_guns_urls_df</span><span class='op'>$</span><span class='va'>date_utc</span><span class='op'>)</span>
 
-<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>readability</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>added_dates</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
-  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_smooth.html'>geom_smooth</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>y <span class='op'>=</span> <span class='va'>Flesch.Kincaid</span><span class='op'>)</span>, color <span class='op'>=</span> <span class='st'>"black"</span><span class='op'>)</span> <span class='op'>+</span> 
-  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_smooth.html'>geom_smooth</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>y <span class='op'>=</span> <span class='va'>FOG</span><span class='op'>)</span>, color <span class='op'>=</span> <span class='st'>"red"</span><span class='op'>)</span> <span class='op'>+</span> 
-  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_smooth.html'>geom_smooth</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>y <span class='op'>=</span> <span class='va'>Coleman.Liau.grade</span><span class='op'>)</span>, color <span class='op'>=</span> <span class='st'>"blue"</span><span class='op'>)</span> <span class='op'>+</span> 
-  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggtheme.html'>theme_minimal</a></span><span class='op'>(</span><span class='op'>)</span>
+<span class='fu'>ggplot</span><span class='op'>(</span><span class='va'>readability</span>, <span class='fu'>aes</span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>added_dates</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'>geom_smooth</span><span class='op'>(</span><span class='fu'>aes</span><span class='op'>(</span>y <span class='op'>=</span> <span class='va'>Flesch.Kincaid</span><span class='op'>)</span>, color <span class='op'>=</span> <span class='st'>"black"</span><span class='op'>)</span> <span class='op'>+</span> 
+  <span class='fu'>geom_smooth</span><span class='op'>(</span><span class='fu'>aes</span><span class='op'>(</span>y <span class='op'>=</span> <span class='va'>FOG</span><span class='op'>)</span>, color <span class='op'>=</span> <span class='st'>"red"</span><span class='op'>)</span> <span class='op'>+</span> 
+  <span class='fu'>geom_smooth</span><span class='op'>(</span><span class='fu'>aes</span><span class='op'>(</span>y <span class='op'>=</span> <span class='va'>Coleman.Liau.grade</span><span class='op'>)</span>, color <span class='op'>=</span> <span class='st'>"blue"</span><span class='op'>)</span> <span class='op'>+</span> 
+  <span class='fu'>theme_minimal</span><span class='op'>(</span><span class='op'>)</span>
 </code></pre>
 </div>
-<p><img src="text-as-data-blog-post-2_files/figure-html5/unnamed-chunk-8-1.png" width="624" /></p>
+<p><img src="text-as-data-blog-post-2_files/figure-html5/unnamed-chunk-9-1.png" width="624" /></p>
 </div>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
@@ -1675,10 +1649,10 @@ failure!</p>
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>list_of_wars_1000</span> <span class='op'>&lt;-</span> <span class='st'>"https://en.wikipedia.org/wiki/List_of_wars:_1000%E2%80%931499"</span>
 
-<span class='va'>wars_1000s_df</span> <span class='op'>&lt;-</span> <span class='fu'><a href='http://xml2.r-lib.org/reference/read_xml.html'>read_html</a></span><span class='op'>(</span><span class='va'>list_of_wars_1000</span><span class='op'>)</span> 
+<span class='va'>wars_1000s_df</span> <span class='op'>&lt;-</span> <span class='fu'>read_html</span><span class='op'>(</span><span class='va'>list_of_wars_1000</span><span class='op'>)</span> 
 
-<span class='va'>wars_1000s</span><span class='op'>&lt;-</span> <span class='va'>wars_1000s_df</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> 
-  <span class='fu'><a href='https://rvest.tidyverse.org/reference/rename.html'>html_nodes</a></span><span class='op'>(</span><span class='st'>"table"</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'>`[[`</span><span class='op'>(</span><span class='fl'>2</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'><a href='https://rvest.tidyverse.org/reference/html_table.html'>html_table</a></span><span class='op'>(</span><span class='op'>)</span>
+<span class='va'>wars_1000s</span><span class='op'>&lt;-</span> <span class='va'>wars_1000s_df</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'>html_nodes</span><span class='op'>(</span><span class='st'>"table"</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'>`[[`</span><span class='op'>(</span><span class='fl'>2</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'>html_table</span><span class='op'>(</span><span class='op'>)</span>
 </code></pre>
 </div>
 </div>
@@ -1705,8 +1679,8 @@ failure!</p>
 </div>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>wars_1100s</span><span class='op'>&lt;-</span> <span class='va'>wars_1000s_df</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> 
-  <span class='fu'><a href='https://rvest.tidyverse.org/reference/rename.html'>html_nodes</a></span><span class='op'>(</span><span class='st'>"table"</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'>`[[`</span><span class='op'>(</span><span class='fl'>3</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'><a href='https://rvest.tidyverse.org/reference/html_table.html'>html_table</a></span><span class='op'>(</span><span class='op'>)</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>wars_1100s</span><span class='op'>&lt;-</span> <span class='va'>wars_1000s_df</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'>html_nodes</span><span class='op'>(</span><span class='st'>"table"</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'>`[[`</span><span class='op'>(</span><span class='fl'>3</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'>html_table</span><span class='op'>(</span><span class='op'>)</span>
 
 
 <span class='va'>wars_1100s_subset</span> <span class='op'>&lt;-</span> <span class='va'>wars_1100s</span><span class='op'>[</span>,<span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span><span class='op'>]</span>
@@ -1730,8 +1704,8 @@ failure!</p>
 </div>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>wars_1100s</span><span class='op'>&lt;-</span> <span class='va'>wars_1000s_df</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> 
-  <span class='fu'><a href='https://rvest.tidyverse.org/reference/rename.html'>html_nodes</a></span><span class='op'>(</span><span class='st'>"table"</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'>`[[`</span><span class='op'>(</span><span class='fl'>3</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'><a href='https://rvest.tidyverse.org/reference/html_table.html'>html_table</a></span><span class='op'>(</span><span class='op'>)</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>wars_1100s</span><span class='op'>&lt;-</span> <span class='va'>wars_1000s_df</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'>html_nodes</span><span class='op'>(</span><span class='st'>"table"</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'>`[[`</span><span class='op'>(</span><span class='fl'>3</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'>html_table</span><span class='op'>(</span><span class='op'>)</span>
 
 
 <span class='va'>wars_1100s_subset</span> <span class='op'>&lt;-</span> <span class='va'>wars_1100s</span><span class='op'>[</span>,<span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span><span class='op'>]</span>
@@ -1755,8 +1729,8 @@ failure!</p>
 </div>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>wars_1200s</span><span class='op'>&lt;-</span> <span class='va'>wars_1000s_df</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> 
-  <span class='fu'><a href='https://rvest.tidyverse.org/reference/rename.html'>html_nodes</a></span><span class='op'>(</span><span class='st'>"table"</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'>`[[`</span><span class='op'>(</span><span class='fl'>4</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'><a href='https://rvest.tidyverse.org/reference/html_table.html'>html_table</a></span><span class='op'>(</span><span class='op'>)</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>wars_1200s</span><span class='op'>&lt;-</span> <span class='va'>wars_1000s_df</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'>html_nodes</span><span class='op'>(</span><span class='st'>"table"</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'>`[[`</span><span class='op'>(</span><span class='fl'>4</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'>html_table</span><span class='op'>(</span><span class='op'>)</span>
 
 
 <span class='va'>wars_1200s_subset</span> <span class='op'>&lt;-</span> <span class='va'>wars_1200s</span><span class='op'>[</span>,<span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span><span class='op'>]</span>
@@ -1780,8 +1754,8 @@ failure!</p>
 </div>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>wars_1300s</span><span class='op'>&lt;-</span> <span class='va'>wars_1000s_df</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> 
-  <span class='fu'><a href='https://rvest.tidyverse.org/reference/rename.html'>html_nodes</a></span><span class='op'>(</span><span class='st'>"table"</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'>`[[`</span><span class='op'>(</span><span class='fl'>5</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'><a href='https://rvest.tidyverse.org/reference/html_table.html'>html_table</a></span><span class='op'>(</span><span class='op'>)</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>wars_1300s</span><span class='op'>&lt;-</span> <span class='va'>wars_1000s_df</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'>html_nodes</span><span class='op'>(</span><span class='st'>"table"</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'>`[[`</span><span class='op'>(</span><span class='fl'>5</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'>html_table</span><span class='op'>(</span><span class='op'>)</span>
 
 
 <span class='va'>wars_1300s_subset</span> <span class='op'>&lt;-</span> <span class='va'>wars_1300s</span><span class='op'>[</span>,<span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span><span class='op'>]</span>
@@ -1805,8 +1779,8 @@ failure!</p>
 </div>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>wars_1400s</span><span class='op'>&lt;-</span> <span class='va'>wars_1000s_df</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> 
-  <span class='fu'><a href='https://rvest.tidyverse.org/reference/rename.html'>html_nodes</a></span><span class='op'>(</span><span class='st'>"table"</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'>`[[`</span><span class='op'>(</span><span class='fl'>6</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'><a href='https://rvest.tidyverse.org/reference/html_table.html'>html_table</a></span><span class='op'>(</span><span class='op'>)</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>wars_1400s</span><span class='op'>&lt;-</span> <span class='va'>wars_1000s_df</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'>html_nodes</span><span class='op'>(</span><span class='st'>"table"</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'>`[[`</span><span class='op'>(</span><span class='fl'>6</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'>html_table</span><span class='op'>(</span><span class='op'>)</span>
 
 
 <span class='va'>wars_1400s_subset</span> <span class='op'>&lt;-</span> <span class='va'>wars_1400s</span><span class='op'>[</span>,<span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span><span class='op'>]</span>
@@ -1832,10 +1806,10 @@ failure!</p>
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>list_of_wars_1500</span> <span class='op'>&lt;-</span> <span class='st'>"https://en.wikipedia.org/wiki/List_of_wars:_1500%E2%80%931799"</span>
 
-<span class='va'>wars_1500s_df</span> <span class='op'>&lt;-</span> <span class='fu'><a href='http://xml2.r-lib.org/reference/read_xml.html'>read_html</a></span><span class='op'>(</span><span class='va'>list_of_wars_1500</span><span class='op'>)</span> 
+<span class='va'>wars_1500s_df</span> <span class='op'>&lt;-</span> <span class='fu'>read_html</span><span class='op'>(</span><span class='va'>list_of_wars_1500</span><span class='op'>)</span> 
 
-<span class='va'>wars_1500s</span> <span class='op'>&lt;-</span> <span class='va'>wars_1500s_df</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> 
-  <span class='fu'><a href='https://rvest.tidyverse.org/reference/rename.html'>html_nodes</a></span><span class='op'>(</span><span class='st'>"table"</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'>`[[`</span><span class='op'>(</span><span class='fl'>1</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'><a href='https://rvest.tidyverse.org/reference/html_table.html'>html_table</a></span><span class='op'>(</span><span class='op'>)</span>
+<span class='va'>wars_1500s</span> <span class='op'>&lt;-</span> <span class='va'>wars_1500s_df</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'>html_nodes</span><span class='op'>(</span><span class='st'>"table"</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'>`[[`</span><span class='op'>(</span><span class='fl'>1</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'>html_table</span><span class='op'>(</span><span class='op'>)</span>
 
 <span class='va'>wars_1500s_subset</span> <span class='op'>&lt;-</span> <span class='va'>wars_1500s</span><span class='op'>[</span>,<span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span><span class='op'>]</span>
 
