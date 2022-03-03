@@ -192,6 +192,7 @@ wars_in_1000s.nodes.stat$dc<-1-diag(wars_1000s_sq)/rowSums(wars_1000s_sq)
 wars_in_1000s.nodes.stat$dc<-ifelse(is.nan(wars_in_1000s.nodes.stat$dc),1,wars_in_1000s.nodes.stat$dc)
 #Calculate received eigenvalue centrality
 wars_in_1000s.nodes.stat$eigen.dc<-wars_in_1000s.nodes.stat$eigen*wars_in_1000s.nodes.stat$dc
+
 ```
 
 #### Brokerage scores in the 1000s
@@ -207,9 +208,11 @@ wars_in_1000s.nodes.stat_2<-wars_in_1000s.nodes.stat %>%
          broker.rep = temp$b_IO,
          broker.gate = temp$b_OI,
          broker.lia = temp$b_O)
+
 ```
 
 ```{r}
+
 (wars_in_1000s.nodes.stat_2%>%
   arrange(desc(broker.tot))%>%
   slice(1:10))[,c(1,11:15)] %>%kable()
@@ -250,6 +253,7 @@ wars_in_1100s.nodes.stat$dc<-1-diag(wars_1100s_sq)/rowSums(wars_1100s_sq)
 wars_in_1100s.nodes.stat$dc<-ifelse(is.nan(wars_in_1100s.nodes.stat$dc),1,wars_in_1100s.nodes.stat$dc)
 #Calculate received eigenvalue centrality
 wars_in_1100s.nodes.stat$eigen.dc<-wars_in_1100s.nodes.stat$eigen*wars_in_1100s.nodes.stat$dc
+
 ```
 
 ```{r, echo=FALSE}
@@ -267,6 +271,7 @@ wars_in_1100s.nodes.stat_2<-wars_in_1100s.nodes.stat %>%
 ```
 
 ```{r}
+
 (wars_in_1100s.nodes.stat_2%>%
   arrange(desc(broker.tot))%>%
   slice(1:10))[,c(1,10:14)] %>%kable()
@@ -466,11 +471,11 @@ ggplot(wars_in_1200s_network, aes(x = x, y = y, xend = xend, yend = yend)) +
 
 ```{r, echo=FALSE}
 
-pls_work<-as.network(wars_in_1000s_edgelist, matrix.type = "edgelist", directed = FALSE,  hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = FALSE, vertex.attrnames=wars_in_1000s_network%v%"vertex.names")
+pls_work<-as.network(wars_in_1000s_edgelist, matrix.type = "edgelist", directed = TRUE,  hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = FALSE, vertex.attrnames=wars_in_1000s_network%v%"vertex.names")
 
 flomarr.se<-equiv.clust(pls_work, equiv.fun="sedist", method="hamming", mode="graph")
-plot(flomarr.se, labels=flomarr.se$glabels,  cex=0.3)
-rect.hclust(flomarr.se$cluster, h=5)
+plot(flomarr.se, labels=flomarr.se$glabels,  cex=0.3, main="Cluster Dendrogram 1000s")
+rect.hclust(flomarr.se$cluster, h=8)
 
 ```
 
@@ -494,17 +499,23 @@ GGally::ggnet2(pls_work,
                node.color="role", 
                node.size=degree(pls_work, gmode="graph"),
                node.label = "vertex.names",
+               size.legend="Node Degree",
                label.size= 1,
-               node.alpha = .5)
+               node.alpha = .5,
+               max_size	=5,
+                arrow.size=3,
+               arrow.gap	=0.01
+)
+
 ```
 
 ```{r, echo=FALSE}
 
-pls_work_2<-as.network(wars_in_1100s_edgelist, matrix.type = "edgelist", directed = FALSE,  hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = FALSE, vertex.attrnames=wars_in_1100s_network%v%"vertex.names")
+pls_work_2<-as.network(wars_in_1100s_edgelist, matrix.type = "edgelist", directed = TRUE,  hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = FALSE, vertex.attrnames=wars_in_1100s_network%v%"vertex.names")
 
 flomarr.se_2<-equiv.clust(pls_work_2, equiv.fun="sedist", method="hamming", mode="graph")
-plot(flomarr.se_2, labels=flomarr.se_2$glabels,  cex=0.3)
-rect.hclust(flomarr.se_2$cluster, h=5)
+plot(flomarr.se_2, labels=flomarr.se_2$glabels,  cex=0.3, main="Cluster Dendrogram 1100s")
+rect.hclust(flomarr.se_2$cluster, h=10)
 
 ```
 
@@ -530,16 +541,21 @@ GGally::ggnet2(pls_work_2,
                node.color="role", 
                node.size=degree(pls_work_2, gmode="graph"),
                node.label = "vertex.names",
+               size.legend="Node Degree",
                label.size= 1,
-               node.alpha = .5)
+               node.alpha = .5,
+               max_size	=5,
+              arrow.size=3,
+               arrow.gap	=0.01
+               )
 ```
 ```{r, echo=FALSE}
 
-pls_work_3<-as.network(wars_in_1200s_edgelist, matrix.type = "edgelist", directed = FALSE,  hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = FALSE, vertex.attrnames=wars_in_1200s_network%v%"vertex.names")
+pls_work_3<-as.network(wars_in_1200s_edgelist, matrix.type = "edgelist", directed = TRUE,  hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = FALSE, vertex.attrnames=wars_in_1200s_network%v%"vertex.names")
 
 flomarr.se_3<-equiv.clust(pls_work_3, equiv.fun="sedist", method="hamming", mode="graph")
-plot(flomarr.se_3, labels=flomarr.se_3$glabels,  cex=0.3)
-rect.hclust(flomarr.se_3$cluster, h=5)
+plot(flomarr.se_3, labels=flomarr.se_3$glabels,  cex=0.3,  main="Cluster Dendrogram 1200s")
+rect.hclust(flomarr.se_3$cluster, h=10)
 
 ```
 
@@ -564,8 +580,12 @@ GGally::ggnet2(pls_work_3,
                node.color="role", 
                node.size=degree(pls_work_3, gmode="graph"),
                node.label = "vertex.names",
+               size.legend="Node Degree",
                label.size= 1,
-               node.alpha = .5)
+               node.alpha = .5,
+               max_size	=5,
+               arrow.size=3,
+               arrow.gap	=0.01)
 
 ```
 
@@ -598,4 +618,5 @@ plot.block(blk_mod_2, cex.lab=.35)
 plot.block(blk_mod_3, cex.lab=.35)
 
 ```
+
 (information regarding the meaning of each type of brokerage was acquired from https://edis.ifas.ufl.edu/publication/WC197)
