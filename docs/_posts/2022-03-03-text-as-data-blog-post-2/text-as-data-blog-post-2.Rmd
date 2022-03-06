@@ -77,7 +77,7 @@ load("/Users/noahmilstein/Desktop/Spring 2022/Textasdata/text_as_data_work/df_gu
 str(top_guns_urls)
 
 top_guns_urls_df=top_guns_urls[,c("title", "date_utc", "comments")]
-top_guns_urls_df
+
 #guns_contents <- get_thread_content(top_guns_urls_df$url[1:1000])
 #str(guns_contents$threads)
 
@@ -147,7 +147,7 @@ head(preprocessed_documents$choices)
 ```{r}
 
 load("/Users/noahmilstein/Desktop/Spring 2022/Textasdata/text_as_data_work/preText_results_gun_50_comps.RData")
-preText_results
+
 preText_score_plot(preText_results)
 
 ```
@@ -197,7 +197,7 @@ print(top_guns_tokens_no_punct_no_upper_no_stop)
 ```
 
 
-```{r}
+```{r, include=FALSE}
 cnlp_init_udpipe()
 
 text_for_top_guns <- as.character(top_guns_corpus)
@@ -225,7 +225,7 @@ head(annotated.guns_corpus$token)
 head(annotated.guns_corpus$document)
 
 doc_id_guns<-annotated.guns_corpus$document
-doc_id_guns
+
 doc_id_guns$date<-top_guns_urls_df$date_utc
 
 annoData <- left_join(doc_id_guns, annotated.guns_corpus$token, by = "doc_id")
@@ -332,6 +332,8 @@ sentimetnsdf <- read_csv("/Users/noahmilstein/Desktop/Spring 2022/Textasdata/tex
 
 ```
 
+### Sentiment Results Using NRC
+
 ```{r}
 
 top_guns_urls_df_2<-top_guns_urls_df
@@ -346,7 +348,7 @@ tidy_posts_for_guns <- top_guns_urls_df_2 %>%
 
 tidy_posts_for_guns %>%
   inner_join(nrc_joy) %>%
-  count(word, sort = TRUE)
+  count(word, sort = TRUE) %>% head() %>% kable()
 
 
 tidy_posts_for_guns_sentiment <- tidy_posts_for_guns %>%
@@ -384,8 +386,201 @@ nrc_guns_word_counts %>%
        y = NULL)
 ```
 
-### Sentiment Results Using NRC
-
 **Explanation:** Using nrc appears to have had some unintended effects that may require an analysis of the specific words used to describe sentiment. One difficult part of the data being used is that firearms, and the words used to describe them, are percieved 
 
+### Sentiment Results Using BING
+
+```{r}
+
+Bing_sentiments<-get_sentiments("bing")
+
+tidy_posts_for_guns <- top_guns_urls_df_2 %>%
+  unnest_tokens(word, title) 
+
+tidy_posts_for_guns %>%
+  inner_join(nrc_joy) %>%
+  count(word, sort = TRUE) %>% head() %>% kable()
+
+
+tidy_posts_for_guns_sentiment <- tidy_posts_for_guns %>%
+  inner_join(Bing_sentiments) %>%
+  count(text, sentiment) %>%
+  pivot_wider(names_from = sentiment, values_from = n, values_fill = 0) %>% 
+  mutate(sentiment = positive - negative)
+
+```
+
+```{r}
+
+bing_word_counts <- tidy_posts_for_guns %>%
+  inner_join(get_sentiments("bing")) %>%
+  count(word, sentiment, sort = TRUE) %>%
+  ungroup()
+
+bing_word_counts %>%
+  group_by(sentiment) %>%
+  slice_max(n, n = 10) %>% 
+  ungroup() %>%
+  mutate(word = reorder(word, n)) %>%
+  ggplot(aes(n, word, fill = sentiment)) +
+  geom_col(show.legend = FALSE) +
+  facet_wrap(~sentiment, scales = "free_y") +
+  labs(x = "Contribution to sentiment",
+       y = NULL)
+
+```
+
+```{r}
+
+library(methods)
+
+too_gun_dfm<- quanteda::dfm(top_guns_corpus, verbose = FALSE)
+
+too_gun_dfm
+
+```
+
+
+```{r}
+
+library(topicmodels)
+
+gun_dfm_lda <- LDA(too_gun_dfm, k = 2, control = list(seed = 777))
+gun_dfm_lda
+
+```
+
+```{r}
+
+gun_dfm_lda_topics <- tidy(gun_dfm_lda, matrix = "beta")
+gun_dfm_lda_topics
+
+```
+
+```{r}
+
+gun_top_terms <- gun_dfm_lda_topics %>%
+  group_by(topic) %>%
+  slice_max(beta, n = 10) %>% 
+  ungroup() %>%
+  arrange(topic, -beta)
+
+gun_top_terms %>%
+  mutate(term = reorder_within(term, beta, topic)) %>%
+  ggplot(aes(beta, term, fill = factor(topic))) +
+  geom_col(show.legend = FALSE) +
+  facet_wrap(~ topic, scales = "free") +
+  scale_y_reordered()
+
+```
+```{r}
+
+beta_wide <- gun_dfm_lda_topics %>%
+  mutate(topic = paste0("topic", topic)) %>%
+  pivot_wider(names_from = topic, values_from = beta) %>% 
+  filter(topic1 > .001 | topic2 > .001) %>%
+  mutate(log_ratio = log2(topic2 / topic1))
+
+beta_wide
+
+```
+```{r}
+
+beta_wide %>%
+  group_by(direction = log_ratio > 0) %>%
+  slice_max(abs(log_ratio), n = 10) %>% 
+  ungroup() %>%
+  mutate(term = reorder(term, log_ratio)) %>%
+  ggplot(aes(log_ratio, term)) +
+  geom_col() +
+  labs(x = "Log2 ratio of beta in topic 2 / topic 1", y = NULL)
+
+```
+
+#### Topic Modeling analysis
+
+**Response:** As can be seen above topic modeling may benefit from some data reduction, removing punctuation and stop words would likely be beneficial as can be seen above where a number of the differences between topics are modeled as punctuation and stop words.
+
+```{r}
+
+gun_tokens_stopwords_and_punct_removed <- tokens_remove(tokens(top_guns_corpus, remove_punct = TRUE), c(stopwords("english")))
+
+gun_corpus_stopwords_and_punct_removed <- corpus(sapply(gun_tokens_stopwords_and_punct_removed, paste, collapse=" ")
+)
+
+gun_corpus_stopwords_and_punct_removed
+
+```
+
+```{r}
+
+library(methods)
+
+too_gun_dfm_no_punct_stopwords<- quanteda::dfm(gun_corpus_stopwords_and_punct_removed, verbose = FALSE)
+
+too_gun_dfm_no_punct_stopwords
+
+```
+
+```{r}
+
+library(topicmodels)
+
+gun_dfm_lda_nopunct_stop <- LDA(too_gun_dfm_no_punct_stopwords, k = 2, control = list(seed = 777))
+gun_dfm_lda_nopunct_stop
+
+
+```
+
+```{r}
+
+gun_dfm_lda_topics_nopunct_stop <- tidy(gun_dfm_lda_nopunct_stop, matrix = "beta")
+
+gun_dfm_lda_topics_nopunct_stop
+
+```
+
+```{r}
+
+gun_top_terms_no_punct_or_stop<- gun_dfm_lda_topics_nopunct_stop %>%
+  group_by(topic) %>%
+  slice_max(beta, n = 10) %>% 
+  ungroup() %>%
+  arrange(topic, -beta)
+
+gun_top_terms_no_punct_or_stop %>%
+  mutate(term = reorder_within(term, beta, topic)) %>%
+  ggplot(aes(beta, term, fill = factor(topic))) +
+  geom_col(show.legend = FALSE) +
+  facet_wrap(~ topic, scales = "free") +
+  scale_y_reordered()
+
+```
+
+```{r}
+
+beta_wide_no_punct_stop <- gun_dfm_lda_topics_nopunct_stop %>%
+  mutate(topic = paste0("topic", topic)) %>%
+  pivot_wider(names_from = topic, values_from = beta) %>% 
+  filter(topic1 > .001 | topic2 > .001) %>%
+  mutate(log_ratio = log2(topic2 / topic1))
+
+```
+
+```{r}
+
+beta_wide_no_punct_stop %>%
+  group_by(direction = log_ratio > 0) %>%
+  slice_max(abs(log_ratio), n = 10) %>% 
+  ungroup() %>%
+  mutate(term = reorder(term, log_ratio)) %>%
+  ggplot(aes(log_ratio, term)) +
+  geom_col() +
+  labs(x = "Log2 ratio of beta in topic 2 / topic 1", y = NULL)
+
+```
+
+#### Topic Modeling analysis with stopwords and punctuation removed
+
+**Response:** As can be seen from the results above, removing stopwords and punctuation removes a good deal of the unwanted language from the corpus and does a slightly more comprehensible job in displaying the information. However, any kind of stemming or reduction will be difficult with posts about firearms for a number of reasons. Firstly the language surrounding firearms involves numbers for model numbers, ammunition calibers and the capacity of magazines and other devices that hold bullets. This results in difficulty removing both punctuation and numbers from the data as they give a sense of what sort of each of the aforementioned items people are interesting in talking about. As a results removing the punctuation is difficult because it allows for more comprehensible data by reducing the usage of unneeded punctuation like exclamaintion points and questions marks that are common on a forum of this nature but not useful in analyzing the common topics and language.
 
