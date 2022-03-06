@@ -1,0 +1,96 @@
+---
+title: "An Attempt to Scrape Wikipedia"
+description: |
+  This Post Involves my Attempt to Scrape and Clean the Output of a Wikipedia article to get the Same Data I had to Make by Hand.
+author:
+  - name: Noah Milstein
+    url: {}
+date: 2022-03-05
+output:
+  distill::distill_article:
+    self_contained: false
+---
+```{r}
+library(textreadr)
+library(tidyr)
+library(rvest)
+```
+
+```{r}
+
+list_of_wars_1000 <- "https://en.wikipedia.org/wiki/List_of_wars:_1000%E2%80%931499"
+
+wars_1000s_df <- read_html(list_of_wars_1000) 
+
+wars_1000s<- wars_1000s_df %>% 
+  html_nodes("table") %>% `[[`(2) %>% html_table()
+```
+
+```{r}
+
+wars_1000s_subset <- wars_1000s[,1:5]
+wars_1000s_subset
+
+```
+
+```{r}
+
+wars_1100s<- wars_1000s_df %>% 
+  html_nodes("table") %>% `[[`(3) %>% html_table()
+
+
+wars_1100s_subset <- wars_1100s[,1:5]
+wars_1100s_subset
+
+```
+
+```{r}
+
+wars_1100s<- wars_1000s_df %>% 
+  html_nodes("table") %>% `[[`(3) %>% html_table()
+
+
+wars_1100s_subset <- wars_1100s[,1:5]
+wars_1100s_subset
+
+```
+
+```{r}
+wars_1200s<- wars_1000s_df %>% 
+  html_nodes("table") %>% `[[`(4) %>% html_table()
+
+
+wars_1200s_subset <- wars_1200s[,1:5]
+wars_1200s_subset
+```
+
+```{r}
+wars_1300s<- wars_1000s_df %>% 
+  html_nodes("table") %>% `[[`(5) %>% html_table()
+
+
+wars_1300s_subset <- wars_1300s[,1:5]
+wars_1300s_subset
+```
+```{r}
+wars_1400s<- wars_1000s_df %>% 
+  html_nodes("table") %>% `[[`(6) %>% html_table()
+
+
+wars_1400s_subset <- wars_1400s[,1:5]
+wars_1400s_subset
+```
+
+```{r}
+
+list_of_wars_1500 <- "https://en.wikipedia.org/wiki/List_of_wars:_1500%E2%80%931799"
+
+wars_1500s_df <- read_html(list_of_wars_1500) 
+
+wars_1500s <- wars_1500s_df %>% 
+  html_nodes("table") %>% `[[`(1) %>% html_table()
+
+wars_1500s_subset <- wars_1500s[,1:5]
+
+wars_1500s_subset
+```

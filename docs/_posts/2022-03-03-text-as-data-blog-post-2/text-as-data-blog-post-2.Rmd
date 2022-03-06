@@ -20,6 +20,7 @@ library(rmarkdown)
 library(RedditExtractoR)
 library(jsonlite)
 library(tidyverse)
+library(stringr)
 library(dplyr)
 library(httr)
 library(tm)
@@ -42,40 +43,31 @@ library(rvest)
 library(tidytext)
 # colors from RColorBrewer::brewer.pal(6, "Set1")
 palette(c("#E41A1C", "#377EB8", "#4DAF4A", "#984EA3", "#FF7F00", "#FFFF33"))
-
-```
-
-```{r, echo=FALSE}
-
-library(aRtsy)
-
-set.seed(2300)
-
-canvas_ant(colors = colorPalette("boogy2"), iterations = 4000000,
-           resolution = 500)
-
+library(preText)
 ```
 
 ### Blog Post 2:
 
-**Question:** For your second blog post, consider the following points. You can
-write about all of them, or select one question, depending on where
-you’re now.
+**Question:** For my second blog post I will be observing the content of the sub-reddit I am scraping, extracting information, and performing initial natural language processing and text analysis on it.
 
-**Answer and Explanation:** My second blog post concerns the first of the two research ideas I had decided 
+Navigate and describe the characteristics of the data source of your
+interest, if you’ve specified one (or plan B). The characteristics include
+(1) its ‘content’ and/or (2) how it can be scraped.
 The characteristics include
+
 (1) its ‘content’ and/or (2) how it can be scraped.
 I Summon up your knowledge of some useful packages we’ve reviewed
+
 and/or NLP tools in relation to your research project.
-F Sorting out adjectives?
-F Extracting major verbs or named entities? ...
-I Specify a research paper or two regarding your research domain/topic.
-Focus on their ‘data,’ analytic strategy, and findings. If they use
-text-as-data methods, use them as a friendly example. If they have
-nothing to do with text-as-data methods, imagine what you can do
-differently.
-I Grab partial data of your project, if you’re ready. to do so. Report your
-success and failure!
+
+I Summon up your knowledge of some useful packages we’ve reviewed
+and/or NLP tools in relation to your research project.
+ Sorting out adjectives?
+ Extracting major verbs or named entities? ...
+
+#### Inital Loading and Processing
+
+**Explanation:** My code below illustrates how I initially got my information from reddit by scraping. In this case I used RedditExtractoR. The author of this packages describes it as a minimalist r wrapper it scrapes a limited number of posts from reddit. The api on reddit itself only allows 60 requests per minute so I will have to extract the next set of data later and pick a period before my first post occured.
 
 ```{r, results='hide'}
 #top_guns_urls <- find_thread_urls(subreddit="guns", sort_by="top")
@@ -85,11 +77,16 @@ load("/Users/noahmilstein/Desktop/Spring 2022/Textasdata/text_as_data_work/df_gu
 str(top_guns_urls)
 
 top_guns_urls_df=top_guns_urls[,c("title", "date_utc", "comments")]
-
+top_guns_urls_df
 #guns_contents <- get_thread_content(top_guns_urls_df$url[1:1000])
 #str(guns_contents$threads)
 
 ```
+
+#### Conversion From Data Frame to Corpus
+
+**Explanation:** Below I have processed my inital dataframe from reddit into a corpus.
+
 
 ```{r, results='hide'}
 
@@ -97,6 +94,110 @@ top_guns_urls_df=top_guns_urls[,c("title", "date_utc", "comments")]
 
 top_guns_corpus<-corpus(top_guns_urls_df$title)
 
+top_guns_documents<-top_guns_corpus[1:10,]
+
+top_guns_corpus_summary <- summary(top_guns_corpus)
+
+```
+
+#### Pre-processing 
+
+**Explanation:** Next I used the factorial_preprocessing() command to both use n-grams processing and use an infrequent term threshold.
+
+```{r}
+
+preprocessed_documents <- factorial_preprocessing(
+    top_guns_corpus,
+    use_ngrams = TRUE,
+    infrequent_term_threshold = 0.2,
+    verbose = FALSE)
+
+```
+
+```{r}
+
+names(preprocessed_documents)
+
+```
+
+```{r}
+
+head(preprocessed_documents$choices)
+
+```
+
+
+#### preText Results
+
+**Explanation:** Next I used preText() to pre-process the documents that I have so far to acquire pre-text scores that can give me a sense of what techniques may be necessary for natural language processing as the project develops.
+
+```{r}
+
+#preText_results <- preText(
+#    preprocessed_documents,
+#    dataset_name = "Gun Pretext Results",
+#    distance_method = "cosine",
+#    num_comparisons = 50,
+#    verbose = TRUE)
+
+```
+
+**Explanation Continued:** Next we look at the pre-text scores with 50 comparisons, which was acquired from the code above. Below these are graphed with intercept. 
+
+```{r}
+
+load("/Users/noahmilstein/Desktop/Spring 2022/Textasdata/text_as_data_work/preText_results_gun_50_comps.RData")
+preText_results
+preText_score_plot(preText_results)
+
+```
+
+The lowest score with intercepts according to the graph is N-3 which removes numbers, and uses n-grams. This plot represents the potential risk of using more complex pre-processing at the pre-text score goes up but may remove more information. The highest score belongs to L-S which is lowercased and stemmed which is quite risky to do.
+
+**Explanation Continued:** Looking at the regression coefficients we see negative scores as usual results and positive coefficients as unusual ones. In this case removing puncuation, stopwords, and n-grams would not lead to a great deal of abnormalilty.
+
+```{r}
+
+regression_coefficient_plot(preText_results,
+                            remove_intercept = TRUE)
+
+```
+
+#### Tokens and Corpus Work
+
+```{r}
+
+top_guns_tokens <- tokens(top_guns_corpus)
+
+print(top_guns_tokens)
+
+top_guns_tokens_no_punct <- tokens(top_guns_corpus, 
+    remove_punct = T)
+
+print(top_guns_tokens_no_punct)
+
+```
+
+```{r}
+
+top_guns_tokens_no_punct_no_upper <- tokens_tolower(top_guns_tokens_no_punct)
+
+print(top_guns_tokens_no_punct_no_upper)
+
+```
+
+```{r}
+
+top_guns_tokens_no_punct_no_upper_no_stop <-    tokens_select(top_guns_tokens_no_punct_no_upper, pattern = stopwords("en"), selection = "remove")
+
+length(top_guns_tokens_no_punct_no_upper_no_stop)
+
+print(top_guns_tokens_no_punct_no_upper_no_stop)
+
+```
+
+
+```{r}
 cnlp_init_udpipe()
 
 text_for_top_guns <- as.character(top_guns_corpus)
@@ -111,10 +212,20 @@ annotated.guns_corpus <- cnlp_annotate(top_guns_corpus_2)
 
 ```{r}
 
+top_guns_corpus_tokens <- tokens(top_guns_corpus)
+
+print(top_guns_corpus_tokens)
+
+```
+
+```{r}
+
 head(annotated.guns_corpus$token)
 
 head(annotated.guns_corpus$document)
+
 doc_id_guns<-annotated.guns_corpus$document
+doc_id_guns
 doc_id_guns$date<-top_guns_urls_df$date_utc
 
 annoData <- left_join(doc_id_guns, annotated.guns_corpus$token, by = "doc_id")
@@ -124,6 +235,7 @@ annoData$date<-as.Date(annoData$date)
 ```
 
 ```{r}
+
 annoData %>% 
   group_by(date) %>% 
   summarize(Sentences = max(sid)) %>%
@@ -131,10 +243,12 @@ annoData %>%
     geom_line() +
     geom_smooth() +
     theme_bw()
+
 ```
 
 
 ```{r}
+
 # calculate readability
 readability <- textstat_readability(top_guns_corpus, 
                                     measure = c("Flesch.Kincaid")) 
@@ -147,10 +261,12 @@ ggplot(readability, aes(x = chapter, y = Flesch.Kincaid)) +
   geom_line() + 
   geom_smooth() + 
   theme_bw()
+
 ```
 
 
 ```{r}
+
 readability <- textstat_readability(top_guns_corpus, 
                                     measure = c("Flesch.Kincaid", "FOG", "Coleman.Liau.grade")) 
 
@@ -164,6 +280,7 @@ ggplot(readability, aes(x = post)) +
   geom_line(aes(y = FOG), color = "red") + 
   geom_line(aes(y = Coleman.Liau.grade), color = "blue") + 
   theme_bw()
+
 ```
 
 ```{r}
@@ -182,86 +299,93 @@ ggplot(readability, aes(x = added_dates)) +
 
 
 ```{r}
+
 cor(readability$Flesch.Kincaid, readability$FOG, use = "complete.obs")
-```
-
-```{r}
-
-list_of_wars_1000 <- "https://en.wikipedia.org/wiki/List_of_wars:_1000%E2%80%931499"
-
-wars_1000s_df <- read_html(list_of_wars_1000) 
-
-wars_1000s<- wars_1000s_df %>% 
-  html_nodes("table") %>% `[[`(2) %>% html_table()
 
 ```
 
 ```{r}
 
-wars_1000s_subset <- wars_1000s[,1:5]
-wars_1000s_subset
+cor(readability$Flesch.Kincaid, readability$Coleman.Liau.grade, use = "complete.obs")
 
 ```
 
 ```{r}
 
-wars_1100s<- wars_1000s_df %>% 
-  html_nodes("table") %>% `[[`(3) %>% html_table()
-
-
-wars_1100s_subset <- wars_1100s[,1:5]
-wars_1100s_subset
+cor(readability$FOG, readability$Coleman.Liau.grade, use = "complete.obs")
 
 ```
 
 ```{r}
 
-wars_1100s<- wars_1000s_df %>% 
-  html_nodes("table") %>% `[[`(3) %>% html_table()
+#sentimetnsdf<-get_sentiments("nrc")
 
+#write.csv(sentimetnsdf, file = "sentimetnsdf.csv")
 
-wars_1100s_subset <- wars_1100s[,1:5]
-wars_1100s_subset
+#save(sentimetnsdf, file="sentimetnsdf_2")
 
 ```
 
 ```{r}
-wars_1200s<- wars_1000s_df %>% 
-  html_nodes("table") %>% `[[`(4) %>% html_table()
+library(readr)
+sentimetnsdf <- read_csv("/Users/noahmilstein/Desktop/Spring 2022/Textasdata/text_as_data_work/sentimetnsdf.csv")
 
-
-wars_1200s_subset <- wars_1200s[,1:5]
-wars_1200s_subset
-```
-
-```{r}
-wars_1300s<- wars_1000s_df %>% 
-  html_nodes("table") %>% `[[`(5) %>% html_table()
-
-
-wars_1300s_subset <- wars_1300s[,1:5]
-wars_1300s_subset
-```
-```{r}
-wars_1400s<- wars_1000s_df %>% 
-  html_nodes("table") %>% `[[`(6) %>% html_table()
-
-
-wars_1400s_subset <- wars_1400s[,1:5]
-wars_1400s_subset
 ```
 
 ```{r}
 
-list_of_wars_1500 <- "https://en.wikipedia.org/wiki/List_of_wars:_1500%E2%80%931799"
+top_guns_urls_df_2<-top_guns_urls_df
+top_guns_urls_df_2$text<- seq(1, 998, by=1)
 
-wars_1500s_df <- read_html(list_of_wars_1500) 
 
-wars_1500s <- wars_1500s_df %>% 
-  html_nodes("table") %>% `[[`(1) %>% html_table()
+nrc_joy <- sentimetnsdf %>% 
+  filter(sentiment == "joy")
 
-wars_1500s_subset <- wars_1500s[,1:5]
+tidy_posts_for_guns <- top_guns_urls_df_2 %>%
+  unnest_tokens(word, title) 
 
-wars_1500s_subset
+tidy_posts_for_guns %>%
+  inner_join(nrc_joy) %>%
+  count(word, sort = TRUE)
+
+
+tidy_posts_for_guns_sentiment <- tidy_posts_for_guns %>%
+  inner_join(sentimetnsdf) %>%
+  count(text, sentiment) %>%
+  pivot_wider(names_from = sentiment, values_from = n, values_fill = 0) %>% 
+  mutate(sentiment = positive - negative)
+
 ```
+
+```{r}
+tidy_posts_for_guns_sentiment
+sentimetnsdf
+```
+
+
+```{r}
+
+nrc_guns_word_counts <- tidy_posts_for_guns %>%
+  inner_join(sentimetnsdf) %>%
+  count(word, sentiment, sort = TRUE) %>%
+  ungroup()
+```
+
+```{r}
+nrc_guns_word_counts %>%
+  group_by(sentiment) %>%
+  slice_max(n, n = 10) %>% 
+  ungroup() %>%
+  mutate(word = reorder(word, n)) %>%
+  ggplot(aes(n, word, fill = sentiment)) +
+  geom_col(show.legend = FALSE) +
+  facet_wrap(~sentiment, scales = "free_y") +
+  labs(x = "Contribution to sentiment",
+       y = NULL)
+```
+
+### Sentiment Results Using NRC
+
+**Explanation:** Using nrc appears to have had some unintended effects that may require an analysis of the specific words used to describe sentiment. One difficult part of the data being used is that firearms, and the words used to describe them, are percieved 
+
 

@@ -471,33 +471,63 @@ ggplot(wars_in_1200s_network, aes(x = x, y = y, xend = xend, yend = yend)) +
 
 ```{r, echo=FALSE}
 
-pls_work<-as.network(wars_in_1000s_edgelist, matrix.type = "edgelist", directed = TRUE,  hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = FALSE, vertex.attrnames=wars_in_1000s_network%v%"vertex.names")
+wars_1000s_for_equiv_clust<-as.network(wars_in_1000s_edgelist, matrix.type = "edgelist", directed = TRUE,  hyper = FALSE, loops = FALSE, multiple = FALSE,
+                                       bipartite = FALSE, vertex.attrnames=wars_in_1000s_network%v%"vertex.names")
 
-flomarr.se<-equiv.clust(pls_work, equiv.fun="sedist", method="hamming", mode="graph")
-plot(flomarr.se, labels=flomarr.se$glabels,  cex=0.3, main="Cluster Dendrogram 1000s")
-rect.hclust(flomarr.se$cluster, h=8)
+war_1000s.se_hamming<-equiv.clust(wars_1000s_for_equiv_clust, equiv.fun="sedist", method="hamming", mode="graph")
+
+plot(war_1000s.se_hamming, labels=war_1000s.se_hamming$glabels,  cex=0.3, main="Cluster Dendrogram 1000s Hamming")
+
+```
+
+```{r, echo=FALSE}
+
+war_1000s.se_average<-equiv.clust(wars_1000s_for_equiv_clust, equiv.fun="sedist", cluster.method="average", method="hamming", mode="graph")
+
+plot(war_1000s.se_average, labels=war_1000s.se_average$glabels,  
+     cex=0.3, main="Cluster Dendrogram 1000s Hamming (Average)")
+
+```
+
+```{r, echo=FALSE}
+
+war_1000s.se_single<-equiv.clust(wars_1000s_for_equiv_clust, equiv.fun="sedist", cluster.method="single", method="hamming", mode="graph")
+
+plot(war_1000s.se_single, labels=war_1000s.se_single$glabels,  
+     cex=0.3, main="Cluster Dendrogram 1000s Hamming (Single)")
+
+```
+
+```{r, echo=FALSE}
+
+war_1000s.se_ward<-equiv.clust(wars_1000s_for_equiv_clust, equiv.fun="sedist", cluster.method="ward.D", method="hamming", mode="graph")
+
+plot(war_1000s.se_ward, labels=war_1000s.se_ward$glabels,  
+     cex=0.3, main="Cluster Dendrogram 1000s Hamming (ward.D)")
 
 ```
 
 ```{r, echo=FALSE}
 #blockmodel and select partitions
-blk_mod<-blockmodel(pls_work,flomarr.se,k=5)
+blk_mod<-blockmodel(wars_1000s_for_equiv_clust,war_1000s.se_hamming,k=5)
 #assign block membership to vertex attribute
-V(wars_in_1000s.ig)$role<-blk_mod$block.membership[match(V(wars_in_1000s.ig)$name,blk_mod$plabels)]
-wars_in_1000s_network%v%"role"<-blk_mod$block.membership[match(wars_in_1000s_network%v%"vertex.names", blk_mod$glabels)]
+V(wars_in_1000s.ig)$role <- blk_mod$block.membership[match(V(wars_in_1000s.ig)$name,blk_mod$plabels)]
+wars_in_1000s_network%v%"role"<- blk_mod$block.membership[match(wars_in_1000s_network%v%"vertex.names", blk_mod$glabels)]
 
 ```
+
+#### Network 1000s Plot Grouping Determined with No Cluster Method
 
 ```{r, echo=FALSE}
 set.seed(2)
 #blockmodel and select partitions
-blk_mod<-blockmodel(pls_work, flomarr.se, k=5)
+blk_mod<-blockmodel(wars_1000s_for_equiv_clust, war_1000s.se_hamming, k=5)
 #assign block membership to vertex attribute
-pls_work%v%"role"<-blk_mod$block.membership[match(pls_work%v%"vertex.names", blk_mod$glabels)]
+wars_1000s_for_equiv_clust%v%"role" <- blk_mod$block.membership[match(wars_1000s_for_equiv_clust%v%"vertex.names", blk_mod$glabels)]
 #plot network using "role" to color nodes: statnet
-GGally::ggnet2(pls_work,
+GGally::ggnet2(wars_1000s_for_equiv_clust,
                node.color="role", 
-               node.size=degree(pls_work, gmode="graph"),
+               node.size=degree(wars_1000s_for_equiv_clust, gmode="graph"),
                node.label = "vertex.names",
                size.legend="Node Degree",
                label.size= 1,
@@ -509,37 +539,150 @@ GGally::ggnet2(pls_work,
 
 ```
 
-```{r, echo=FALSE}
-
-pls_work_2<-as.network(wars_in_1100s_edgelist, matrix.type = "edgelist", directed = TRUE,  hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = FALSE, vertex.attrnames=wars_in_1100s_network%v%"vertex.names")
-
-flomarr.se_2<-equiv.clust(pls_work_2, equiv.fun="sedist", method="hamming", mode="graph")
-plot(flomarr.se_2, labels=flomarr.se_2$glabels,  cex=0.3, main="Cluster Dendrogram 1100s")
-rect.hclust(flomarr.se_2$cluster, h=10)
-
-```
+#### Network 1000s Plot Grouping Determined with the Average Cluster Method
 
 ```{r, echo=FALSE}
+set.seed(2)
 #blockmodel and select partitions
-blk_mod_2<-blockmodel(pls_work_2,flomarr.se_2,k=5)
+blk_mod<-blockmodel(wars_1000s_for_equiv_clust, war_1000s.se_average, k=5)
 #assign block membership to vertex attribute
-V(wars_in_1100s.ig)$role<-blk_mod_2$block.membership[match(V(wars_in_1100s.ig)$name,blk_mod_2$plabels)]
-wars_in_1100s_network%v%"role"<-blk_mod_2$block.membership[match(wars_in_1100s_network%v%"vertex.names", blk_mod_2$glabels)]
+wars_1000s_for_equiv_clust%v%"role" <- blk_mod$block.membership[match(wars_1000s_for_equiv_clust%v%"vertex.names", blk_mod$glabels)]
+#plot network using "role" to color nodes: statnet
+GGally::ggnet2(wars_1000s_for_equiv_clust,
+               node.color="role", 
+               node.size=degree(wars_1000s_for_equiv_clust, gmode="graph"),
+               node.label = "vertex.names",
+               size.legend="Node Degree",
+               label.size= 1,
+               node.alpha = .5,
+               max_size	=5,
+                arrow.size=3,
+               arrow.gap	=0.01
+)
 
 ```
 
+#### Network 1000s Plot Grouping Determined with the Single Cluster Method
+
+```{r, echo=FALSE}
+set.seed(2)
+#blockmodel and select partitions
+blk_mod<-blockmodel(wars_1000s_for_equiv_clust, war_1000s.se_single, k=5)
+#assign block membership to vertex attribute
+wars_1000s_for_equiv_clust%v%"role" <- blk_mod$block.membership[match(wars_1000s_for_equiv_clust%v%"vertex.names", blk_mod$glabels)]
+#plot network using "role" to color nodes: statnet
+GGally::ggnet2(wars_1000s_for_equiv_clust,
+               node.color="role", 
+               node.size=degree(wars_1000s_for_equiv_clust, gmode="graph"),
+               node.label = "vertex.names",
+               size.legend="Node Degree",
+               label.size= 1,
+               node.alpha = .5,
+               max_size	=5,
+                arrow.size=3,
+               arrow.gap	=0.01
+)
+
+```
+
+#### Network 1000s Plot Grouping Determined with the Ward.D Cluster Method
+
+```{r, echo=FALSE}
+set.seed(2)
+#blockmodel and select partitions
+blk_mod<-blockmodel(wars_1000s_for_equiv_clust, war_1000s.se_ward, k=5)
+#assign block membership to vertex attribute
+wars_1000s_for_equiv_clust%v%"role" <- blk_mod$block.membership[match(wars_1000s_for_equiv_clust%v%"vertex.names", blk_mod$glabels)]
+#plot network using "role" to color nodes: statnet
+GGally::ggnet2(wars_1000s_for_equiv_clust,
+               node.color="role", 
+               node.size=degree(wars_1000s_for_equiv_clust, gmode="graph"),
+               node.label = "vertex.names",
+               size.legend="Node Degree",
+               label.size= 1,
+               node.alpha = .5,
+               max_size	=5,
+                arrow.size=3,
+               arrow.gap	=0.01
+)
+
+```
+
+#### Network 1000s Plot igraph
+
+```{r, echo=FALSE}
+
+plot.igraph(wars_in_1000s.ig, 
+            vertex.color=V(wars_in_1000s.ig)$role,
+            edge.arrow.size=.2,
+            vertex.size=2+(igraph::degree(wars_in_1000s.ig)*0.1), vertex.label.color="black", vertex.label.cex=0.3, vertex.label.dist=2,  
+            xlim=c(-1 ,1),
+            ylim=c(-1, 1 ))
+
+```
+
+### Network Graphing 1100s
+
+```{r, echo=FALSE}
+
+wars_1100s_for_equiv_clust<-as.network(wars_in_1100s_edgelist, matrix.type = "edgelist", directed = TRUE,  hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = FALSE, vertex.attrnames=wars_in_1100s_network%v%"vertex.names")
+
+war_1100s.se_hamming<-equiv.clust(wars_1100s_for_equiv_clust, equiv.fun="sedist", method="hamming", mode="graph")
+
+plot(war_1100s.se_hamming, labels=war_1100s.se_hamming$glabels,  cex=0.3, main="Cluster Dendrogram 1100s (Hamming)")
+
+```
+
+```{r, echo=FALSE}
+
+war_1100s.se_average<-equiv.clust(wars_1100s_for_equiv_clust, equiv.fun="sedist", cluster.method="average", method="hamming", mode="graph")
+
+plot(war_1100s.se_average, labels=war_1100s.se_average$glabels,  
+     cex=0.3, main="Cluster Dendrogram 1100s Hamming (Average)")
+
+```
+
+```{r, echo=FALSE}
+
+war_1100s.se_single<-equiv.clust(wars_1100s_for_equiv_clust, equiv.fun="sedist", cluster.method="single", method="hamming", mode="graph")
+
+plot(war_1100s.se_single, labels=war_1100s.se_single$glabels,  
+     cex=0.3, main="Cluster Dendrogram 1100s Hamming (Single)")
+
+```
+
+```{r, echo=FALSE}
+
+war_1100s.se_ward<-equiv.clust(wars_1100s_for_equiv_clust, equiv.fun="sedist", cluster.method="ward.D", method="hamming", mode="graph")
+
+plot(war_1100s.se_ward, labels=war_1100s.se_ward$glabels,  
+     cex=0.3, main="Cluster Dendrogram 1000s Hamming (ward.D)")
+
+```
+
+```{r, echo=FALSE}
+
+#blockmodel and select partitions
+blk_mod_2<-blockmodel(wars_1100s_for_equiv_clust, war_1100s.se_hamming, k=5)
+#assign block membership to vertex attribute
+V(wars_in_1100s.ig)$role <- blk_mod_2$block.membership[match(V(wars_in_1100s.ig)$name,blk_mod_2$plabels)]
+wars_in_1100s_network%v%"role"<- blk_mod_2$block.membership[match(wars_in_1100s_network%v%"vertex.names", blk_mod_2$glabels)]
+
+```
+
+#### Network 1100s Plot Grouping Determined with No Cluster Method
 
 ```{r, echo=FALSE}
 
 set.seed(2)
 #blockmodel and select partitions
-blk_mod_2<-blockmodel(pls_work_2, flomarr.se_2, k=5)
+blk_mod_2<-blockmodel(wars_1100s_for_equiv_clust, war_1100s.se_hamming, k=5)
 #assign block membership to vertex attribute
-pls_work_2%v%"role"<-blk_mod_2$block.membership[match(pls_work_2%v%"vertex.names", blk_mod_2$glabels)]
+wars_1100s_for_equiv_clust%v%"role" <- blk_mod_2$block.membership[match(wars_1100s_for_equiv_clust%v%"vertex.names", blk_mod_2$glabels)]
 #plot network using "role" to color nodes: statnet
-GGally::ggnet2(pls_work_2,
+GGally::ggnet2(wars_1100s_for_equiv_clust,
                node.color="role", 
-               node.size=degree(pls_work_2, gmode="graph"),
+               node.size=degree(wars_1100s_for_equiv_clust, gmode="graph"),
                node.label = "vertex.names",
                size.legend="Node Degree",
                label.size= 1,
@@ -549,6 +692,88 @@ GGally::ggnet2(pls_work_2,
                arrow.gap	=0.01
                )
 ```
+
+#### Network 1100s Plot Grouping Determined with the Average Cluster Method
+
+```{r, echo=FALSE}
+set.seed(2)
+#blockmodel and select partitions
+blk_mod_2<-blockmodel(wars_1100s_for_equiv_clust, war_1100s.se_average, k=5)
+#assign block membership to vertex attribute
+wars_1100s_for_equiv_clust%v%"role" <- blk_mod_2$block.membership[match(wars_1100s_for_equiv_clust%v%"vertex.names", blk_mod_2$glabels)]
+#plot network using "role" to color nodes: statnet
+GGally::ggnet2(wars_1100s_for_equiv_clust,
+               node.color="role", 
+               node.size=degree(wars_1100s_for_equiv_clust, gmode="graph"),
+               node.label = "vertex.names",
+               size.legend="Node Degree",
+               label.size= 1,
+               node.alpha = .5,
+               max_size	=5,
+                arrow.size=3,
+               arrow.gap	=0.01
+)
+
+```
+
+#### Network 1100s Plot Grouping Determined with the Single Cluster Method
+
+```{r, echo=FALSE}
+set.seed(2)
+#blockmodel and select partitions
+blk_mod_2<-blockmodel(wars_1100s_for_equiv_clust, war_1100s.se_single, k=5)
+#assign block membership to vertex attribute
+wars_1100s_for_equiv_clust%v%"role" <- blk_mod_2$block.membership[match(wars_1100s_for_equiv_clust%v%"vertex.names", blk_mod_2$glabels)]
+#plot network using "role" to color nodes: statnet
+GGally::ggnet2(wars_1100s_for_equiv_clust,
+               node.color="role", 
+               node.size=degree(wars_1100s_for_equiv_clust, gmode="graph"),
+               node.label = "vertex.names",
+               size.legend="Node Degree",
+               label.size= 1,
+               node.alpha = .5,
+               max_size	=5,
+                arrow.size=3,
+               arrow.gap	=0.01
+)
+
+```
+
+#### Network 1100s Plot Grouping Determined with the Ward.D Cluster Method
+
+```{r, echo=FALSE}
+set.seed(2)
+#blockmodel and select partitions
+blk_mod_2<-blockmodel(wars_1100s_for_equiv_clust, war_1100s.se_ward, k=5)
+#assign block membership to vertex attribute
+wars_1100s_for_equiv_clust%v%"role" <- blk_mod_2$block.membership[match(wars_1000s_for_equiv_clust%v%"vertex.names", blk_mod_2$glabels)]
+#plot network using "role" to color nodes: statnet
+GGally::ggnet2(wars_1100s_for_equiv_clust,
+               node.color="role", 
+               node.size=degree(wars_1100s_for_equiv_clust, gmode="graph"),
+               node.label = "vertex.names",
+               size.legend="Node Degree",
+               label.size= 1,
+               node.alpha = .5,
+               max_size	=5,
+                arrow.size=3,
+               arrow.gap	=0.01
+)
+
+```
+
+#### Network 1100s Plot igraph
+
+```{r, echo=FALSE}
+
+plot.igraph(wars_in_1100s.ig, 
+            vertex.color=V(wars_in_1100s.ig)$role,
+            edge.arrow.size=.2,
+            vertex.size=2+(igraph::degree(wars_in_1100s.ig)*0.1), vertex.label.color="black", vertex.label.cex=0.3, vertex.label.dist=2, xlim=c(-1 ,1),
+            ylim=c(-1, 1 ))
+
+```
+
 ```{r, echo=FALSE}
 
 pls_work_3<-as.network(wars_in_1200s_edgelist, matrix.type = "edgelist", directed = TRUE,  hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = FALSE, vertex.attrnames=wars_in_1200s_network%v%"vertex.names")
@@ -591,6 +816,17 @@ GGally::ggnet2(pls_work_3,
 
 ```{r, echo=FALSE}
 
+plot.igraph(wars_in_1200s.ig, 
+            vertex.color=V(wars_in_1200s.ig)$role,
+            edge.arrow.size=.2,
+            vertex.size=2+(igraph::degree(wars_in_1200s.ig)*0.1), vertex.label.color="black", vertex.label.cex=0.3, vertex.label.dist=2,
+            xlim=c(-1 ,1),
+            ylim=c(-1, 1 ))
+
+```
+
+```{r, echo=FALSE}
+
 plot.block<-function(x=blk_mod, main=NULL, cex.lab=1){
   plot.sociomatrix(x$blocked.data, labels=list(x$plabels,x$plabels),
                    main=main, drawlines = FALSE, cex.lab=cex.lab)
@@ -616,6 +852,12 @@ plot.block(blk_mod_2, cex.lab=.35)
 ```{r, echo=FALSE}
 
 plot.block(blk_mod_3, cex.lab=.35)
+
+```
+
+### Inspecting Clustering Methods
+
+```{r}
 
 ```
 
