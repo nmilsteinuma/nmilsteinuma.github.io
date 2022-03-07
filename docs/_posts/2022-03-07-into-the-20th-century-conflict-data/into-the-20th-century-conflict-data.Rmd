@@ -27,19 +27,29 @@ library(intergraph)
 library(knitr)
 library(GGally)
 library(aRtsy)
+library(stringr)
+
+```
+
+```{r}
+
+Wars_in_latter_half_of_20th <- read_excel("~/Desktop/Spring 2022/Networks/Wars_in_latter_half_of_20th.xlsx")
+
+Wars_in_latter_half_of_20th$In<-str_trim(Wars_in_latter_half_of_20th$In, side = c("left"))
+
+Wars_in_latter_half_of_20th$Out<-str_trim(Wars_in_latter_half_of_20th$Out, side = c("left"))
+
 ```
 
 
 ```{r, echo=FALSE}
 
-Wars_in_latter_half_of_20th <- read_excel("~/Desktop/Spring 2022/Networks/Wars_in_latter_half_of_20th.xlsx")
+
 
 Wars_in_latter_half_of_20th$"Out" <- sapply(Wars_in_latter_half_of_20th$"Out",
                                     function(x) { gsub("[\r\n]", "", x) })
 Wars_in_latter_half_of_20th$"In"<- sapply(Wars_in_latter_half_of_20th$"In",
                                     function(x) { gsub("[\r\n]", "", x) })
-
-
 
 ```
 
@@ -54,6 +64,13 @@ Wars_in_latter_half_of_20th.ig<-graph_from_data_frame(Wars_in_latter_half_of_20t
 Wars_in_latter_half_of_20th_network <- asNetwork(Wars_in_latter_half_of_20th.ig)
 
 ```
+
+```{r, echo=FALSE}
+
+print(Wars_in_latter_half_of_20th_network)
+
+```
+
 
 ```{r, echo=FALSE}
 
@@ -89,6 +106,91 @@ Wars_in_latter_half_of_20th_network.nodes.stat$dc<-1-diag(Wars_20th_sq)/rowSums(
 Wars_in_latter_half_of_20th_network.nodes.stat$dc<-ifelse(is.nan(Wars_in_latter_half_of_20th_network.nodes.stat$dc),1,Wars_in_latter_half_of_20th_network.nodes.stat$dc)
 #Calculate received eigenvalue centrality
 Wars_in_latter_half_of_20th_network.nodes.stat$eigen.dc<-Wars_in_latter_half_of_20th_network.nodes.stat$eigen*Wars_in_latter_half_of_20th_network.nodes.stat$dc
+
+```
+
+```{r}
+
+temp<-data.frame(brokerage(Wars_in_latter_half_of_20th_network, cl = Wars_in_latter_half_of_20th_network.nodes.stat$totdegree)$z.nli)
+
+Wars_in_latter_half_of_20th_network.nodes.stat_2 <- Wars_in_latter_half_of_20th_network.nodes.stat %>%
+  mutate(broker.tot = temp$t,
+         broker.coord = temp$w_I,
+         broker.itin = temp$w_O,
+         broker.rep = temp$b_IO,
+         broker.gate = temp$b_OI,
+         broker.lia = temp$b_O)
+```
+
+```{r}
+(Wars_in_latter_half_of_20th_network.nodes.stat_2%>%
+  arrange(desc(totdegree))%>%
+  slice(1:100))[,c(1,2)] %>%kable()
+```
+
+
+```{r}
+(Wars_in_latter_half_of_20th_network.nodes.stat_2%>%
+  arrange(desc(totdegree))%>%
+  slice(1:10))[,c(1,2)] %>%kable()
+```
+
+```{r}
+(Wars_in_latter_half_of_20th_network.nodes.stat_2%>%
+  arrange(desc(indegree))%>%
+  slice(1:10))[,c(1,3)] %>%kable()
+```
+
+```{r}
+(Wars_in_latter_half_of_20th_network.nodes.stat_2%>%
+  arrange(desc(indegree))%>%
+  slice(1:10))[,c(1,3)] %>%kable()
+```
+
+```{r}
+
+(Wars_in_latter_half_of_20th_network.nodes.stat_2%>%
+  arrange(desc(outdegree))%>%
+  slice(1:10))[,c(1,4)] %>%kable()
+
+```
+
+```{r}
+
+(Wars_in_latter_half_of_20th_network.nodes.stat_2%>%
+  arrange(desc(broker.coord))%>%
+  slice(0:5))[,c(1,12)] %>%kable()
+
+```
+
+```{r}
+
+(Wars_in_latter_half_of_20th_network.nodes.stat_2%>%
+  arrange(desc(broker.itin))%>%
+  slice(0:5))[,c(1,13)] %>%kable()
+
+```
+
+```{r, echo=FALSE}
+
+(Wars_in_latter_half_of_20th_network.nodes.stat_2%>%
+  arrange(desc(broker.rep))%>%
+  slice(0:5))[,c(1,14)] %>%kable()
+
+```
+
+```{r, echo=FALSE}
+
+(Wars_in_latter_half_of_20th_network.nodes.stat_2%>%
+  arrange(desc(broker.gate))%>%
+  slice(0:5))[,c(1,15)] %>%kable()
+
+```
+```{r, echo=FALSE}
+
+(Wars_in_latter_half_of_20th_network.nodes.stat_2%>%
+  arrange(desc(broker.lia))%>%
+  slice(0:5))[,c(1,16)] %>%kable()
 
 ```
 
