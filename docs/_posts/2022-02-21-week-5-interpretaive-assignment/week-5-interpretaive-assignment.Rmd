@@ -855,10 +855,111 @@ plot.block(blk_mod_3, cex.lab=.35)
 
 ```
 
-### Inspecting Clustering Methods
+### Into the 20th Century
 
-```{r}
 
+```{r, echo=FALSE}
+
+Wars_in_latter_half_of_20th <- read_excel("~/Desktop/Spring 2022/Networks/Wars_in_latter_half_of_20th.xlsx")
+
+Wars_in_latter_half_of_20th$"Out" <- sapply(Wars_in_latter_half_of_20th$"Out",
+                                    function(x) { gsub("[\r\n]", "", x) })
+Wars_in_latter_half_of_20th$"In"<- sapply(Wars_in_latter_half_of_20th$"In",
+                                    function(x) { gsub("[\r\n]", "", x) })
+
+
+
+```
+
+```{r, echo=FALSE}
+Wars_in_latter_half_of_20th_edgelist <- as.matrix(Wars_in_latter_half_of_20th)
+
+Wars_in_latter_half_of_20th_edgelist_network_edgelist <- graph.edgelist(Wars_in_latter_half_of_20th_edgelist, directed=TRUE)
+
+Wars_in_latter_half_of_20th.ig<-graph_from_data_frame(Wars_in_latter_half_of_20th)
+
+Wars_in_latter_half_of_20th_network <- asNetwork(Wars_in_latter_half_of_20th.ig)
+
+```
+
+```{r, echo=FALSE}
+
+Wars_in_latter_half_of_20th_network.nodes.stat<-data.frame(name=Wars_in_latter_half_of_20th_network%v%"vertex.names",
+    totdegree=sna::degree(Wars_in_latter_half_of_20th_network),
+    indegree=sna::degree(Wars_in_latter_half_of_20th_network, cmode="indegree"),
+    outdegree=sna::degree(Wars_in_latter_half_of_20th_network, cmode="outdegree"))
+
+Wars_in_latter_half_of_20th_network.nodes.stat$eigen<-evcent(Wars_in_latter_half_of_20th_network)
+
+Wars_in_latter_half_of_20th_network.nodes.stat$close<-sna::closeness(Wars_in_latter_half_of_20th_network, cmode="suminvdir")
+
+Wars_20th<-as.matrix(as_adjacency_matrix(Wars_in_latter_half_of_20th.ig))
+
+#square the adjacency matrix
+
+Wars_20th_sq<-t(Wars_20th) %*% Wars_20th
+
+#Calculate the proportion of reflected centrality.
+
+Wars_in_latter_half_of_20th_network.nodes.stat$rc<-diag(Wars_20th_sq)/rowSums(Wars_20th_sq)
+
+#replace missing values with 0
+
+Wars_in_latter_half_of_20th_network.nodes.stat$rc<-ifelse(is.nan(Wars_in_latter_half_of_20th_network.nodes.stat$rc),0,Wars_in_latter_half_of_20th_network.nodes.stat$rc)
+
+#Calculate received eigenvalue centrality
+Wars_in_latter_half_of_20th_network.nodes.stat$eigen.rc<-Wars_in_latter_half_of_20th_network.nodes.stat$eigen*Wars_in_latter_half_of_20th_network.nodes.stat$rc
+
+#Calculate the proportion of derived centrality.
+Wars_in_latter_half_of_20th_network.nodes.stat$dc<-1-diag(Wars_20th_sq)/rowSums(Wars_20th_sq)
+#replace missing values with 0
+Wars_in_latter_half_of_20th_network.nodes.stat$dc<-ifelse(is.nan(Wars_in_latter_half_of_20th_network.nodes.stat$dc),1,Wars_in_latter_half_of_20th_network.nodes.stat$dc)
+#Calculate received eigenvalue centrality
+Wars_in_latter_half_of_20th_network.nodes.stat$eigen.dc<-Wars_in_latter_half_of_20th_network.nodes.stat$eigen*Wars_in_latter_half_of_20th_network.nodes.stat$dc
+
+```
+
+```{r,echo=FALSE}
+
+Wars_in_latter_half_of_20th_for_equiv_clust<-as.network(Wars_in_latter_half_of_20th_edgelist, matrix.type = "edgelist", directed = TRUE,  hyper = FALSE, loops = FALSE, multiple = FALSE,
+                                       bipartite = FALSE, vertex.attrnames=Wars_in_latter_half_of_20th_network%v%"vertex.names")
+
+Wars_in_latter_half_of_20th.se_hamming<-equiv.clust(Wars_in_latter_half_of_20th_for_equiv_clust, equiv.fun="sedist", method="hamming", mode="graph")
+
+```
+
+```{r, echo=FALSE}
+
+#blockmodel and select partitions
+blk_mod_equiv_clust<-blockmodel(Wars_in_latter_half_of_20th_for_equiv_clust, Wars_in_latter_half_of_20th.se_hamming, k=5)
+#assign block membership to vertex attribute
+V(Wars_in_latter_half_of_20th.ig)$role <- blk_mod_equiv_clust$block.membership[match(V(Wars_in_latter_half_of_20th.ig)$name, blk_mod_equiv_clust$plabels)]
+Wars_in_latter_half_of_20th_network%v%"role"<- blk_mod_equiv_clust$block.membership[match(Wars_in_latter_half_of_20th_network%v%"vertex.names", blk_mod_equiv_clust$glabels)]
+
+```
+
+
+```{r, echo=FALSE}
+
+set.seed(2)
+#blockmodel and select partitions
+blk_mod_equiv_clust<-blockmodel(Wars_in_latter_half_of_20th_for_equiv_clust, Wars_in_latter_half_of_20th.se_hamming, k=5)
+#assign block membership to vertex attribute
+Wars_in_latter_half_of_20th_for_equiv_clust%v%"role" <- blk_mod_equiv_clust$block.membership[match(Wars_in_latter_half_of_20th_for_equiv_clust%v%"vertex.names", blk_mod_equiv_clust$glabels)]
+#plot network using "role" to color nodes: statnet
+GGally::ggnet2(Wars_in_latter_half_of_20th_for_equiv_clust,
+               node.color="role", 
+               node.size=0.7,
+                  edge.size=0.1,
+
+               node.label = "vertex.names",
+               label.size= 0.8,
+               node.alpha = .5,
+               edge.alpha = .5,
+               max_size	=5,
+              arrow.size=2,
+               arrow.gap	=0.01
+               )
 ```
 
 (information regarding the meaning of each type of brokerage was acquired from https://edis.ifas.ufl.edu/publication/WC197)
