@@ -117,7 +117,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   <!--/radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-resource-manifest">
-  {"type":"NULL"}
+  {"type":"character","attributes":{},"value":["an-attempt-to-scrape-wikipedia_files/anchor-4.2.2/anchor.min.js","an-attempt-to-scrape-wikipedia_files/bowser-1.9.3/bowser.min.js","an-attempt-to-scrape-wikipedia_files/distill-2.2.21/template.v2.js","an-attempt-to-scrape-wikipedia_files/figure-html5/unnamed-chunk-2-1.png","an-attempt-to-scrape-wikipedia_files/header-attrs-2.11/header-attrs.js","an-attempt-to-scrape-wikipedia_files/jquery-3.6.0/jquery-3.6.0.js","an-attempt-to-scrape-wikipedia_files/jquery-3.6.0/jquery-3.6.0.min.js","an-attempt-to-scrape-wikipedia_files/jquery-3.6.0/jquery-3.6.0.min.map","an-attempt-to-scrape-wikipedia_files/popper-2.6.0/popper.min.js","an-attempt-to-scrape-wikipedia_files/tippy-6.2.7/tippy-bundle.umd.min.js","an-attempt-to-scrape-wikipedia_files/tippy-6.2.7/tippy-light-border.css","an-attempt-to-scrape-wikipedia_files/tippy-6.2.7/tippy.css","an-attempt-to-scrape-wikipedia_files/tippy-6.2.7/tippy.umd.min.js","an-attempt-to-scrape-wikipedia_files/webcomponents-2.0.0/webcomponents.js"]}
   </script>
   <!--radix_placeholder_navigation_in_header-->
   <!--/radix_placeholder_navigation_in_header-->
@@ -1438,7 +1438,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </script>
 
   <!--/radix_placeholder_distill-->
-  <script src="an-attempt-to-scrape-wikipedia_files/header-attrs-2.11/header-attrs.js"></script>
+  <script src="an-attempt-to-scrape-wikipedia_files/header-attrs-2.12/header-attrs.js"></script>
   <script src="an-attempt-to-scrape-wikipedia_files/jquery-3.6.0/jquery-3.6.0.min.js"></script>
   <script src="an-attempt-to-scrape-wikipedia_files/popper-2.6.0/popper.min.js"></script>
   <link href="an-attempt-to-scrape-wikipedia_files/tippy-6.2.7/tippy.css" rel="stylesheet" />
@@ -1488,8 +1488,12 @@ Wikipedia article to get the Same Data I had to Make by Hand.</p></p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/trinker/textreadr'>textreadr</a></span><span class='op'>)</span>
 <span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://tidyr.tidyverse.org'>tidyr</a></span><span class='op'>)</span>
 <span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://rvest.tidyverse.org/'>rvest</a></span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://koenderks.github.io/aRtsy/'>aRtsy</a></span><span class='op'>)</span>
 </code></pre>
 </div>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<p><img src="an-attempt-to-scrape-wikipedia_files/figure-html5/unnamed-chunk-2-1.png" width="624" /></p>
 </div>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
@@ -1662,7 +1666,7 @@ Wikipedia article to get the Same Data I had to Make by Hand.</p></p>
 <span class='va'>wars_1500s_subset</span>
 </code></pre>
 </div>
-<pre><code># A tibble: 160 × 5
+<pre><code># A tibble: 161 × 5
    Start Finish `Name of conflict`           Belligerents Belligerents
    &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;                        &lt;chr&gt;        &lt;chr&gt;       
  1 Start Finish &quot;Name of conflict&quot;           Victorious … &quot;Defeated p…
@@ -1675,7 +1679,7 @@ Wikipedia article to get the Same Data I had to Make by Hand.</p></p>
  8 1505  1517   &quot;Portuguese–Mamluk naval wa… Portugal     &quot;Mamluk Sul…
  9 1507  1508   &quot;Third Muscovite–Lithuanian… Grand Duchy… &quot;Grand Duch…
 10 1508  1516   &quot;War of the League of Cambr… 1508–10: Pa… &quot;1508–10: V…
-# … with 150 more rows</code></pre>
+# … with 151 more rows</code></pre>
 </div>
 <div class="sourceCode" id="cb8"><pre
 class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
