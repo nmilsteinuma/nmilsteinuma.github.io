@@ -340,6 +340,7 @@ library(igraph)
 
 net.js <- Wars_in_latter_half_of_20th.ig
 graph_attr(net.js, "layout") <- NULL 
+
 ```
 
 ```{r}
