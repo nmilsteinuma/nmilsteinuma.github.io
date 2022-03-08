@@ -4,7 +4,6 @@ description: |
   A brief analysis of wars in 1000s, 1100s, and 1200s comparing faction centrality and brokerage.
 author:
   - name: Noah Milstein
-    url: {}
 date: 2022-02-21
 output:
   distill::distill_article:

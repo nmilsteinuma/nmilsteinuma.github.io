@@ -128,7 +128,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   <!--radix_placeholder_rmarkdown_metadata-->
 
 <script type="text/json" id="radix-rmarkdown-metadata">
-{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","author","date","output","citation_url","canonical_url"]}},"value":[{"type":"character","attributes":{},"value":["Into the 20th Century (Conflict Data)"]},{"type":"character","attributes":{},"value":["In this post I begin my analysis of the 20th century conflicts dataset."]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","url"]}},"value":[{"type":"character","attributes":{},"value":["Noah Milstein"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":[]}},"value":[]}]}]},{"type":"character","attributes":{},"value":["2022-03-07"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["self_contained"]}},"value":[{"type":"logical","attributes":{},"value":[false]}]}]},{"type":"character","attributes":{},"value":["https://nmilsteinuma.github.io/posts/2022-03-07-into-the-20th-century-conflict-data/"]},{"type":"character","attributes":{},"value":["https://nmilsteinuma.github.io/posts/2022-03-07-into-the-20th-century-conflict-data/"]}]}
+{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","author","date","output","citation_url","canonical_url"]}},"value":[{"type":"character","attributes":{},"value":["Into the 20th Century (Conflict Data)"]},{"type":"character","attributes":{},"value":["In this post I begin my analysis of the 20th century conflicts dataset."]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name"]}},"value":[{"type":"character","attributes":{},"value":["Noah Milstein"]}]}]},{"type":"character","attributes":{},"value":["2022-03-07"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["self_contained"]}},"value":[{"type":"logical","attributes":{},"value":[false]}]}]},{"type":"character","attributes":{},"value":["https://nmilsteinuma.github.io/posts/2022-03-07-into-the-20th-century-conflict-data/"]},{"type":"character","attributes":{},"value":["https://nmilsteinuma.github.io/posts/2022-03-07-into-the-20th-century-conflict-data/"]}]}
 </script>
 <!--/radix_placeholder_rmarkdown_metadata-->
   
@@ -2081,7 +2081,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <!--radix_placeholder_front_matter-->
 
 <script id="distill-front-matter" type="text/json">
-{"title":"Into the 20th Century (Conflict Data)","description":"In this post I begin my analysis of the 20th century conflicts dataset.","authors":[{"author":"Noah Milstein","authorURL":{},"affiliation":"&nbsp;","affiliationURL":"#","orcidID":""}],"publishedDate":"2022-03-07T00:00:00.000-05:00","citationText":"Milstein, 2022"}
+{"title":"Into the 20th Century (Conflict Data)","description":"In this post I begin my analysis of the 20th century conflicts dataset.","authors":[{"author":"Noah Milstein","authorURL":"#","affiliation":"&nbsp;","affiliationURL":"#","orcidID":""}],"publishedDate":"2022-03-07T00:00:00.000-05:00","citationText":"Milstein, 2022"}
 </script>
 
 <!--/radix_placeholder_front_matter-->
@@ -2112,7 +2112,7 @@ dataset.</p></p>
 </div>
 
 <div class="d-byline">
-  Noah Milstein true 
+  Noah Milstein  
   
 <br/>2022-03-07
 </div>
@@ -2823,14 +2823,14 @@ dataset.</p></p>
 </div>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>net.js</span> <span class='op'>&lt;-</span> <span class='va'>Wars_in_latter_half_of_20th.ig</span>
-<span class='fu'><a href='https://rdrr.io/pkg/igraph/man/graph_attr.html'>graph_attr</a></span><span class='op'>(</span><span class='va'>net.js</span>, <span class='st'>"layout"</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='cn'>NULL</span> 
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'>#net.js &lt;- Wars_in_latter_half_of_20th.ig</span>
+<span class='co'>#graph_attr(net.js, "layout") &lt;- NULL </span>
 </code></pre>
 </div>
 </div>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>gjs</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/threejs/man/graphjs.html'>graphjs</a></span><span class='op'>(</span><span class='va'>net.js</span>, main<span class='op'>=</span><span class='st'>"Cold War Interactive Network"</span>, bg<span class='op'>=</span><span class='st'>"gray10"</span>, vertex.size<span class='op'>=</span><span class='fl'>0.5</span>, showLabels<span class='op'>=</span><span class='cn'>T</span>, vertex.label <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/igraph/man/V.html'>V</a></span><span class='op'>(</span><span class='va'>net.js</span><span class='op'>)</span><span class='op'>$</span><span class='va'>name</span>, stroke<span class='op'>=</span><span class='cn'>F</span>, curvature<span class='op'>=</span><span class='fl'>0.1</span>, attraction<span class='op'>=</span><span class='fl'>0.9</span>, repulsion<span class='op'>=</span><span class='fl'>0.7</span>, opacity<span class='op'>=</span><span class='fl'>0.9</span><span class='op'>)</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'>#gjs &lt;- graphjs(net.js, main="Cold War Interactive Network", bg="gray10", #vertex.size=0.5, showLabels=T, vertex.label = V(net.js)$name, stroke=F, curvature=0.1, #attraction=0.9, repulsion=0.7, opacity=0.9)</span>
 <span class='co'>#print(gjs)</span>
 <span class='co'>#saveWidget(gjs, file="Media-Network-gjs.html")</span>
 <span class='co'>#browseURL("Media-Network-gjs.html")</span>

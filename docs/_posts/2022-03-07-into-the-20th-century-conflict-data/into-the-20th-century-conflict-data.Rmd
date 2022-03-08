@@ -4,7 +4,6 @@ description: |
   In this post I begin my analysis of the 20th century conflicts dataset.
 author:
   - name: Noah Milstein
-    url: {}
 date: 2022-03-07
 output:
   distill::distill_article:
@@ -338,15 +337,14 @@ library(igraph)
 
 ```{r}
 
-net.js <- Wars_in_latter_half_of_20th.ig
-graph_attr(net.js, "layout") <- NULL 
+#net.js <- Wars_in_latter_half_of_20th.ig
+#graph_attr(net.js, "layout") <- NULL 
 
 ```
 
 ```{r}
 
-
-gjs <- graphjs(net.js, main="Cold War Interactive Network", bg="gray10", vertex.size=0.5, showLabels=T, vertex.label = V(net.js)$name, stroke=F, curvature=0.1, attraction=0.9, repulsion=0.7, opacity=0.9)
+#gjs <- graphjs(net.js, main="Cold War Interactive Network", bg="gray10", #vertex.size=0.5, showLabels=T, vertex.label = V(net.js)$name, stroke=F, curvature=0.1, #attraction=0.9, repulsion=0.7, opacity=0.9)
 #print(gjs)
 #saveWidget(gjs, file="Media-Network-gjs.html")
 #browseURL("Media-Network-gjs.html")
