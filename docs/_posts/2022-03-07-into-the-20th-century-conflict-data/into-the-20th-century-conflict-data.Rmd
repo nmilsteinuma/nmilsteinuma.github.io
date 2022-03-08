@@ -1,5 +1,5 @@
 ---
-title: "Into the 20th Century (Conflict Data)"
+title: "Into the 20th Century (Conflict Data) Homework 6"
 description: |
   In this post I begin my analysis of the 20th century conflicts dataset.
 author:
@@ -11,8 +11,7 @@ output:
     self_contained: false
 ---
 
-
-```{r, echo=FALSE}
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
 library(corrr)
 library(readxl)
 library(igraph)
@@ -32,20 +31,25 @@ library(stringr)
 
 ```
 
-```{r}
 
-Wars_in_latter_half_of_20th <- read_excel("~/Desktop/Spring 2022/Networks/Wars_in_latter_half_of_20th.xlsx")
+### Loading and Summarizing Data
 
-Wars_in_latter_half_of_20th$In<-str_trim(Wars_in_latter_half_of_20th$In, side = c("left"))
+**Loading:** Similarly to the datasets I used for the prior assignments, this one will involve the use of a conflict dataset. Given the relative success of the analysis techniques on dyadic conflict in the 9th, 10th, and 11th centuries I decided to try it on a much more recent period, that being the height of the cold war beginning in 1945 and officially ending with the dissolution of the Soviet Union in 1992, however the dataset in question ends in 1989.
 
-Wars_in_latter_half_of_20th$Out<-str_trim(Wars_in_latter_half_of_20th$Out, side = c("left"))
+```{r,echo=FALSE}
+
+Wars_in_latter_half_of_20th <- 
+  read_excel("~/Desktop/Spring 2022/Networks/Wars_in_latter_half_of_20th.xlsx")
+
+Wars_in_latter_half_of_20th$In <- 
+  str_trim(Wars_in_latter_half_of_20th$In, side = c("left"))
+
+Wars_in_latter_half_of_20th$Out <- 
+  str_trim(Wars_in_latter_half_of_20th$Out, side = c("left"))
 
 ```
 
-
 ```{r, echo=FALSE}
-
-
 
 Wars_in_latter_half_of_20th$"Out" <- sapply(Wars_in_latter_half_of_20th$"Out",
                                     function(x) { gsub("[\r\n]", "", x) })
@@ -66,6 +70,10 @@ Wars_in_latter_half_of_20th_network <- asNetwork(Wars_in_latter_half_of_20th.ig)
 
 ```
 
+### Interpretation and Inital Analysis
+
+**Initial Interpretation:** After briefly cleaning the dataset to remove excess spaces resulting in nations, or factions being counted twice, I then converted my data in 4 different kinds of network objects, being a matrix, edgelist graph, igraph, and network. A ggplot object of the initial network can be seen below.
+
 ```{r, echo=FALSE, warning=FALSE}
 
 set.seed(777)
@@ -77,14 +85,17 @@ ggplot(Wars_in_latter_half_of_20th_network, aes(x = x, y = y, xend = xend, yend 
   theme_blank()
 
 ```
+#### Continued Visualization
 
-```{r, warning=FALSE}
+**Visuals** Though not necessarily practical for understanding the nature of the network the two visualization below are used to exhibit the increased complexity of this dataset relative to prior ones, as in previous models of conflict there were under 200 nodes (or factions) being visualized, as will be illustrated in subsequent analysis there were about 600 nations, rebel groups, factions, and warring parties considered direct belligerents in this dataset. It is also important to note that this network does not include direct military **support** that did did not constitute direct involvement, this will later be included as a grouping dummy variable, but in its current form military support that is not directly intervention will not be considered.
+
+```{r, warning=FALSE, message=FALSE}
 set.seed(2)
 
 ggraph(Wars_in_latter_half_of_20th_network, 'dendrogram', circular = TRUE) + 
     geom_edge_elbow() + 
     coord_fixed() +
-    geom_edge_link0(edge_alpha = 0.05)+
+    geom_edge_link0(edge_alpha = 0.001)+
     geom_node_text(aes(label = name), size=1, repel=FALSE)
 
 
@@ -97,6 +108,11 @@ ggraph(Wars_in_latter_half_of_20th_network, layout = "treemap") +
 
 ```
 
+interpret the data, identifying at least two results of interest. Questions you may want to consider include (but are not limited to) the following. Calculate structural equivalence models for your network data, and use clustering and blockmodeling to identify nodes in similar positions. Can you find any patterns in the data, and do the blocks “make sense.” What types of behavior would we expect to see (or do we see) on the basis of equivalence and block assignment? Do different clustering methods and/or the use of weights make a difference? How much insight can you get from plotting the block role assignments. You may also want to see if nodes that are equivalent (and/or belong to same block) are similar on measures of centrality introduced in earlier weeks.
+
+#### Inital Analysis and Interpretation
+
+**Network Summary:** As can be seen by the network print below the conflict dataset comprises 599 nodes, factions, or belligerents that are **direct** combatants in each conflict, these are directed with an in-degree being a lost war, and an out-degree being a won war. There are loops as many factions fight each other multiple times and amongst different sets of allies losing some wars and winning others.
 
 ```{r, echo=FALSE}
 
@@ -155,17 +171,20 @@ Wars_in_latter_half_of_20th_network.nodes.stat_2 <- Wars_in_latter_half_of_20th_
          broker.lia = temp$b_O)
 ```
 
+#### Brokerage and Network Attributes
+
+**Brokerage Scores:** In this case brokerage scores are calculated using the function brokerage() and appended to the data frame with the these measures
+
+##### Total Degree
+
 ```{r}
+
 (Wars_in_latter_half_of_20th_network.nodes.stat_2%>%
   arrange(desc(totdegree))%>%
   slice(1:10))[,c(1,2)] %>%kable()
 ```
 
-```{r}
-(Wars_in_latter_half_of_20th_network.nodes.stat_2%>%
-  arrange(desc(indegree))%>%
-  slice(1:10))[,c(1,3)] %>%kable()
-```
+##### In-Degree
 
 ```{r}
 (Wars_in_latter_half_of_20th_network.nodes.stat_2%>%
@@ -173,13 +192,14 @@ Wars_in_latter_half_of_20th_network.nodes.stat_2 <- Wars_in_latter_half_of_20th_
   slice(1:10))[,c(1,3)] %>%kable()
 ```
 
-```{r}
+##### Out-Degree
 
+```{r}
 (Wars_in_latter_half_of_20th_network.nodes.stat_2%>%
   arrange(desc(outdegree))%>%
   slice(1:10))[,c(1,4)] %>%kable()
-
 ```
+
 
 ```{r}
 

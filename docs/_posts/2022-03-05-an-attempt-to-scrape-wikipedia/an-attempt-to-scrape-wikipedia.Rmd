@@ -10,18 +10,19 @@ output:
   distill::distill_article:
     self_contained: false
 ---
-```{r}
+```{r, echo=FALSE}
 library(textreadr)
 library(tidyr)
 library(rvest)
 library(aRtsy)
+library(awtools)
 ```
 
 ```{r, echo=FALSE}
 set.seed(871)
+
 canvas_polylines(colors = colorPalette("jasp"), ratio = 0.2, iterations = 500,
                  size = 0.1, resolution = 500)
-?canvas_polylines
 ```
 
 ```{r}
