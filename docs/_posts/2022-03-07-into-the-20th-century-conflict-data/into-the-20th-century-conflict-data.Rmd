@@ -4,6 +4,7 @@ description: |
   In this post I begin my analysis of the 20th century conflicts dataset.
 author:
   - name: Noah Milstein
+    url: {}
 date: 2022-03-07
 output:
   distill::distill_article:
