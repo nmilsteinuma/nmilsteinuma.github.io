@@ -117,7 +117,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   <!--/radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-resource-manifest">
-  {"type":"character","attributes":{},"value":["into-the-20th-century-conflict-data_files/anchor-4.2.2/anchor.min.js","into-the-20th-century-conflict-data_files/bowser-1.9.3/bowser.min.js","into-the-20th-century-conflict-data_files/distill-2.2.21/template.v2.js","into-the-20th-century-conflict-data_files/figure-html5/unnamed-chunk-18-1.png","into-the-20th-century-conflict-data_files/figure-html5/unnamed-chunk-20-1.png","into-the-20th-century-conflict-data_files/figure-html5/unnamed-chunk-22-1.png","into-the-20th-century-conflict-data_files/figure-html5/unnamed-chunk-28-1.png","into-the-20th-century-conflict-data_files/figure-html5/unnamed-chunk-30-1.png","into-the-20th-century-conflict-data_files/figure-html5/unnamed-chunk-5-1.png","into-the-20th-century-conflict-data_files/figure-html5/unnamed-chunk-6-1.png","into-the-20th-century-conflict-data_files/figure-html5/unnamed-chunk-7-1.png","into-the-20th-century-conflict-data_files/header-attrs-2.11/header-attrs.js","into-the-20th-century-conflict-data_files/jquery-3.6.0/jquery-3.6.0.js","into-the-20th-century-conflict-data_files/jquery-3.6.0/jquery-3.6.0.min.js","into-the-20th-century-conflict-data_files/jquery-3.6.0/jquery-3.6.0.min.map","into-the-20th-century-conflict-data_files/popper-2.6.0/popper.min.js","into-the-20th-century-conflict-data_files/tippy-6.2.7/tippy-bundle.umd.min.js","into-the-20th-century-conflict-data_files/tippy-6.2.7/tippy-light-border.css","into-the-20th-century-conflict-data_files/tippy-6.2.7/tippy.css","into-the-20th-century-conflict-data_files/tippy-6.2.7/tippy.umd.min.js","into-the-20th-century-conflict-data_files/webcomponents-2.0.0/webcomponents.js"]}
+  {"type":"character","attributes":{},"value":["into-the-20th-century-conflict-data_files/anchor-4.2.2/anchor.min.js","into-the-20th-century-conflict-data_files/bowser-1.9.3/bowser.min.js","into-the-20th-century-conflict-data_files/distill-2.2.21/template.v2.js","into-the-20th-century-conflict-data_files/figure-html5/unnamed-chunk-18-1.png","into-the-20th-century-conflict-data_files/figure-html5/unnamed-chunk-20-1.png","into-the-20th-century-conflict-data_files/figure-html5/unnamed-chunk-22-1.png","into-the-20th-century-conflict-data_files/figure-html5/unnamed-chunk-28-1.png","into-the-20th-century-conflict-data_files/figure-html5/unnamed-chunk-30-1.png","into-the-20th-century-conflict-data_files/figure-html5/unnamed-chunk-5-1.png","into-the-20th-century-conflict-data_files/figure-html5/unnamed-chunk-6-1.png","into-the-20th-century-conflict-data_files/figure-html5/unnamed-chunk-7-1.png","into-the-20th-century-conflict-data_files/header-attrs-2.11/header-attrs.js","into-the-20th-century-conflict-data_files/jquery-3.6.0/jquery-3.6.0.js","into-the-20th-century-conflict-data_files/jquery-3.6.0/jquery-3.6.0.min.js","into-the-20th-century-conflict-data_files/jquery-3.6.0/jquery-3.6.0.min.map","into-the-20th-century-conflict-data_files/popper-2.6.0/popper.min.js","into-the-20th-century-conflict-data_files/tippy-6.2.7/tippy-bundle.umd.min.js","into-the-20th-century-conflict-data_files/tippy-6.2.7/tippy-light-border.css","into-the-20th-century-conflict-data_files/tippy-6.2.7/tippy.css","into-the-20th-century-conflict-data_files/tippy-6.2.7/tippy.umd.min.js","into-the-20th-century-conflict-data_files/webcomponents-2.0.0/webcomponents.js","Media-Network-gjs.html"]}
   </script>
   <!--radix_placeholder_navigation_in_header-->
   <!--/radix_placeholder_navigation_in_header-->
@@ -1521,7 +1521,8 @@ dataset.</p></p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>ggraph</span><span class='op'>(</span><span class='va'>Wars_in_latter_half_of_20th_network</span>, layout <span class='op'>=</span> <span class='st'>"treemap"</span><span class='op'>)</span> <span class='op'>+</span> 
-  <span class='fu'>geom_node_tile</span><span class='op'>(</span><span class='fu'>aes</span><span class='op'>(</span>fill <span class='op'>=</span> <span class='va'>depth</span><span class='op'>)</span><span class='op'>)</span>
+  <span class='fu'>geom_node_tile</span><span class='op'>(</span><span class='fu'>aes</span><span class='op'>(</span>fill <span class='op'>=</span> <span class='va'>depth</span><span class='op'>)</span><span class='op'>)</span><span class='op'>+</span>    
+  <span class='fu'>geom_node_text</span><span class='op'>(</span><span class='fu'>aes</span><span class='op'>(</span>label <span class='op'>=</span> <span class='va'>name</span><span class='op'>)</span>, size<span class='op'>=</span><span class='fl'>1</span>, repel<span class='op'>=</span><span class='cn'>FALSE</span><span class='op'>)</span>
 </code></pre>
 </div>
 <p><img src="into-the-20th-century-conflict-data_files/figure-html5/unnamed-chunk-7-1.png" width="624" /></p>
@@ -2176,6 +2177,30 @@ dataset.</p></p>
 </code></pre>
 </div>
 <p><img src="into-the-20th-century-conflict-data_files/figure-html5/unnamed-chunk-30-1.png" width="624" /></p>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://bwlewis.github.io/rthreejs'>threejs</a></span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/ramnathv/htmlwidgets'>htmlwidgets</a></span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://igraph.org'>igraph</a></span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>net.js</span> <span class='op'>&lt;-</span> <span class='va'>Wars_in_latter_half_of_20th.ig</span>
+<span class='fu'><a href='https://rdrr.io/pkg/igraph/man/graph_attr.html'>graph_attr</a></span><span class='op'>(</span><span class='va'>net.js</span>, <span class='st'>"layout"</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='cn'>NULL</span> 
+</code></pre>
+</div>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>gjs</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/threejs/man/graphjs.html'>graphjs</a></span><span class='op'>(</span><span class='va'>net.js</span>, main<span class='op'>=</span><span class='st'>"Cold War Interactive Network"</span>, bg<span class='op'>=</span><span class='st'>"gray10"</span>, vertex.size<span class='op'>=</span><span class='fl'>0.5</span>, showLabels<span class='op'>=</span><span class='cn'>T</span>, vertex.label <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/igraph/man/V.html'>V</a></span><span class='op'>(</span><span class='va'>net.js</span><span class='op'>)</span><span class='op'>$</span><span class='va'>name</span>, stroke<span class='op'>=</span><span class='cn'>F</span>, curvature<span class='op'>=</span><span class='fl'>0.1</span>, attraction<span class='op'>=</span><span class='fl'>0.9</span>, repulsion<span class='op'>=</span><span class='fl'>0.7</span>, opacity<span class='op'>=</span><span class='fl'>0.9</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>gjs</span><span class='op'>)</span>
+<span class='co'>#saveWidget(gjs, file="Media-Network-gjs.html")</span>
+<span class='co'>#browseURL("Media-Network-gjs.html")</span>
+</code></pre>
+</div>
 </div>
 <div class="sourceCode" id="cb5"><pre
 class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
