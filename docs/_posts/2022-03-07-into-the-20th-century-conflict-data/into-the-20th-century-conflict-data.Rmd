@@ -13,7 +13,7 @@ output:
 
 
 ```{r, echo=FALSE}
-
+library(corrr)
 library(readxl)
 library(igraph)
 library(statnet)
@@ -22,6 +22,7 @@ library(tidyverse)
 library(ggnetwork)
 library(GGally)
 library(ggplot2)
+library(ggraph)
 library(sna)
 library(intergraph)
 library(knitr)
@@ -64,6 +65,38 @@ Wars_in_latter_half_of_20th.ig<-graph_from_data_frame(Wars_in_latter_half_of_20t
 Wars_in_latter_half_of_20th_network <- asNetwork(Wars_in_latter_half_of_20th.ig)
 
 ```
+
+```{r, echo=FALSE, warning=FALSE}
+
+set.seed(777)
+ggplot(Wars_in_latter_half_of_20th_network, aes(x = x, y = y, xend = xend, yend = yend)) +
+  geom_edges(color = "grey25", alpha = 0.25, arrow = arrow(length = unit(2, "pt"), type = "closed"))+
+  geom_nodes(color = "blue", alpha = 0.3, size = 2) +
+  geom_nodetext(aes( label = vertex.names ), size=1)+
+    ggtitle("Networks of Conflicts from 1945-1989") +
+  theme_blank()
+
+```
+
+```{r, warning=FALSE}
+set.seed(2)
+
+ggraph(Wars_in_latter_half_of_20th_network, 'dendrogram', circular = TRUE) + 
+    geom_edge_elbow() + 
+    coord_fixed() +
+    geom_edge_link0(edge_alpha = 0.05)+
+    geom_node_text(aes(label = name), size=1, repel=FALSE)
+
+
+```
+
+```{r}
+ggraph(Wars_in_latter_half_of_20th_network, layout = "treemap") + 
+  geom_node_tile(aes(fill = depth))+    
+  geom_node_text(aes(label = name), size=1, repel=FALSE)
+
+```
+
 
 ```{r, echo=FALSE}
 
@@ -121,13 +154,6 @@ Wars_in_latter_half_of_20th_network.nodes.stat_2 <- Wars_in_latter_half_of_20th_
          broker.gate = temp$b_OI,
          broker.lia = temp$b_O)
 ```
-
-```{r}
-(Wars_in_latter_half_of_20th_network.nodes.stat_2%>%
-  arrange(desc(totdegree))%>%
-  slice(1:100))[,c(1,2)] %>%kable()
-```
-
 
 ```{r}
 (Wars_in_latter_half_of_20th_network.nodes.stat_2%>%
@@ -218,14 +244,14 @@ Wars_in_latter_half_of_20th_network%v%"role"<- blk_mod_equiv_clust$block.members
 
 set.seed(2)
 #blockmodel and select partitions
-blk_mod_equiv_clust<-blockmodel(Wars_in_latter_half_of_20th_for_equiv_clust, Wars_in_latter_half_of_20th.se_hamming, k=5)
+blk_mod_equiv_clust<-blockmodel(Wars_in_latter_half_of_20th_for_equiv_clust, Wars_in_latter_half_of_20th.se_hamming, k=250)
 #assign block membership to vertex attribute
 Wars_in_latter_half_of_20th_for_equiv_clust%v%"role" <- blk_mod_equiv_clust$block.membership[match(Wars_in_latter_half_of_20th_for_equiv_clust%v%"vertex.names", blk_mod_equiv_clust$glabels)]
 #plot network using "role" to color nodes: statnet
 GGally::ggnet2(Wars_in_latter_half_of_20th_for_equiv_clust,
                node.color="role", 
-               node.size=0.7,
                   edge.size=0.1,
+               node.size=degree(Wars_in_latter_half_of_20th_for_equiv_clust, gmode="graph"),
 
                node.label = "vertex.names",
                label.size= 0.8,
@@ -236,3 +262,95 @@ GGally::ggnet2(Wars_in_latter_half_of_20th_for_equiv_clust,
                arrow.gap	=0.01
                )
 ```
+
+#### Examining Centrality
+
+```{r}
+
+sna::dyad.census(Wars_in_latter_half_of_20th_network)
+
+sna::triad.census(Wars_in_latter_half_of_20th_network)
+
+
+```
+
+```{r}
+
+(Wars_in_latter_half_of_20th_network.nodes.stat_2%>%
+  arrange(desc(eigen))%>%
+  slice(0:5))[,c(1,5)] %>%kable()
+
+```
+
+```{r}
+
+(Wars_in_latter_half_of_20th_network.nodes.stat_2%>%
+  arrange(desc(close))%>%
+  slice(0:5))[,c(1,6)] %>%kable()
+
+```
+
+```{r}
+
+(Wars_in_latter_half_of_20th_network.nodes.stat_2%>%
+  arrange(desc(eigen.rc))%>%
+  slice(0:5))[,c(1,8)] %>%kable()
+
+```
+
+```{r}
+
+(Wars_in_latter_half_of_20th_network.nodes.stat_2%>%
+  arrange(desc(eigen.dc))%>%
+  slice(0:5))[,c(1,10)] %>%kable()
+
+```
+
+```{r}
+Wars_in_latter_half_of_20th_network.nodes.stat_2%>%
+  select(-name) %>% 
+  gather() %>% 
+  ggplot(aes(value)) +
+    geom_histogram() +
+    facet_wrap(~key, scales = "free")
+```
+
+```{r}
+
+wars_correlation_latter_half<-Wars_in_latter_half_of_20th_network.nodes.stat_2 %>% 
+  select(totdegree,indegree,outdegree,eigen,eigen.rc,eigen.dc)%>%
+  correlate() 
+fashion(wars_correlation_latter_half)
+
+```
+
+```{r}
+
+rplot(wars_correlation_latter_half)
+
+```
+
+```{r}
+library(threejs)
+library(htmlwidgets)
+library(igraph)
+```
+
+```{r}
+
+net.js <- Wars_in_latter_half_of_20th.ig
+graph_attr(net.js, "layout") <- NULL 
+```
+
+```{r}
+
+
+gjs <- graphjs(net.js, main="Cold War Interactive Network", bg="gray10", vertex.size=0.5, showLabels=T, vertex.label = V(net.js)$name, stroke=F, curvature=0.1, attraction=0.9, repulsion=0.7, opacity=0.9)
+print(gjs)
+saveWidget(gjs, file="Media-Network-gjs.html")
+browseURL("Media-Network-gjs.html")
+```
+
+
+
+
