@@ -9,13 +9,13 @@
     <generator>Distill</generator>
     <lastBuildDate>Mon, 21 Mar 2022 00:00:00 +0000</lastBuildDate>
     <item>
-      <title>Blog Post 7</title>
+      <title>Blog Post 7, Integrating ML</title>
       <dc:creator>Noah Milstein</dc:creator>
       <link>https://nmilsteinuma.github.io/posts/2022-03-21-blog-post-7</link>
-      <description>A short description of the post.</description>
+      <description>This post is an analysis of community structure and machine learning techniques on my medieval dataset.</description>
       <guid>https://nmilsteinuma.github.io/posts/2022-03-21-blog-post-7</guid>
       <pubDate>Mon, 21 Mar 2022 00:00:00 +0000</pubDate>
-      <media:content url="https://nmilsteinuma.github.io/posts/2022-03-21-blog-post-7/blog-post-7_files/figure-html5/unnamed-chunk-17-1.png" medium="image" type="image/png" width="1248" height="768"/>
+      <media:content url="https://nmilsteinuma.github.io/posts/2022-03-21-blog-post-7/blog-post-7_files/figure-html5/unnamed-chunk-2-1.png" medium="image" type="image/png" width="1248" height="768"/>
     </item>
     <item>
       <title>Into the 20th Century (Conflict Data) Homework 6</title>

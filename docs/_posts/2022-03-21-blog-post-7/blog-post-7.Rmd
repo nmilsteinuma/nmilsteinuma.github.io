@@ -1,7 +1,7 @@
 ---
-title: "Blog Post 7"
+title: "Blog Post 7, Integrating ML"
 description: |
-  A short description of the post.
+ This post is an analysis of community structure and machine learning techniques on my medieval dataset.
 author:
   - name: Noah Milstein
     url: {}
@@ -14,7 +14,9 @@ output:
 
 ```{r, echo=FALSE}
 
-library(readxl); library(igraph)
+library(emojifont)
+library(readxl)
+library(igraph)
 library(statnet)
 library(network)
 library(tidyverse)
@@ -26,6 +28,22 @@ library(intergraph)
 library(knitr)
 library(GGally)
 library(aRtsy)
+```
+
+
+```{r, echo=FALSE}
+
+ggplot() + geom_emoji("boat") + theme_void()
+
+```
+
+### An Introduction to the Project and Dataset
+
+|   The project that I am doing involves conflict in the high middle ages. This was the period between 1000 and 1200 
+
+```{r, echo=FALSE}
+
+
 ```
 
 ```{r setup, include=FALSE}
@@ -53,19 +71,6 @@ wars_in_1200s$"In"<- sapply(wars_in_1200s$"In",
                                     function(x) { gsub("[\r\n]", "", x) })
                             
 ```
-
-### Background and Research Question:
-
-  Wikipedia is self-described as a "free content, multilingual online encyclopedia written and maintained by a community of volunteers through a model of open collaboration," information on the website i shared and maintained "using a wiki-based editing system. [and] Individual contributors," being the 5th most visited website in the world it is also the largest and most-read reference work in history." ("https://en.wikipedia.org/wiki/Wikipedia") Because of Wikipedia's position, as an arbiter of information and reference for a number of subjects, it is essential to understand the nature of the required citations and how they inform the websites portrayal of history and information. (Chase 2021)
-
-  Conflict is a defining feature of history, the results of war and the groups involved are essential to understanding dynamics of power globally. A war can represent the transfer of material, territorial, and strategic power between groups. As a result the networks of wars between nations can give some notion of power centrality among warring nations. 
-
-  Since wikipedia has become a widely accepted (if often critiqued) source of information, its citations and the information resulting from them can give us a sense of how where the center of global conflict, and thus the most central nations, according to popular and accessible academic literature.
-
-https://www.visualcapitalist.com/the-50-most-visited-websites-in-the-world/
-
-Chase, Matt. "Wikipedia is 20, and its reputation has never been higher". The Economist. January 9, 2021. Retrieved February 25, 2021.
-
 
 ```{r, echo=FALSE}
 
