@@ -13,8 +13,6 @@ output:
 
 
 ```{r, echo=FALSE}
-
-library(emojifont)
 library(readxl)
 library(igraph)
 library(statnet)
@@ -31,15 +29,10 @@ library(aRtsy)
 ```
 
 
-```{r, echo=FALSE}
-
-ggplot() + geom_emoji("boat") + theme_void()
-
-```
 
 ### An Introduction to the Project and Dataset
 
-|   The project that I am doing involves conflict in the high middle ages. This was the period between 1000 and 1200 
+The project that I am doing involves conflict in the high middle ages. This was the period between 1000 and 1200 
 
 ```{r setup, include=FALSE}
 
