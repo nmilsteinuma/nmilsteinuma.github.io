@@ -78,6 +78,8 @@ load("/Users/noahmilstein/Desktop/Spring 2022/Textasdata/text_as_data_work/df_gu
 
 str(top_guns_urls)
 
+# threads_contents <- get_thread_content(top_guns_urls$url[1:5]) 
+# threads_contents
 top_guns_urls_df=top_guns_urls[,c("title", "date_utc", "comments")]
 
 #guns_contents <- get_thread_content(top_guns_urls_df$url[1:1000])
