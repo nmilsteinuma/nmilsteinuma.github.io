@@ -2123,8 +2123,8 @@ learning techniques on my medieval dataset.</p></p>
 </div>
 <h3 id="an-introduction-to-the-project-and-dataset">An Introduction to
 the Project and Dataset</h3>
-<p>The project that I am doing involves conflict in the high middle
-ages. This was the period between 1000 and 1200</p>
+<div class="line-block">The project that I am doing involves conflict in
+the high middle ages. This was the period between 1000 and 1200</div>
 <div class="layout-chunk" data-layout="l-body">
 
 </div>
@@ -3075,458 +3075,6 @@ id="network-1100s-plot-grouping-determined-with-the-ward.d-cluster-method">Netwo
 </div>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>wars_in_1000s.nodes.stat_2</span>
-</code></pre>
-</div>
-<pre><code>                             name totdegree indegree outdegree
-1                County of Apulia         7        0         7
-2                County of Aversa         5        0         5
-3               Kingdom of Sicily         8        3         5
-4                      Ghaznavids         3        1         2
-5               Kingdom of Poland         2        0         2
-6              Kingdom of Hungary         3        0         3
-7               Kingdom of Norway         2        1         1
-8                Hammudid dynasty         1        0         1
-9            High King of Ireland         3        0         3
-10                        Denmark         1        0         1
-11               Republic of Pisa         1        0         1
-12              Republic of Genoa         1        0         1
-13             Sardinian judicati         1        0         1
-14               Byzantine Empire        18        5        13
-15                County of Anjou         1        0         1
-16                County of Maine         1        0         1
-17                    West Frisia         1        0         1
-18            Kingdom of Scotland         1        0         1
-19         Kingdom of Strathclyde         1        0         1
-20     Mirdasid Emirate of Aleppo         1        0         1
-21             Kingdom of Georgia         8        1         7
-22                         Duklja         1        0         1
-23                   Seljuk Turks         1        0         1
-24              Holy Roman Empire        15        2        13
-25             Republic of Venice         3        0         3
-26            Great Seljuq Empire         4        0         4
-27               Sultanate of Rum        11        7         4
-28               County of Sicily         9        0         9
-29              Kingdom of Aragon         2        1         1
-30               County of Urgell         1        0         1
-31             Duchy of Aquitaine         1        0         1
-32                   Papal States         4        3         1
-33                        England         9        5         4
-34             Kingdom of Castile         2        0         2
-35                       Normandy         3        1         2
-36                 Welsh kingdoms         1        0         1
-37           Principality of Kiev         2        1         1
-38      Principality of Chernigov         2        1         1
-39   Principality of Pereiaslavl&#39;         2        1         1
-40                         Cumans         3        0         3
-41                     Kievan Rus         2        1         1
-42             Kingdom of Galicia         1        0         1
-43            Kingdom of Castille         1        0         1
-44                  Seljuk Empire         8        7         1
-45              Kingdom of France        10        3         7
-46  County of Apulia and Calabria         7        0         7
-47    Armenian Kingdom of Cilicia         7        0         7
-48                  Peter Orseolo         1        0         1
-49                   Liao dynasty         2        1         1
-50                         Goryeo         3        1         2
-51                        Dazaifu         1        0         1
-52                   Chola Empire         5        0         5
-53                          Japan         1        0         1
-54          Minamoto no Yoriyoshi         1        0         1
-55                    Lý dynasty          1        0         1
-56                       Varendra         1        0         1
-57                  Minamoto clan         1        0         1
-58        Principality of Salerno         3        3         0
-59      Principality of Benevento         3        3         0
-60          Principality of Capua         3        3         0
-61             Republic of Amalfi         3        3         0
-62                Duchy of Naples         3        3         0
-63                    Kabul Shahi         2        2         0
-64           Voivodeship of Ahtum         1        1         0
-65                 Finnish tribes         1        1         0
-66           Caliphate of Córdoba         1        1         0
-67                       Leinster         1        1         0
-68                         Dublin         1        1         0
-69      Vikings of Orkney and Man         1        1         0
-70                 Taifa of Dénia         3        3         0
-71                County of Blois         2        2         0
-72              Duchy of Anacopia         1        1         0
-73              Duchy of Kldekari         1        1         0
-74              Duchy of Klarjeti         1        1         0
-75               Duchy of Bohemia         1        1         0
-76               Empire of Nicaea         2        2         0
-77            Empire of Trebizond         2        2         0
-78                Crusader states         2        2         0
-79              Emirate of Sicily         2        2         0
-80                         Zirids         2        2         0
-81                Taifa of Lérida         4        4         0
-82              Duchy of Brittany         2        2         0
-83             Kingdom of Navarre         1        1         0
-84              Earldom of Orkney         1        1         0
-85        Principality of Polotsk         3        3         0
-86                      Pechenegs         1        1         0
-87                          Ouzes         1        1         0
-88                  Veche of kiev         1        1         0
-89             County of Portugal         1        1         0
-90                Kingdom of León         1        1         0
-91               Bulgarian rebels         1        1         0
-92        Kerman Seljuk Sultanate         1        1         0
-93                Duchy of Saxony         1        1         0
-94          Atabegs of Azerbaijan         1        1         0
-95                 English rebels         1        1         0
-96                 Saxon nobility         1        1         0
-97              Fatimid Caliphate         6        6         0
-98                  Danishmendids         6        6         0
-99       Seljuk Emirate of Aleppo         6        6         0
-100    Seljuk Emirate of Damascus         6        6         0
-101             Abbasid Caliphate         6        6         0
-102              Hungarian pagans         1        1         0
-103               Jurchen pirates         2        2         0
-104             Eastern Chalukyas         1        1         0
-105                   Pala Empire         2        2         0
-106                          Odda         1        1         0
-107                       Kalinga         1        1         0
-108                     Srivijaya         1        1         0
-109                      Abe clan         2        2         0
-110                  Song dynasty         1        1         0
-111                 Kiyohara clan         1        1         0
-           eigen       close         rc     eigen.rc        dc
-1   0.000000e+00 0.054545455 0.00000000 0.000000e+00 1.0000000
-2   0.000000e+00 0.045454545 0.00000000 0.000000e+00 1.0000000
-3   0.000000e+00 0.045454545 0.10344828 0.000000e+00 0.8965517
-4   0.000000e+00 0.009090909 1.00000000 0.000000e+00 0.0000000
-5   1.428998e-01 0.143181818 0.00000000 0.000000e+00 1.0000000
-6   0.000000e+00 0.027272727 0.00000000 0.000000e+00 1.0000000
-7   0.000000e+00 0.009090909 0.25000000 0.000000e+00 0.7500000
-8   0.000000e+00 0.009090909 0.00000000 0.000000e+00 1.0000000
-9   0.000000e+00 0.027272727 0.00000000 0.000000e+00 1.0000000
-10  0.000000e+00 0.025757576 0.00000000 0.000000e+00 1.0000000
-11  0.000000e+00 0.009090909 0.00000000 0.000000e+00 1.0000000
-12  0.000000e+00 0.009090909 0.00000000 0.000000e+00 1.0000000
-13  0.000000e+00 0.009090909 0.00000000 0.000000e+00 1.0000000
-14  5.056632e-01 0.186363636 0.29411765 1.487245e-01 0.7058824
-15  0.000000e+00 0.009090909 0.00000000 0.000000e+00 1.0000000
-16  0.000000e+00 0.009090909 0.00000000 0.000000e+00 1.0000000
-17  1.428998e-01 0.117424242 0.00000000 0.000000e+00 1.0000000
-18  0.000000e+00 0.025757576 0.00000000 0.000000e+00 1.0000000
-19  0.000000e+00 0.025757576 0.00000000 0.000000e+00 1.0000000
-20  2.857997e-01 0.113636364 0.00000000 0.000000e+00 1.0000000
-21  4.473330e-01 0.148484848 0.07692308 3.441023e-02 0.9230769
-22  2.857997e-01 0.113636364 0.00000000 0.000000e+00 1.0000000
-23  0.000000e+00 0.013636364 0.00000000 0.000000e+00 1.0000000
-24  2.528316e-01 0.188636364 0.66666667 1.685544e-01 0.3333333
-25  9.129827e-02 0.117424242 0.00000000 0.000000e+00 1.0000000
-26  2.857997e-01 0.131818182 0.00000000 0.000000e+00 1.0000000
-27  2.857997e-01 0.127272727 0.11111111 3.175552e-02 0.8888889
-28  1.615333e-01 0.138636364 0.00000000 0.000000e+00 1.0000000
-29  0.000000e+00 0.009090909 0.50000000 0.000000e+00 0.5000000
-30  0.000000e+00 0.009090909 0.00000000 0.000000e+00 1.0000000
-31  0.000000e+00 0.009090909 0.00000000 0.000000e+00 1.0000000
-32  0.000000e+00 0.009090909 0.10344828 0.000000e+00 0.8965517
-33  0.000000e+00 0.031818182 0.71428571 0.000000e+00 0.2857143
-34  0.000000e+00 0.022727273 0.00000000 0.000000e+00 1.0000000
-35  0.000000e+00 0.034848485 1.00000000 0.000000e+00 0.0000000
-36  0.000000e+00 0.029545455 0.00000000 0.000000e+00 1.0000000
-37  0.000000e+00 0.009090909 0.33333333 0.000000e+00 0.6666667
-38  0.000000e+00 0.009090909 0.33333333 0.000000e+00 0.6666667
-39  0.000000e+00 0.009090909 0.33333333 0.000000e+00 0.6666667
-40  0.000000e+00 0.031818182 0.00000000 0.000000e+00 1.0000000
-41  0.000000e+00 0.009090909 0.07692308 0.000000e+00 0.9230769
-42  0.000000e+00 0.009090909 0.00000000 0.000000e+00 1.0000000
-43  0.000000e+00 0.009090909 0.00000000 0.000000e+00 1.0000000
-44  0.000000e+00 0.009090909 0.11111111 0.000000e+00 0.8888889
-45  1.615333e-01 0.126515152 0.10344828 1.671035e-02 0.8965517
-46  1.615333e-01 0.129545455 0.00000000 0.000000e+00 1.0000000
-47  1.615333e-01 0.129545455 0.00000000 0.000000e+00 1.0000000
-48  0.000000e+00 0.009090909 0.00000000 0.000000e+00 1.0000000
-49  5.460239e-13 0.013636364 0.50000000 2.730119e-13 0.5000000
-50  2.730119e-13 0.018181818 1.00000000 2.730119e-13 0.0000000
-51  0.000000e+00 0.009090909 0.00000000 0.000000e+00 1.0000000
-52  0.000000e+00 0.045454545 0.00000000 0.000000e+00 1.0000000
-53  0.000000e+00 0.009090909 0.00000000 0.000000e+00 1.0000000
-54  0.000000e+00 0.009090909 0.00000000 0.000000e+00 1.0000000
-55  0.000000e+00 0.009090909 0.00000000 0.000000e+00 1.0000000
-56  0.000000e+00 0.009090909 0.00000000 0.000000e+00 1.0000000
-57  0.000000e+00 0.009090909 0.00000000 0.000000e+00 1.0000000
-58  0.000000e+00 0.000000000 0.17647059 0.000000e+00 0.8235294
-59  0.000000e+00 0.000000000 0.17647059 0.000000e+00 0.8235294
-60  0.000000e+00 0.000000000 0.17647059 0.000000e+00 0.8235294
-61  0.000000e+00 0.000000000 0.17647059 0.000000e+00 0.8235294
-62  0.000000e+00 0.000000000 0.17647059 0.000000e+00 0.8235294
-63  0.000000e+00 0.000000000 1.00000000 0.000000e+00 0.0000000
-64  0.000000e+00 0.000000000 0.33333333 0.000000e+00 0.6666667
-65  0.000000e+00 0.000000000 1.00000000 0.000000e+00 0.0000000
-66  0.000000e+00 0.000000000 1.00000000 0.000000e+00 0.0000000
-67  0.000000e+00 0.000000000 0.33333333 0.000000e+00 0.6666667
-68  0.000000e+00 0.000000000 0.33333333 0.000000e+00 0.6666667
-69  0.000000e+00 0.000000000 0.33333333 0.000000e+00 0.6666667
-70  0.000000e+00 0.000000000 1.00000000 0.000000e+00 0.0000000
-71  0.000000e+00 0.000000000 1.00000000 0.000000e+00 0.0000000
-72  0.000000e+00 0.000000000 0.14285714 0.000000e+00 0.8571429
-73  0.000000e+00 0.000000000 0.14285714 0.000000e+00 0.8571429
-74  0.000000e+00 0.000000000 0.14285714 0.000000e+00 0.8571429
-75  0.000000e+00 0.000000000 0.07692308 0.000000e+00 0.9230769
-76  0.000000e+00 0.000000000 0.25000000 0.000000e+00 0.7500000
-77  0.000000e+00 0.000000000 0.25000000 0.000000e+00 0.7500000
-78  0.000000e+00 0.000000000 0.25000000 0.000000e+00 0.7500000
-79  0.000000e+00 0.000000000 0.28571429 0.000000e+00 0.7142857
-80  0.000000e+00 0.000000000 0.22222222 0.000000e+00 0.7777778
-81  0.000000e+00 0.000000000 1.00000000 0.000000e+00 0.0000000
-82  0.000000e+00 0.000000000 0.50000000 0.000000e+00 0.5000000
-83  0.000000e+00 0.000000000 0.50000000 0.000000e+00 0.5000000
-84  0.000000e+00 0.000000000 0.25000000 0.000000e+00 0.7500000
-85  0.000000e+00 0.000000000 1.00000000 0.000000e+00 0.0000000
-86  0.000000e+00 0.000000000 0.33333333 0.000000e+00 0.6666667
-87  0.000000e+00 0.000000000 0.33333333 0.000000e+00 0.6666667
-88  0.000000e+00 0.000000000 1.00000000 0.000000e+00 0.0000000
-89  0.000000e+00 0.000000000 1.00000000 0.000000e+00 0.0000000
-90  0.000000e+00 0.000000000 1.00000000 0.000000e+00 0.0000000
-91  0.000000e+00 0.000000000 0.07692308 0.000000e+00 0.9230769
-92  0.000000e+00 0.000000000 1.00000000 0.000000e+00 0.0000000
-93  0.000000e+00 0.000000000 0.07692308 0.000000e+00 0.9230769
-94  0.000000e+00 0.000000000 0.14285714 0.000000e+00 0.8571429
-95  0.000000e+00 0.000000000 0.50000000 0.000000e+00 0.5000000
-96  0.000000e+00 0.000000000 0.07692308 0.000000e+00 0.9230769
-97  0.000000e+00 0.000000000 0.10714286 0.000000e+00 0.8928571
-98  0.000000e+00 0.000000000 0.10714286 0.000000e+00 0.8928571
-99  0.000000e+00 0.000000000 0.10714286 0.000000e+00 0.8928571
-100 0.000000e+00 0.000000000 0.10714286 0.000000e+00 0.8928571
-101 0.000000e+00 0.000000000 0.10714286 0.000000e+00 0.8928571
-102 0.000000e+00 0.000000000 1.00000000 0.000000e+00 0.0000000
-103 0.000000e+00 0.000000000 0.66666667 0.000000e+00 0.3333333
-104 0.000000e+00 0.000000000 0.20000000 0.000000e+00 0.8000000
-105 0.000000e+00 0.000000000 0.33333333 0.000000e+00 0.6666667
-106 0.000000e+00 0.000000000 0.20000000 0.000000e+00 0.8000000
-107 0.000000e+00 0.000000000 0.20000000 0.000000e+00 0.8000000
-108 0.000000e+00 0.000000000 0.20000000 0.000000e+00 0.8000000
-109 0.000000e+00 0.000000000 1.00000000 0.000000e+00 0.0000000
-110 0.000000e+00 0.000000000 1.00000000 0.000000e+00 0.0000000
-111 0.000000e+00 0.000000000 1.00000000 0.000000e+00 0.0000000
-        eigen.dc  broker.tot broker.coord broker.itin  broker.rep
-1   0.000000e+00 -0.71474619  -0.01761109  -0.5084146 -0.12016311
-2   0.000000e+00 -0.71474619          NaN  -0.5088465 -0.08536061
-3   0.000000e+00  5.05223843  -0.01761109   4.0866123 -0.12016311
-4   0.000000e+00  0.05418509  -0.13807914  -0.4907567 -0.29033662
-5   1.428998e-01 -0.71474619  -0.19356624  -0.4721526 -0.33997092
-6   0.000000e+00 -0.71474619  -0.13807914  -0.4907567 -0.29033662
-7   0.000000e+00 -0.33028055  -0.19356624  -0.4721526 -0.33997092
-8   0.000000e+00 -0.71474619  -0.44208280  -0.2616354 -0.44960918
-9   0.000000e+00 -0.71474619  -0.13807914  -0.4907567 -0.29033662
-10  0.000000e+00 -0.71474619  -0.44208280  -0.2616354 -0.44960918
-11  0.000000e+00 -0.71474619  -0.44208280  -0.2616354 -0.44960918
-12  0.000000e+00 -0.71474619  -0.44208280  -0.2616354 -0.44960918
-13  0.000000e+00 -0.71474619  -0.44208280  -0.2616354 -0.44960918
-14  3.569387e-01 22.73765793          NaN   3.1654785         NaN
-15  0.000000e+00 -0.71474619  -0.44208280  -0.2616354 -0.44960918
-16  0.000000e+00 -0.71474619  -0.44208280  -0.2616354 -0.44960918
-17  1.428998e-01 -0.71474619  -0.44208280  -0.2616354 -0.44960918
-18  0.000000e+00 -0.71474619  -0.44208280  -0.2616354 -0.44960918
-19  0.000000e+00 -0.71474619  -0.44208280  -0.2616354 -0.44960918
-20  2.857997e-01 -0.71474619  -0.44208280  -0.2616354 -0.44960918
-21  4.129228e-01  0.82311638  -0.01761109  -0.5084146 -0.12016311
-22  2.857997e-01 -0.71474619  -0.44208280  -0.2616354 -0.44960918
-23  0.000000e+00 -0.71474619  -0.44208280  -0.2616354 -0.44960918
-24  8.427720e-02  9.28136049          NaN   2.2468427         NaN
-25  9.129827e-02 -0.71474619  -0.13807914  -0.4907567 -0.29033662
-26  2.857997e-01 -0.71474619  -0.01761109  -0.5084146 -0.12016311
-27  2.540442e-01  9.28136049          NaN  -0.5090648         NaN
-28  1.615333e-01 -0.71474619          NaN  -0.5088465 -0.08536061
-29  0.000000e+00 -0.33028055  -0.19356624  -0.4721526  0.92818207
-30  0.000000e+00 -0.71474619  -0.44208280  -0.2616354 -0.44960918
-31  0.000000e+00 -0.71474619  -0.44208280  -0.2616354 -0.44960918
-32  0.000000e+00  0.43865074  -0.01761109  -0.5084146 -0.12016311
-33  0.000000e+00  6.97456664          NaN   5.0036896 -0.08536061
-34  0.000000e+00 -0.71474619  -0.19356624  -0.4721526 -0.33997092
-35  0.000000e+00  0.05418509  -0.13807914   0.4423585 -0.29033662
-36  0.000000e+00 -0.71474619  -0.44208280  -0.2616354 -0.44960918
-37  0.000000e+00 -0.33028055  -0.19356624   0.4812412 -0.33997092
-38  0.000000e+00 -0.33028055  -0.19356624   0.4812412 -0.33997092
-39  0.000000e+00 -0.33028055  -0.19356624   0.4812412 -0.33997092
-40  0.000000e+00 -0.71474619  -0.13807914  -0.4907567 -0.29033662
-41  0.000000e+00 -0.33028055  -0.19356624  -0.4721526 -0.33997092
-42  0.000000e+00 -0.71474619  -0.44208280  -0.2616354 -0.44960918
-43  0.000000e+00 -0.71474619  -0.44208280  -0.2616354 -0.44960918
-44  0.000000e+00  1.97651330  -0.01761109  -0.5084146  3.46775292
-45  1.448230e-01  1.97651330          NaN  -0.5090648         NaN
-46  1.615333e-01 -0.71474619  -0.01761109  -0.5084146 -0.12016311
-47  1.615333e-01 -0.71474619  -0.01761109  -0.5084146 -0.12016311
-48  0.000000e+00 -0.71474619  -0.44208280  -0.2616354 -0.44960918
-49  2.730119e-13 -0.71474619  -0.19356624  -0.4721526 -0.33997092
-50  0.000000e+00 -0.33028055  -0.13807914   0.4423585 -0.29033662
-51  0.000000e+00 -0.71474619  -0.44208280  -0.2616354 -0.44960918
-52  0.000000e+00 -0.71474619          NaN  -0.5088465 -0.08536061
-53  0.000000e+00 -0.71474619  -0.44208280  -0.2616354 -0.44960918
-54  0.000000e+00 -0.71474619  -0.44208280  -0.2616354 -0.44960918
-55  0.000000e+00 -0.71474619  -0.44208280  -0.2616354 -0.44960918
-56  0.000000e+00 -0.71474619  -0.44208280  -0.2616354 -0.44960918
-57  0.000000e+00 -0.71474619  -0.44208280  -0.2616354 -0.44960918
-58  0.000000e+00 -0.71474619  -0.13807914  -0.4907567 -0.29033662
-59  0.000000e+00 -0.71474619  -0.13807914  -0.4907567 -0.29033662
-60  0.000000e+00 -0.71474619  -0.13807914  -0.4907567 -0.29033662
-61  0.000000e+00 -0.71474619  -0.13807914  -0.4907567 -0.29033662
-62  0.000000e+00 -0.71474619  -0.13807914  -0.4907567 -0.29033662
-63  0.000000e+00 -0.71474619  -0.19356624  -0.4721526 -0.33997092
-64  0.000000e+00 -0.71474619  -0.44208280  -0.2616354 -0.44960918
-65  0.000000e+00 -0.71474619  -0.44208280  -0.2616354 -0.44960918
-66  0.000000e+00 -0.71474619  -0.44208280  -0.2616354 -0.44960918
-67  0.000000e+00 -0.71474619  -0.44208280  -0.2616354 -0.44960918
-68  0.000000e+00 -0.71474619  -0.44208280  -0.2616354 -0.44960918
-69  0.000000e+00 -0.71474619  -0.44208280  -0.2616354 -0.44960918
-70  0.000000e+00 -0.71474619  -0.13807914  -0.4907567 -0.29033662
-71  0.000000e+00 -0.71474619  -0.19356624  -0.4721526 -0.33997092
-72  0.000000e+00 -0.71474619  -0.44208280  -0.2616354 -0.44960918
-73  0.000000e+00 -0.71474619  -0.44208280  -0.2616354 -0.44960918
-74  0.000000e+00 -0.71474619  -0.44208280  -0.2616354 -0.44960918
-75  0.000000e+00 -0.71474619  -0.44208280  -0.2616354 -0.44960918
-76  0.000000e+00 -0.71474619  -0.19356624  -0.4721526 -0.33997092
-77  0.000000e+00 -0.71474619  -0.19356624  -0.4721526 -0.33997092
-78  0.000000e+00 -0.71474619  -0.19356624  -0.4721526 -0.33997092
-79  0.000000e+00 -0.71474619  -0.19356624  -0.4721526 -0.33997092
-80  0.000000e+00 -0.71474619  -0.19356624  -0.4721526 -0.33997092
-81  0.000000e+00 -0.71474619  -0.01761109  -0.5084146 -0.12016311
-82  0.000000e+00 -0.71474619  -0.19356624  -0.4721526 -0.33997092
-83  0.000000e+00 -0.71474619  -0.44208280  -0.2616354 -0.44960918
-84  0.000000e+00 -0.71474619  -0.44208280  -0.2616354 -0.44960918
-85  0.000000e+00 -0.71474619  -0.13807914  -0.4907567 -0.29033662
-86  0.000000e+00 -0.71474619  -0.44208280  -0.2616354 -0.44960918
-87  0.000000e+00 -0.71474619  -0.44208280  -0.2616354 -0.44960918
-88  0.000000e+00 -0.71474619  -0.44208280  -0.2616354 -0.44960918
-89  0.000000e+00 -0.71474619  -0.44208280  -0.2616354 -0.44960918
-90  0.000000e+00 -0.71474619  -0.44208280  -0.2616354 -0.44960918
-91  0.000000e+00 -0.71474619  -0.44208280  -0.2616354 -0.44960918
-92  0.000000e+00 -0.71474619  -0.44208280  -0.2616354 -0.44960918
-93  0.000000e+00 -0.71474619  -0.44208280  -0.2616354 -0.44960918
-94  0.000000e+00 -0.71474619  -0.44208280  -0.2616354 -0.44960918
-95  0.000000e+00 -0.71474619  -0.44208280  -0.2616354 -0.44960918
-96  0.000000e+00 -0.71474619  -0.44208280  -0.2616354 -0.44960918
-97  0.000000e+00 -0.71474619  -0.04212098  -0.5069284 -0.16835546
-98  0.000000e+00 -0.71474619  -0.04212098  -0.5069284 -0.16835546
-99  0.000000e+00 -0.71474619  -0.04212098  -0.5069284 -0.16835546
-100 0.000000e+00 -0.71474619  -0.04212098  -0.5069284 -0.16835546
-101 0.000000e+00 -0.71474619  -0.04212098  -0.5069284 -0.16835546
-102 0.000000e+00 -0.71474619  -0.44208280  -0.2616354 -0.44960918
-103 0.000000e+00 -0.71474619  -0.19356624  -0.4721526 -0.33997092
-104 0.000000e+00 -0.71474619  -0.44208280  -0.2616354 -0.44960918
-105 0.000000e+00 -0.71474619  -0.19356624  -0.4721526 -0.33997092
-106 0.000000e+00 -0.71474619  -0.44208280  -0.2616354 -0.44960918
-107 0.000000e+00 -0.71474619  -0.44208280  -0.2616354 -0.44960918
-108 0.000000e+00 -0.71474619  -0.44208280  -0.2616354 -0.44960918
-109 0.000000e+00 -0.71474619  -0.19356624  -0.4721526 -0.33997092
-110 0.000000e+00 -0.71474619  -0.44208280  -0.2616354 -0.44960918
-111 0.000000e+00 -0.71474619  -0.44208280  -0.2616354 -0.44960918
-    broker.gate  broker.lia
-1   -0.12016311 -0.64877607
-2   -0.08536061 -0.65408154
-3   -0.12016311  4.58941859
-4   -0.29033662  0.69127301
-5   -0.33997092 -0.54951219
-6   -0.29033662 -0.58638154
-7   -0.33997092  0.15986917
-8   -0.44960918 -0.42885631
-9   -0.29033662 -0.58638154
-10  -0.44960918 -0.42885631
-11  -0.44960918 -0.42885631
-12  -0.44960918 -0.42885631
-13  -0.44960918 -0.42885631
-14          NaN 28.14086594
-15  -0.44960918 -0.42885631
-16  -0.44960918 -0.42885631
-17  -0.44960918 -0.42885631
-18  -0.44960918 -0.42885631
-19  -0.44960918 -0.42885631
-20  -0.44960918 -0.42885631
-21  -0.12016311  1.44650180
-22  -0.44960918 -0.42885631
-23  -0.44960918 -0.42885631
-24          NaN 10.96180299
-25  -0.29033662 -0.58638154
-26  -0.12016311 -0.64877607
-27          NaN 12.47760266
-28  -0.08536061 -0.65408154
-29  -0.33997092 -0.54951219
-30  -0.44960918 -0.42885631
-31  -0.44960918 -0.42885631
-32  10.64358498 -0.64877607
-33  -0.08536061  6.54821407
-34  -0.33997092 -0.54951219
-35  -0.29033662  0.05244574
-36  -0.44960918 -0.42885631
-37  -0.33997092 -0.54951219
-38  -0.33997092 -0.54951219
-39  -0.33997092 -0.54951219
-40  -0.29033662 -0.58638154
-41  -0.33997092  0.15986917
-42  -0.44960918 -0.42885631
-43  -0.44960918 -0.42885631
-44  -0.12016311  2.49414073
-45          NaN  2.87753807
-46  -0.12016311 -0.64877607
-47  -0.12016311 -0.64877607
-48  -0.44960918 -0.42885631
-49  -0.33997092 -0.54951219
-50  -0.29033662 -0.58638154
-51  -0.44960918 -0.42885631
-52  -0.08536061 -0.65408154
-53  -0.44960918 -0.42885631
-54  -0.44960918 -0.42885631
-55  -0.44960918 -0.42885631
-56  -0.44960918 -0.42885631
-57  -0.44960918 -0.42885631
-58  -0.29033662 -0.58638154
-59  -0.29033662 -0.58638154
-60  -0.29033662 -0.58638154
-61  -0.29033662 -0.58638154
-62  -0.29033662 -0.58638154
-63  -0.33997092 -0.54951219
-64  -0.44960918 -0.42885631
-65  -0.44960918 -0.42885631
-66  -0.44960918 -0.42885631
-67  -0.44960918 -0.42885631
-68  -0.44960918 -0.42885631
-69  -0.44960918 -0.42885631
-70  -0.29033662 -0.58638154
-71  -0.33997092 -0.54951219
-72  -0.44960918 -0.42885631
-73  -0.44960918 -0.42885631
-74  -0.44960918 -0.42885631
-75  -0.44960918 -0.42885631
-76  -0.33997092 -0.54951219
-77  -0.33997092 -0.54951219
-78  -0.33997092 -0.54951219
-79  -0.33997092 -0.54951219
-80  -0.33997092 -0.54951219
-81  -0.12016311 -0.64877607
-82  -0.33997092 -0.54951219
-83  -0.44960918 -0.42885631
-84  -0.44960918 -0.42885631
-85  -0.29033662 -0.58638154
-86  -0.44960918 -0.42885631
-87  -0.44960918 -0.42885631
-88  -0.44960918 -0.42885631
-89  -0.44960918 -0.42885631
-90  -0.44960918 -0.42885631
-91  -0.44960918 -0.42885631
-92  -0.44960918 -0.42885631
-93  -0.44960918 -0.42885631
-94  -0.44960918 -0.42885631
-95  -0.44960918 -0.42885631
-96  -0.44960918 -0.42885631
-97  -0.16835546 -0.63798418
-98  -0.16835546 -0.63798418
-99  -0.16835546 -0.63798418
-100 -0.16835546 -0.63798418
-101 -0.16835546 -0.63798418
-102 -0.44960918 -0.42885631
-103 -0.33997092 -0.54951219
-104 -0.44960918 -0.42885631
-105 -0.33997092 -0.54951219
-106 -0.44960918 -0.42885631
-107 -0.44960918 -0.42885631
-108 -0.44960918 -0.42885631
-109 -0.33997092 -0.54951219
-110 -0.44960918 -0.42885631
-111 -0.44960918 -0.42885631</code></pre>
-<div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>aspects_of_1000s_states</span> <span class='op'>&lt;-</span> <span class='fu'>read_excel</span><span class='op'>(</span><span class='st'>"~/Desktop/Spring 2022/Networks/aspects_of_1000s_states.xlsx"</span><span class='op'>)</span>
 
 <span class='va'>total_1000s</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/merge.html'>merge</a></span><span class='op'>(</span><span class='va'>aspects_of_1000s_states</span>, <span class='va'>wars_in_1000s.nodes.stat_2</span>, by<span class='op'>=</span><span class='st'>"name"</span><span class='op'>)</span>
@@ -3650,7 +3198,9 @@ type <span class='op'>=</span> <span class='st'>"response"</span><span class='op
 </div>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>x_ridge</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/model.matrix.html'>model.matrix</a></span><span class='op'>(</span><span class='va'>more_win_or_loss</span> <span class='op'>~</span> <span class='va'>.</span><span class='op'>-</span><span class='va'>loss_rate</span><span class='op'>-</span><span class='va'>win_rate</span><span class='op'>-</span><span class='va'>totdegree</span><span class='op'>-</span><span class='va'>indegree</span><span class='op'>-</span><span class='va'>outdegree</span><span class='op'>-</span><span class='va'>dc</span><span class='op'>-</span><span class='va'>eigen.dc</span>, <span class='va'>total_1000s_for_regression</span><span class='op'>)</span><span class='op'>[</span>, <span class='op'>-</span><span class='fl'>1</span><span class='op'>]</span> 
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>246</span><span class='op'>)</span>
+
+<span class='va'>x_ridge</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/model.matrix.html'>model.matrix</a></span><span class='op'>(</span><span class='va'>more_win_or_loss</span> <span class='op'>~</span> <span class='va'>.</span><span class='op'>-</span><span class='va'>loss_rate</span><span class='op'>-</span><span class='va'>win_rate</span><span class='op'>-</span><span class='va'>totdegree</span><span class='op'>-</span><span class='va'>indegree</span><span class='op'>-</span><span class='va'>outdegree</span><span class='op'>-</span><span class='va'>dc</span><span class='op'>-</span><span class='va'>eigen.dc</span>, <span class='va'>total_1000s_for_regression</span><span class='op'>)</span><span class='op'>[</span>, <span class='op'>-</span><span class='fl'>1</span><span class='op'>]</span> 
 
 <span class='va'>y_ridge</span> <span class='op'>&lt;-</span> <span class='va'>total_1000s_for_regression</span><span class='op'>$</span><span class='va'>more_win_or_loss</span>
 
@@ -3762,34 +3312,63 @@ type <span class='op'>=</span> <span class='st'>"response"</span><span class='op
 </div>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>2897</span><span class='op'>)</span>
+
+<span class='va'>x_lasso</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/model.matrix.html'>model.matrix</a></span><span class='op'>(</span><span class='va'>more_win_or_loss</span> <span class='op'>~</span> <span class='va'>.</span><span class='op'>-</span><span class='va'>loss_rate</span><span class='op'>-</span><span class='va'>win_rate</span><span class='op'>-</span><span class='va'>totdegree</span><span class='op'>-</span><span class='va'>indegree</span><span class='op'>-</span><span class='va'>outdegree</span><span class='op'>-</span><span class='va'>dc</span><span class='op'>-</span><span class='va'>eigen.dc</span>, <span class='va'>total_1000s_for_regression</span><span class='op'>)</span><span class='op'>[</span>, <span class='op'>-</span><span class='fl'>1</span><span class='op'>]</span> 
+
+<span class='va'>y_lasso</span> <span class='op'>&lt;-</span> <span class='va'>total_1000s_for_regression</span><span class='op'>$</span><span class='va'>more_win_or_loss</span>
+
+<span class='va'>grid</span> <span class='op'>&lt;-</span> <span class='fl'>10</span><span class='op'>^</span><span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span><span class='op'>(</span><span class='fl'>10</span>, <span class='op'>-</span><span class='fl'>2</span>, length <span class='op'>=</span> <span class='fl'>100</span><span class='op'>)</span>
+
+<span class='va'>lasso.mod</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://glmnet.stanford.edu/reference/glmnet.html'>glmnet</a></span><span class='op'>(</span><span class='va'>x_lasso</span>, <span class='va'>y_lasso</span>, alpha <span class='op'>=</span> <span class='fl'>0</span>, lambda <span class='op'>=</span> <span class='va'>grid</span><span class='op'>)</span>
+
+<span class='fu'><a href='https://rdrr.io/r/base/dim.html'>dim</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/coef.html'>coef</a></span><span class='op'>(</span><span class='va'>lasso.mod</span><span class='op'>)</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>[1]  14 100</code></pre>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>729</span><span class='op'>)</span>
+
+<span class='va'>train_lasso</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span><span class='op'>(</span><span class='va'>x_ridge</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span><span class='op'>(</span><span class='va'>x_ridge</span><span class='op'>)</span><span class='op'>*</span><span class='fl'>0.8</span> <span class='op'>)</span> 
+
+<span class='va'>test_lasso</span> <span class='op'>&lt;-</span> <span class='op'>(</span><span class='op'>-</span><span class='va'>train_lasso</span><span class='op'>)</span>
+
+<span class='va'>y.test_lasso</span> <span class='op'>&lt;-</span> <span class='va'>y_lasso</span><span class='op'>[</span><span class='va'>test_lasso</span><span class='op'>]</span>
+</code></pre>
+</div>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>9292</span><span class='op'>)</span>
 
-<span class='va'>lasso.mod</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://glmnet.stanford.edu/reference/glmnet.html'>glmnet</a></span><span class='op'>(</span><span class='va'>x_ridge</span><span class='op'>[</span><span class='va'>train_ridge</span>, <span class='op'>]</span>, <span class='va'>y_ridge</span><span class='op'>[</span><span class='va'>train_ridge</span><span class='op'>]</span>, 
+<span class='va'>lasso.mod</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://glmnet.stanford.edu/reference/glmnet.html'>glmnet</a></span><span class='op'>(</span><span class='va'>x_lasso</span><span class='op'>[</span><span class='va'>train_lasso</span>, <span class='op'>]</span>, <span class='va'>y_lasso</span><span class='op'>[</span><span class='va'>train_lasso</span><span class='op'>]</span>, 
                     alpha <span class='op'>=</span> <span class='fl'>1</span>, lambda <span class='op'>=</span> <span class='va'>grid</span><span class='op'>)</span>
 
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>lasso.mod</span><span class='op'>)</span>
 </code></pre>
 </div>
-<p><img src="blog-post-7_files/figure-html5/unnamed-chunk-67-1.png" width="624" /></p>
+<p><img src="blog-post-7_files/figure-html5/unnamed-chunk-69-1.png" width="624" /></p>
 </div>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>1029</span><span class='op'>)</span>
 
-<span class='va'>cv.out_2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://glmnet.stanford.edu/reference/cv.glmnet.html'>cv.glmnet</a></span><span class='op'>(</span><span class='va'>x_ridge</span><span class='op'>[</span><span class='va'>train_ridge</span>, <span class='op'>]</span>, <span class='va'>y_ridge</span><span class='op'>[</span><span class='va'>train_ridge</span><span class='op'>]</span>, alpha <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span> 
+<span class='va'>cv.out_2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://glmnet.stanford.edu/reference/cv.glmnet.html'>cv.glmnet</a></span><span class='op'>(</span><span class='va'>x_lasso</span><span class='op'>[</span><span class='va'>train_lasso</span>, <span class='op'>]</span>, <span class='va'>y_lasso</span><span class='op'>[</span><span class='va'>train_lasso</span><span class='op'>]</span>, alpha <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span> 
 
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>cv.out_2</span><span class='op'>)</span>
 </code></pre>
 </div>
-<p><img src="blog-post-7_files/figure-html5/unnamed-chunk-68-1.png" width="624" /></p>
+<p><img src="blog-post-7_files/figure-html5/unnamed-chunk-70-1.png" width="624" /></p>
 </div>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>1920</span><span class='op'>)</span>
 
-<span class='va'>bestlam</span> <span class='op'>&lt;-</span> <span class='va'>cv.out_2</span><span class='op'>$</span><span class='va'>lambda.min</span>
+<span class='va'>bestlam_2</span> <span class='op'>&lt;-</span> <span class='va'>cv.out_2</span><span class='op'>$</span><span class='va'>lambda.min</span>
 
-<span class='va'>lasso.pred</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span><span class='op'>(</span><span class='va'>cv.out_2</span>, s <span class='op'>=</span> <span class='va'>bestlam</span>, newx <span class='op'>=</span> <span class='va'>x_ridge</span><span class='op'>[</span><span class='va'>test_ridge</span>,<span class='op'>]</span><span class='op'>)</span>
+<span class='va'>lasso.pred</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span><span class='op'>(</span><span class='va'>cv.out_2</span>, s <span class='op'>=</span> <span class='va'>bestlam_2</span>, newx <span class='op'>=</span> <span class='va'>x_ridge</span><span class='op'>[</span><span class='va'>test_ridge</span>,<span class='op'>]</span><span class='op'>)</span>
 
 <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='op'>(</span><span class='va'>lasso.pred</span> <span class='op'>-</span> <span class='va'>y.test_ridge</span><span class='op'>)</span><span class='op'>^</span><span class='fl'>2</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'>kable</span><span class='op'>(</span><span class='op'>)</span>
 </code></pre>
@@ -3811,10 +3390,10 @@ type <span class='op'>=</span> <span class='st'>"response"</span><span class='op
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>2739</span><span class='op'>)</span>
 
-<span class='va'>out</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://glmnet.stanford.edu/reference/glmnet.html'>glmnet</a></span><span class='op'>(</span><span class='va'>x_ridge</span><span class='op'>[</span><span class='va'>train_ridge</span>, <span class='op'>]</span>, <span class='va'>y_ridge</span><span class='op'>[</span><span class='va'>train_ridge</span><span class='op'>]</span>, 
+<span class='va'>out</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://glmnet.stanford.edu/reference/glmnet.html'>glmnet</a></span><span class='op'>(</span><span class='va'>x_lasso</span><span class='op'>[</span><span class='va'>train_lasso</span>, <span class='op'>]</span>, <span class='va'>y_lasso</span><span class='op'>[</span><span class='va'>train_lasso</span><span class='op'>]</span>, 
               alpha <span class='op'>=</span> <span class='fl'>1</span>, lambda <span class='op'>=</span> <span class='va'>grid</span><span class='op'>)</span>
 
-<span class='va'>lasso.coef</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span><span class='op'>(</span><span class='va'>out</span>, type <span class='op'>=</span> <span class='st'>"coefficients"</span>, s <span class='op'>=</span> <span class='va'>bestlam</span><span class='op'>)</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>14</span>, <span class='op'>]</span>
+<span class='va'>lasso.coef</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span><span class='op'>(</span><span class='va'>out</span>, type <span class='op'>=</span> <span class='st'>"coefficients"</span>, s <span class='op'>=</span> <span class='va'>bestlam_2</span><span class='op'>)</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>14</span>, <span class='op'>]</span>
 
 <span class='va'>lasso.coef</span>
 </code></pre>

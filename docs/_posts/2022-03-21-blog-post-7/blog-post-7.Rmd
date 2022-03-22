@@ -32,7 +32,7 @@ library(aRtsy)
 
 ### An Introduction to the Project and Dataset
 
-The project that I am doing involves conflict in the high middle ages. This was the period between 1000 and 1200 
+| The project that I am doing involves conflict in the high middle ages. This was the period between 1000 and 1200 
 
 ```{r setup, include=FALSE}
 
@@ -854,7 +854,6 @@ wars_in_1000s_network <- asNetwork(wars_in_1000s.ig)
 
 ```{r}
 
-wars_in_1000s.nodes.stat_2
 
 aspects_of_1000s_states <- read_excel("~/Desktop/Spring 2022/Networks/aspects_of_1000s_states.xlsx")
 
@@ -934,6 +933,9 @@ library(MASS)
 
 ```{r}
 
+
+set.seed(246)
+
 x_ridge <- model.matrix(more_win_or_loss ~ .-loss_rate-win_rate-totdegree-indegree-outdegree-dc-eigen.dc, total_1000s_for_regression)[, -1] 
 
 y_ridge <- total_1000s_for_regression$more_win_or_loss
@@ -1005,9 +1007,37 @@ mean((ridge.pred - y.test_ridge)^2) %>% kable()
 ```
 
 ```{r}
+
+set.seed(2897)
+
+x_lasso <- model.matrix(more_win_or_loss ~ .-loss_rate-win_rate-totdegree-indegree-outdegree-dc-eigen.dc, total_1000s_for_regression)[, -1] 
+
+y_lasso <- total_1000s_for_regression$more_win_or_loss
+
+grid <- 10^seq(10, -2, length = 100)
+
+lasso.mod <- glmnet(x_lasso, y_lasso, alpha = 0, lambda = grid)
+
+dim(coef(lasso.mod))
+
+
+
+```
+
+```{r}
+
+set.seed(729)
+
+train_lasso <- sample(1:nrow(x_ridge), nrow(x_ridge)*0.8 ) 
+
+test_lasso <- (-train_lasso)
+
+y.test_lasso <- y_lasso[test_lasso]
+```
+```{r}
 set.seed(9292)
 
-lasso.mod <- glmnet(x_ridge[train_ridge, ], y_ridge[train_ridge], 
+lasso.mod <- glmnet(x_lasso[train_lasso, ], y_lasso[train_lasso], 
                     alpha = 1, lambda = grid)
 
 plot(lasso.mod)
@@ -1017,7 +1047,7 @@ plot(lasso.mod)
 
 set.seed(1029)
 
-cv.out_2 <- cv.glmnet(x_ridge[train_ridge, ], y_ridge[train_ridge], alpha = 1) 
+cv.out_2 <- cv.glmnet(x_lasso[train_lasso, ], y_lasso[train_lasso], alpha = 1) 
 
 plot(cv.out_2)
 
@@ -1028,9 +1058,9 @@ plot(cv.out_2)
 ```{r}
 set.seed(1920)
 
-bestlam <- cv.out_2$lambda.min
+bestlam_2 <- cv.out_2$lambda.min
 
-lasso.pred <- predict(cv.out_2, s = bestlam, newx = x_ridge[test_ridge,])
+lasso.pred <- predict(cv.out_2, s = bestlam_2, newx = x_ridge[test_ridge,])
 
 mean((lasso.pred - y.test_ridge)^2) %>% kable()
 
@@ -1040,10 +1070,10 @@ mean((lasso.pred - y.test_ridge)^2) %>% kable()
 
 set.seed(2739)
 
-out <- glmnet(x_ridge[train_ridge, ], y_ridge[train_ridge], 
+out <- glmnet(x_lasso[train_lasso, ], y_lasso[train_lasso], 
               alpha = 1, lambda = grid)
 
-lasso.coef <- predict(out, type = "coefficients", s = bestlam)[1:14, ]
+lasso.coef <- predict(out, type = "coefficients", s = bestlam_2)[1:14, ]
 
 lasso.coef
 
