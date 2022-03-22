@@ -14,7 +14,9 @@ output:
 library(textreadr)
 library(tidyr)
 library(rvest)
+library(xml2)
 library(aRtsy)
+library(purrr)
 library(awtools)
 ```
 
@@ -25,14 +27,48 @@ canvas_polylines(colors = colorPalette("jasp"), ratio = 0.2, iterations = 500,
                  size = 0.1, resolution = 500)
 ```
 
+
 ```{r}
 
-list_of_wars_1000 <- "https://en.wikipedia.org/wiki/List_of_wars:_1000%E2%80%931499"
+ list_of_wars_1000<- "https://en.wikipedia.org/wiki/List_of_wars:_1000%E2%80%931499"
+
+ first_try<-list_of_wars_1000%>% read_html() %>% 
+    html_nodes("p") %>% 
+    # For each node, return all content nodes, both text and tags, separated. From xml2.
+    map(xml_contents) %>%    # or lapply(xml_contents)
+    # For each nexted node, get the text. Here, this just reduces "<br />" tags to "".
+    map(html_text) %>%       # or lapply(html_text)
+    # For each list element, subset to non-empty strings.
+    map(~.x[.x != ''])       # or lapply(function(x){x[x != '']})
+ first_try
+```
+
+```{r}
+
+url_1<- "https://en.wikipedia.org/wiki/List_of_wars:_1000%E2%80%931499"
+
+webpage <- read_html(url_1)
+
+tbls <- html_nodes(webpage, ".wikitable")
+
+my.table <- html_table(tbls, fill = TRUE)
+my.table
+my.table[1]
+
+x <- as.numeric(gsub("\\[.*","",my.table[,4]))
+
+names(x) = gsub("\\[.*","",my.table[,2])
+
+```
+
+```{r}
+html_children(test_url_parsed[[1]]) %>% html_text %>% paste0(collapse = "\n")
 
 wars_1000s_df <- read_html(list_of_wars_1000) 
-
+?read_html
 wars_1000s<- wars_1000s_df %>% 
   html_nodes("table") %>% `[[`(2) %>% html_table()
+wars_1000s
 ```
 
 ```{r}

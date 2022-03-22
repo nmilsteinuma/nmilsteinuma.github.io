@@ -1,0 +1,1060 @@
+---
+title: "Blog Post 7"
+description: |
+  A short description of the post.
+author:
+  - name: Noah Milstein
+    url: {}
+date: 2022-03-21
+output:
+  distill::distill_article:
+    self_contained: false
+---
+
+
+```{r, echo=FALSE}
+
+library(readxl); library(igraph)
+library(statnet)
+library(network)
+library(tidyverse)
+library(ggnetwork)
+library(GGally)
+library(ggplot2)
+library(sna)
+library(intergraph)
+library(knitr)
+library(GGally)
+library(aRtsy)
+```
+
+```{r setup, include=FALSE}
+
+wars_in_1000s <- read_excel("~/Desktop/Spring 2022/Networks/wars_in_1000s.xlsx")
+
+wars_in_1000s$"Out-list" <- sapply(wars_in_1000s$"Out-list",
+                                    function(x) { gsub("[\r\n]", "", x) })
+wars_in_1000s$"In-list"<- sapply(wars_in_1000s$"In-list",
+                                    function(x) { gsub("[\r\n]", "", x) })
+
+wars_in_1100s <- read_excel("~/Desktop/Spring 2022/Networks/wars_in_1100s.xlsx")
+
+wars_in_1100s$"Out" <- sapply(wars_in_1100s$"Out",
+                                    function(x) { gsub("[\r\n]", "", x) })
+wars_in_1100s$"In"<- sapply(wars_in_1100s$"In",
+                                    function(x) { gsub("[\r\n]", "", x) })
+
+wars_in_1200s <- read_excel("~/Desktop/Spring 2022/Networks/wars_in_1200s.xlsx")
+
+
+wars_in_1200s$"Out" <- sapply(wars_in_1200s$"Out",
+                                    function(x) { gsub("[\r\n]", "", x) })
+wars_in_1200s$"In"<- sapply(wars_in_1200s$"In",  
+                                    function(x) { gsub("[\r\n]", "", x) })
+                            
+```
+
+### Background and Research Question:
+
+  Wikipedia is self-described as a "free content, multilingual online encyclopedia written and maintained by a community of volunteers through a model of open collaboration," information on the website i shared and maintained "using a wiki-based editing system. [and] Individual contributors," being the 5th most visited website in the world it is also the largest and most-read reference work in history." ("https://en.wikipedia.org/wiki/Wikipedia") Because of Wikipedia's position, as an arbiter of information and reference for a number of subjects, it is essential to understand the nature of the required citations and how they inform the websites portrayal of history and information. (Chase 2021)
+
+  Conflict is a defining feature of history, the results of war and the groups involved are essential to understanding dynamics of power globally. A war can represent the transfer of material, territorial, and strategic power between groups. As a result the networks of wars between nations can give some notion of power centrality among warring nations. 
+
+  Since wikipedia has become a widely accepted (if often critiqued) source of information, its citations and the information resulting from them can give us a sense of how where the center of global conflict, and thus the most central nations, according to popular and accessible academic literature.
+
+https://www.visualcapitalist.com/the-50-most-visited-websites-in-the-world/
+
+Chase, Matt. "Wikipedia is 20, and its reputation has never been higher". The Economist. January 9, 2021. Retrieved February 25, 2021.
+
+
+```{r, echo=FALSE}
+
+wars_in_1000s_edgelist <- as.matrix(wars_in_1000s)
+
+wars_in_1000s_edgelist_network_edgelist <- graph.edgelist(wars_in_1000s_edgelist, directed=TRUE)
+
+wars_in_1000s.ig<-graph_from_data_frame(wars_in_1000s)
+
+wars_in_1000s_network <- asNetwork(wars_in_1000s.ig)
+
+wars_in_1100s_edgelist <- as.matrix(wars_in_1100s)
+
+wars_in_1100s_edgelist_network_edgelist <- graph.edgelist(wars_in_1100s_edgelist, directed=TRUE)
+
+wars_in_1100s.ig<-graph_from_data_frame(wars_in_1100s)
+
+wars_in_1100s_network <- asNetwork(wars_in_1100s.ig)
+
+wars_in_1200s_edgelist <- as.matrix(wars_in_1200s)
+
+wars_in_1200s_edgelist_network_edgelist <- graph.edgelist(wars_in_1200s_edgelist, directed=TRUE)
+
+wars_in_1200s.ig<-graph_from_data_frame(wars_in_1200s)
+
+wars_in_1200s_network <- asNetwork(wars_in_1200s.ig)
+
+```
+
+
+## Part 1: 
+
+### Describe the Dataset You Are Using:
+
+**The Dataset Being Used:** The dataset that I am using is wikipedia list of wars throughout history, this article is the "List of wars: 1000–1499" which acts as a subset of the "2nd-millennium conflicts" I chose this dataset as an exemplar of popular history's depiction of the centralization of worldwide conflict. Wikipedia, being an accessible source generally created from relevant citations makes it a good case study to see where historical writers and academics center their world are relevant conflicts.
+
+### Identify initial network format:
+
+**Answer:** The initial network format is as an edge list, the first, **in** column contains the winners of each war while the second, **out** column contains the losers of each. These sets of belligerents are directed 
+
+### Network Structure: Wars Startings in the 1000s
+
+```{r, echo=FALSE}
+
+print(wars_in_1000s_network)
+
+```
+
+### Network Structure: Wars Startings in the 1100s
+
+```{r, echo=FALSE}
+
+print(wars_in_1100s_network)
+
+```
+
+### Network Structure: Wars Startings in the 1200s
+
+```{r, echo=FALSE}
+
+print(wars_in_1200s_network)
+
+```
+
+**Identify Nodes:** Describe and identify the nodes (including how many nodes are in the dataset)
+
+**Answer:** Nodes or vertices in these datasets represent belligerents in wars throughout history, the involved parties in each conflict can be a nation, province, individual, or group so long as they are listed as involved in the conflict. In the 1000s there are 117, in the 1100s there are 78 and in the 1200s there are 161.
+
+**What Constitutes a Tie:** What constitutes a tie or edge (including how many ties, whether ties are directed/undirected and weighted/binary, and how to interpret the value of the tie if any)
+
+**Answer:** A tie or edge in this dataset represents a war, this war can be between two nations or groups within a nation. These edges can represent a war that involved many more nations but are always tied to each and every party involved on both sides. These edges are directed and the direction indicates which side "won" the conflict (if an edge has an arrow pointing to another the node that originated that arrow won the war against them. There are 153 edges in the 1000s, 225 edges in 1100s and 313 edges in the 1200s.
+
+**Edge Attributes and Subset:** Whether or not there are edge attributes that might be used to subset data or stack multiple networks (e.g., tie type, year, etc).
+
+**Answer:** There are a number of attributes that could be used to subset the data, year that the conflict began or the length of time it lasted are available. Aspects like each side's religion and the area where the conflict took place could be used to subset the data itself.
+
+## Part 2: 
+
+### Brokerage and Betweeness centrality 
+
+**What are betweeness and brokerage cenrrality** Calculate brokerage and betweenneess centrality measures for one or more subsets of your network data, and write up the results and your interpretation of them. 
+
+**Answer:** I will be calculating these measures for wars in 1000-1099, 1100-1199, and 1200-1399.
+
+
+```{r,echo=FALSE}
+
+wars_in_1000s.nodes.stat<-data.frame(name=wars_in_1000s_network%v%"vertex.names",
+    totdegree=sna::degree(wars_in_1000s_network),
+    indegree=sna::degree(wars_in_1000s_network, cmode="indegree"),
+    outdegree=sna::degree(wars_in_1000s_network, cmode="outdegree"))
+
+wars_in_1000s.nodes.stat$eigen<-evcent(wars_in_1000s_network)
+
+wars_in_1000s.nodes.stat$close<-sna::closeness(wars_in_1000s_network, cmode="suminvdir")
+
+wars_1000s<-as.matrix(as_adjacency_matrix(wars_in_1000s.ig))
+
+#square the adjacency matrix
+
+wars_1000s_sq<-t(wars_1000s) %*% wars_1000s
+
+#Calculate the proportion of reflected centrality.
+
+wars_in_1000s.nodes.stat$rc<-diag(wars_1000s_sq)/rowSums(wars_1000s_sq)
+
+#replace missing values with 0
+
+wars_in_1000s.nodes.stat$rc<-ifelse(is.nan(wars_in_1000s.nodes.stat$rc),0,wars_in_1000s.nodes.stat$rc)
+
+#Calculate received eigenvalue centrality
+wars_in_1000s.nodes.stat$eigen.rc<-wars_in_1000s.nodes.stat$eigen*wars_in_1000s.nodes.stat$rc
+
+#Calculate the proportion of derived centrality.
+wars_in_1000s.nodes.stat$dc<-1-diag(wars_1000s_sq)/rowSums(wars_1000s_sq)
+#replace missing values with 0
+wars_in_1000s.nodes.stat$dc<-ifelse(is.nan(wars_in_1000s.nodes.stat$dc),1,wars_in_1000s.nodes.stat$dc)
+#Calculate received eigenvalue centrality
+wars_in_1000s.nodes.stat$eigen.dc<-wars_in_1000s.nodes.stat$eigen*wars_in_1000s.nodes.stat$dc
+
+```
+
+#### Brokerage scores in the 1000s
+
+```{r,echo=FALSE}
+
+temp<-data.frame(brokerage(wars_in_1000s_network, cl = wars_in_1000s.nodes.stat$totdegree)$z.nli)
+
+wars_in_1000s.nodes.stat_2<-wars_in_1000s.nodes.stat %>%
+  mutate(broker.tot = temp$t,
+         broker.coord = temp$w_I,
+         broker.itin = temp$w_O,
+         broker.rep = temp$b_IO,
+         broker.gate = temp$b_OI,
+         broker.lia = temp$b_O)
+
+```
+
+```{r}
+
+(wars_in_1000s.nodes.stat_2%>%
+  arrange(desc(broker.tot))%>%
+  slice(1:10))[,c(1,11:15)] %>%kable()
+
+```
+
+#### Brokerage scores in the 1100s
+
+```{r, echo=FALSE}
+
+wars_in_1100s.nodes.stat<-data.frame(name=wars_in_1100s_network%v%"vertex.names",
+    totdegree=sna::degree(wars_in_1100s_network),
+    indegree=sna::degree(wars_in_1100s_network, cmode="indegree"),
+    outdegree=sna::degree(wars_in_1100s_network, cmode="outdegree"))
+
+wars_in_1100s.nodes.stat$eigen<-evcent(wars_in_1100s_network)
+
+wars_1100s<-as.matrix(as_adjacency_matrix(wars_in_1100s.ig))
+
+#square the adjacency matrix
+
+wars_1100s_sq<-t(wars_1100s) %*% wars_1100s
+
+#Calculate the proportion of reflected centrality.
+
+wars_in_1100s.nodes.stat$rc<-diag(wars_1100s_sq)/rowSums(wars_1100s_sq)
+
+#replace missing values with 0
+
+wars_in_1100s.nodes.stat$rc<-ifelse(is.nan(wars_in_1100s.nodes.stat$rc),0,wars_in_1100s.nodes.stat$rc)
+
+#Calculate received eigenvalue centrality
+wars_in_1100s.nodes.stat$eigen.rc<-wars_in_1100s.nodes.stat$eigen*wars_in_1100s.nodes.stat$rc
+
+#Calculate the proportion of derived centrality.
+wars_in_1100s.nodes.stat$dc<-1-diag(wars_1100s_sq)/rowSums(wars_1100s_sq)
+#replace missing values with 0
+wars_in_1100s.nodes.stat$dc<-ifelse(is.nan(wars_in_1100s.nodes.stat$dc),1,wars_in_1100s.nodes.stat$dc)
+#Calculate received eigenvalue centrality
+wars_in_1100s.nodes.stat$eigen.dc<-wars_in_1100s.nodes.stat$eigen*wars_in_1100s.nodes.stat$dc
+
+```
+
+```{r, echo=FALSE}
+
+temp<-data.frame(brokerage(wars_in_1100s_network, cl = wars_in_1100s.nodes.stat$totdegree)$z.nli)
+
+wars_in_1100s.nodes.stat_2<-wars_in_1100s.nodes.stat %>%
+  mutate(broker.tot = temp$t,
+         broker.coord = temp$w_I,
+         broker.itin = temp$w_O,
+         broker.rep = temp$b_IO,
+         broker.gate = temp$b_OI,
+         broker.lia = temp$b_O)
+
+```
+
+```{r}
+
+(wars_in_1100s.nodes.stat_2%>%
+  arrange(desc(broker.tot))%>%
+  slice(1:10))[,c(1,10:14)] %>%kable()
+
+```
+
+#### Brokerage scores in the 1200s
+
+```{r, echo=FALSE}
+
+wars_in_1200s.nodes.stat<-data.frame(name=wars_in_1200s_network%v%"vertex.names",
+    totdegree=sna::degree(wars_in_1200s_network),
+    indegree=sna::degree(wars_in_1200s_network, cmode="indegree"),
+    outdegree=sna::degree(wars_in_1200s_network, cmode="outdegree"))
+
+wars_in_1200s.nodes.stat$eigen<-evcent(wars_in_1200s_network)
+
+```
+
+```{r, echo=FALSE}
+
+wars_1200s<-as.matrix(as_adjacency_matrix(wars_in_1200s.ig))
+
+#square the adjacency matrix
+
+wars_1200s_sq<-t(wars_1200s) %*% wars_1200s
+
+#Calculate the proportion of reflected centrality.
+
+wars_in_1200s.nodes.stat$rc<-diag(wars_1200s_sq)/rowSums(wars_1200s_sq)
+
+#replace missing values with 0
+
+wars_in_1200s.nodes.stat$rc<-ifelse(is.nan(wars_in_1200s.nodes.stat$rc),0,wars_in_1200s.nodes.stat$rc)
+
+#Calculate received eigenvalue centrality
+wars_in_1200s.nodes.stat$eigen.rc<-wars_in_1200s.nodes.stat$eigen*wars_in_1200s.nodes.stat$rc
+
+#Calculate the proportion of derived centrality.
+wars_in_1200s.nodes.stat$dc<-1-diag(wars_1200s_sq)/rowSums(wars_1200s_sq)
+#replace missing values with 0
+wars_in_1200s.nodes.stat$dc<-ifelse(is.nan(wars_in_1200s.nodes.stat$dc),1,wars_in_1200s.nodes.stat$dc)
+#Calculate received eigenvalue centrality
+wars_in_1200s.nodes.stat$eigen.dc<-wars_in_1200s.nodes.stat$eigen*wars_in_1200s.nodes.stat$dc
+
+```
+
+```{r, echo=FALSE}
+
+temp<-data.frame(brokerage(wars_in_1200s_network, cl = wars_in_1200s.nodes.stat$totdegree)$z.nli)
+
+wars_in_1200s.nodes.stat_2<-wars_in_1200s.nodes.stat %>%
+  mutate(broker.tot = temp$t,
+         broker.coord = temp$w_I,
+         broker.itin = temp$w_O,
+         broker.rep = temp$b_IO,
+         broker.gate = temp$b_OI,
+         broker.lia = temp$b_O)
+
+```
+
+```{r, echo=FALSE}
+
+(wars_in_1200s.nodes.stat_2%>%
+  arrange(desc(broker.tot))%>%
+  slice(1:10))[,c(1,10:14)] %>%kable()
+
+```
+
+```{r, echo=FALSE}
+
+(wars_in_1000s.nodes.stat_2%>%
+  arrange(desc(broker.gate
+))%>%
+  slice(1:10))[,c(1,15)] %>%kable()
+
+(wars_in_1000s.nodes.stat_2%>%
+  arrange(desc(broker.tot
+))%>%
+  slice(1:10))[,c(1,11)] %>%kable()
+
+```
+
+## Option 2.A 
+
+**For a Specific Research Question:** If you have a specific research question, please feel free to use that to guide your analysis. Otherwise, you may want to orient your analysis as follows in order to identify a compelling question or noteworthy pattern in the data that can be interpreted.
+
+**Answer:** Since I am interested in the relative power of nations by their relative position ad centrality in the worldwide conflict, network brokerage can be used to illustrate significant positions in global conflict. Below I wanted to look at 4 kinds of brokerage, these are broker.gate or gatekeeper, coordinator, liason, and itinerant. I am interested to see if these specific coordination types are primarily done by specific nations.
+
+```{r, echo=FALSE, warning=FALSE}
+
+set.seed(777)
+ggplot(wars_in_1000s_network, aes(x = x, y = y, xend = xend, yend = yend)) +
+  geom_edges(color = "grey25", alpha = 0.25, arrow = arrow(length = unit(2, "pt"), type = "closed"))+
+  geom_nodes(color = "blue", alpha = 0.3, size = 2) +
+  geom_nodetext(aes( label = vertex.names ), size=1)+
+    ggtitle("Networks of Wars in the 1000s") +
+  theme_blank()
+
+```
+
+```{r, echo=FALSE, warning=FALSE}
+
+set.seed(777)
+ggplot(wars_in_1100s_network, aes(x = x, y = y, xend = xend, yend = yend)) +
+  geom_edges(color = "grey25", alpha = 0.25, arrow = arrow(length = unit(2, "pt"), type = "closed"))+
+  geom_nodes(color = "peru", alpha = 0.3, size = 2) +
+  geom_nodetext(aes( label = vertex.names ), size=1)+
+    ggtitle("Networks of Wars in the 1100s") +
+  theme_blank()
+
+```
+
+```{r, echo=FALSE, warning=FALSE}
+set.seed(777)
+ggplot(wars_in_1200s_network, aes(x = x, y = y, xend = xend, yend = yend)) +
+  geom_edges(color = "grey25", alpha = 0.25, arrow = arrow(length = unit(2, "pt"), type = "closed"))+
+  geom_nodes(color = "lightpink", alpha = 0.3, size = 2) +
+  geom_nodetext(aes( label = vertex.names ), size=1)+
+    ggtitle("Networks of Wars in the 1200s") +
+  theme_blank()
+```
+
+#### Total Brokerage
+
+**Explanation:** Looking at total brokerage in this dataset gives a sense of which factions were responsible for highest connection of unconnected actors through conflict. Given the crusades igniting conflict between Europe and the middle east it is sensible that the Byzantine Empire in the center of both connects the most unconnected actors through conflict closely followed by the Sultanate of Rum, a major Muslim faction that fought against the crusades and third being the Holy Roman Empire who participated in many conflicts including the crusades. These are followed by England who centered the wars in the British isles and the Kingdom of Sicily who were also in a position of conflict.
+
+```{r, echo=FALSE}
+
+(wars_in_1000s.nodes.stat_2%>%
+  arrange(desc(broker.tot))%>%
+  slice(0:5))[,c(1,11)] %>%kable()
+
+```
+
+#### Coordinator Brokerage
+
+**Explanation:** In this case no particular country is very high above any other in terms of their coordinator brokerage, meaning that within groups no particular nations appear to be brokering more within the groups.
+
+```{r, echo=FALSE}
+
+(wars_in_1000s.nodes.stat_2%>%
+  arrange(desc(broker.coord))%>%
+  slice(0:5))[,c(1,12)] %>%kable()
+
+```
+
+#### Itinerant Brokerage
+
+**Explanation:** Itinerant brokerage represents when a non-group actor connects 2 actors in a group it is no in to each other, in this case England has the highest score. Looking at the network graph they do appear to connect 2 actors in a group together.
+
+```{r, echo=FALSE}
+
+(wars_in_1000s.nodes.stat_2%>%
+  arrange(desc(broker.itin))%>%
+  slice(0:5))[,c(1,13)] %>%kable()
+
+```
+
+
+#### Representative Brokerage
+
+**Explanation:** Representative brokerage indicates that the broker, or nation in question loses a war to another in their group, but wins another against a faction outside of their group. This can be though of as their directed connections to them. In this case the Seljuk Empire	and Kingdom of Aragon	have instances in which they lose to factions within their group before beating those outside of it.
+
+```{r, echo=FALSE}
+
+(wars_in_1000s.nodes.stat_2%>%
+  arrange(desc(broker.rep))%>%
+  slice(0:5))[,c(1,14)] %>%kable()
+
+```
+
+#### Gatekeeper Brokerage
+
+**Explanation:** The Papal states being ranked highest in gatekeeper brokerage is an interesting observation as no other nation in the dataset appears to be close to their level as most are negative in this category. In this cae being a gatekeeper means that they are in at conflict in a group with another while the nation in a different group of conflicts is only at war with them from the group. This is an interesting observation given the Papal states role as a coordinator of the war, but not a participant in the conflcit as directly as other belligerents. (This being the crusade given the period)
+
+```{r, echo=FALSE}
+
+(wars_in_1000s.nodes.stat_2%>%
+  arrange(desc(broker.gate))%>%
+  slice(0:5))[,c(1,15)] %>%kable()
+
+```
+
+#### Liaison Brokerage
+
+**Explanation:** A liaison broker, in this case, is a faction that loses a war to a group they do not belong to and wins a war against a different group than the first that they also do not belong to. The Byzantine Empire, Sultanate of Rum, and Holy Roman Empire	are highest in this category likely owing to their frequent states of conflict beyond the crusades against a variety of groups.
+
+
+```{r, echo=FALSE}
+
+(wars_in_1000s.nodes.stat_2%>%
+  arrange(desc(broker.lia))%>%
+  slice(0:5))[,c(1,16)] %>%kable()
+
+```
+
+```{r, echo=FALSE}
+
+wars_1000s_for_equiv_clust<-as.network(wars_in_1000s_edgelist, matrix.type = "edgelist", directed = TRUE,  hyper = FALSE, loops = FALSE, multiple = FALSE,
+                                       bipartite = FALSE, vertex.attrnames=wars_in_1000s_network%v%"vertex.names")
+
+war_1000s.se_hamming<-equiv.clust(wars_1000s_for_equiv_clust, equiv.fun="sedist", method="hamming", mode="graph")
+
+plot(war_1000s.se_hamming, labels=war_1000s.se_hamming$glabels,  cex=0.3, main="Cluster Dendrogram 1000s Hamming")
+
+```
+
+```{r, echo=FALSE}
+
+war_1000s.se_average<-equiv.clust(wars_1000s_for_equiv_clust, equiv.fun="sedist", cluster.method="average", method="hamming", mode="graph")
+
+plot(war_1000s.se_average, labels=war_1000s.se_average$glabels,  
+     cex=0.3, main="Cluster Dendrogram 1000s Hamming (Average)")
+
+```
+
+```{r, echo=FALSE}
+
+war_1000s.se_single<-equiv.clust(wars_1000s_for_equiv_clust, equiv.fun="sedist", cluster.method="single", method="hamming", mode="graph")
+
+plot(war_1000s.se_single, labels=war_1000s.se_single$glabels,  
+     cex=0.3, main="Cluster Dendrogram 1000s Hamming (Single)")
+
+```
+
+```{r, echo=FALSE}
+
+war_1000s.se_ward<-equiv.clust(wars_1000s_for_equiv_clust, equiv.fun="sedist", cluster.method="ward.D", method="hamming", mode="graph")
+
+plot(war_1000s.se_ward, labels=war_1000s.se_ward$glabels,  
+     cex=0.3, main="Cluster Dendrogram 1000s Hamming (ward.D)")
+
+```
+
+```{r, echo=FALSE}
+#blockmodel and select partitions
+blk_mod<-blockmodel(wars_1000s_for_equiv_clust,war_1000s.se_hamming,k=5)
+#assign block membership to vertex attribute
+V(wars_in_1000s.ig)$role <- blk_mod$block.membership[match(V(wars_in_1000s.ig)$name,blk_mod$plabels)]
+wars_in_1000s_network%v%"role"<- blk_mod$block.membership[match(wars_in_1000s_network%v%"vertex.names", blk_mod$glabels)]
+
+```
+
+#### Network 1000s Plot Grouping Determined with No Cluster Method
+
+```{r, echo=FALSE}
+set.seed(2)
+#blockmodel and select partitions
+blk_mod<-blockmodel(wars_1000s_for_equiv_clust, war_1000s.se_hamming, k=5)
+#assign block membership to vertex attribute
+wars_1000s_for_equiv_clust%v%"role" <- blk_mod$block.membership[match(wars_1000s_for_equiv_clust%v%"vertex.names", blk_mod$glabels)]
+#plot network using "role" to color nodes: statnet
+GGally::ggnet2(wars_1000s_for_equiv_clust,
+               node.color="role", 
+               node.size=degree(wars_1000s_for_equiv_clust, gmode="graph"),
+               node.label = "vertex.names",
+               size.legend="Node Degree",
+               label.size= 1,
+               node.alpha = .5,
+               max_size	=5,
+                arrow.size=3,
+               arrow.gap	=0.01
+)
+
+```
+
+#### Network 1000s Plot Grouping Determined with the Average Cluster Method
+
+```{r, echo=FALSE}
+set.seed(2)
+#blockmodel and select partitions
+blk_mod<-blockmodel(wars_1000s_for_equiv_clust, war_1000s.se_average, k=5)
+#assign block membership to vertex attribute
+wars_1000s_for_equiv_clust%v%"role" <- blk_mod$block.membership[match(wars_1000s_for_equiv_clust%v%"vertex.names", blk_mod$glabels)]
+#plot network using "role" to color nodes: statnet
+GGally::ggnet2(wars_1000s_for_equiv_clust,
+               node.color="role", 
+               node.size=degree(wars_1000s_for_equiv_clust, gmode="graph"),
+               node.label = "vertex.names",
+               size.legend="Node Degree",
+               label.size= 1,
+               node.alpha = .5,
+               max_size	=5,
+                arrow.size=3,
+               arrow.gap	=0.01
+)
+
+```
+
+#### Network 1000s Plot Grouping Determined with the Single Cluster Method
+
+```{r, echo=FALSE}
+set.seed(2)
+#blockmodel and select partitions
+blk_mod<-blockmodel(wars_1000s_for_equiv_clust, war_1000s.se_single, k=5)
+#assign block membership to vertex attribute
+wars_1000s_for_equiv_clust%v%"role" <- blk_mod$block.membership[match(wars_1000s_for_equiv_clust%v%"vertex.names", blk_mod$glabels)]
+#plot network using "role" to color nodes: statnet
+GGally::ggnet2(wars_1000s_for_equiv_clust,
+               node.color="role", 
+               node.size=degree(wars_1000s_for_equiv_clust, gmode="graph"),
+               node.label = "vertex.names",
+               size.legend="Node Degree",
+               label.size= 1,
+               node.alpha = .5,
+               max_size	=5,
+                arrow.size=3,
+               arrow.gap	=0.01
+)
+
+```
+
+#### Network 1000s Plot Grouping Determined with the Ward.D Cluster Method
+
+```{r, echo=FALSE}
+set.seed(2)
+#blockmodel and select partitions
+blk_mod<-blockmodel(wars_1000s_for_equiv_clust, war_1000s.se_ward, k=5)
+#assign block membership to vertex attribute
+wars_1000s_for_equiv_clust%v%"role" <- blk_mod$block.membership[match(wars_1000s_for_equiv_clust%v%"vertex.names", blk_mod$glabels)]
+#plot network using "role" to color nodes: statnet
+GGally::ggnet2(wars_1000s_for_equiv_clust,
+               node.color="role", 
+               node.size=degree(wars_1000s_for_equiv_clust, gmode="graph"),
+               node.label = "vertex.names",
+               size.legend="Node Degree",
+               label.size= 1,
+               node.alpha = .5,
+               max_size	=5,
+                arrow.size=3,
+               arrow.gap	=0.01
+)
+
+```
+
+#### Network 1000s Plot igraph
+
+```{r, echo=FALSE}
+
+plot.igraph(wars_in_1000s.ig, 
+            vertex.color=V(wars_in_1000s.ig)$role,
+            edge.arrow.size=.2,
+            vertex.size=2+(igraph::degree(wars_in_1000s.ig)*0.1), vertex.label.color="black", vertex.label.cex=0.3, vertex.label.dist=2,  
+            xlim=c(-1 ,1),
+            ylim=c(-1, 1 ))
+
+```
+
+### Network Graphing 1100s
+
+```{r, echo=FALSE}
+
+wars_1100s_for_equiv_clust<-as.network(wars_in_1100s_edgelist, matrix.type = "edgelist", directed = TRUE,  hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = FALSE, vertex.attrnames=wars_in_1100s_network%v%"vertex.names")
+
+war_1100s.se_hamming<-equiv.clust(wars_1100s_for_equiv_clust, equiv.fun="sedist", method="hamming", mode="graph")
+
+plot(war_1100s.se_hamming, labels=war_1100s.se_hamming$glabels,  cex=0.3, main="Cluster Dendrogram 1100s (Hamming)")
+
+```
+
+```{r, echo=FALSE}
+
+war_1100s.se_average<-equiv.clust(wars_1100s_for_equiv_clust, equiv.fun="sedist", cluster.method="average", method="hamming", mode="graph")
+
+plot(war_1100s.se_average, labels=war_1100s.se_average$glabels,  
+     cex=0.3, main="Cluster Dendrogram 1100s Hamming (Average)")
+
+```
+
+```{r, echo=FALSE}
+
+war_1100s.se_single<-equiv.clust(wars_1100s_for_equiv_clust, equiv.fun="sedist", cluster.method="single", method="hamming", mode="graph")
+
+plot(war_1100s.se_single, labels=war_1100s.se_single$glabels,  
+     cex=0.3, main="Cluster Dendrogram 1100s Hamming (Single)")
+
+```
+
+```{r, echo=FALSE}
+
+war_1100s.se_ward<-equiv.clust(wars_1100s_for_equiv_clust, equiv.fun="sedist", cluster.method="ward.D", method="hamming", mode="graph")
+
+plot(war_1100s.se_ward, labels=war_1100s.se_ward$glabels,  
+     cex=0.3, main="Cluster Dendrogram 1000s Hamming (ward.D)")
+
+```
+
+```{r, echo=FALSE}
+
+#blockmodel and select partitions
+blk_mod_2<-blockmodel(wars_1100s_for_equiv_clust, war_1100s.se_hamming, k=5)
+#assign block membership to vertex attribute
+V(wars_in_1100s.ig)$role <- blk_mod_2$block.membership[match(V(wars_in_1100s.ig)$name,blk_mod_2$plabels)]
+wars_in_1100s_network%v%"role"<- blk_mod_2$block.membership[match(wars_in_1100s_network%v%"vertex.names", blk_mod_2$glabels)]
+
+```
+
+#### Network 1100s Plot Grouping Determined with No Cluster Method
+
+```{r, echo=FALSE}
+
+set.seed(2)
+#blockmodel and select partitions
+blk_mod_2<-blockmodel(wars_1100s_for_equiv_clust, war_1100s.se_hamming, k=5)
+#assign block membership to vertex attribute
+wars_1100s_for_equiv_clust%v%"role" <- blk_mod_2$block.membership[match(wars_1100s_for_equiv_clust%v%"vertex.names", blk_mod_2$glabels)]
+#plot network using "role" to color nodes: statnet
+GGally::ggnet2(wars_1100s_for_equiv_clust,
+               node.color="role", 
+               node.size=degree(wars_1100s_for_equiv_clust, gmode="graph"),
+               node.label = "vertex.names",
+               size.legend="Node Degree",
+               label.size= 1,
+               node.alpha = .5,
+               max_size	=5,
+              arrow.size=3,
+               arrow.gap	=0.01
+               )
+```
+
+#### Network 1100s Plot Grouping Determined with the Average Cluster Method
+
+```{r, echo=FALSE}
+set.seed(2)
+#blockmodel and select partitions
+blk_mod_2<-blockmodel(wars_1100s_for_equiv_clust, war_1100s.se_average, k=5)
+#assign block membership to vertex attribute
+wars_1100s_for_equiv_clust%v%"role" <- blk_mod_2$block.membership[match(wars_1100s_for_equiv_clust%v%"vertex.names", blk_mod_2$glabels)]
+#plot network using "role" to color nodes: statnet
+GGally::ggnet2(wars_1100s_for_equiv_clust,
+               node.color="role", 
+               node.size=degree(wars_1100s_for_equiv_clust, gmode="graph"),
+               node.label = "vertex.names",
+               size.legend="Node Degree",
+               label.size= 1,
+               node.alpha = .5,
+               max_size	=5,
+                arrow.size=3,
+               arrow.gap	=0.01
+)
+
+```
+
+#### Network 1100s Plot Grouping Determined with the Single Cluster Method
+
+```{r, echo=FALSE}
+set.seed(2)
+#blockmodel and select partitions
+blk_mod_2<-blockmodel(wars_1100s_for_equiv_clust, war_1100s.se_single, k=5)
+#assign block membership to vertex attribute
+wars_1100s_for_equiv_clust%v%"role" <- blk_mod_2$block.membership[match(wars_1100s_for_equiv_clust%v%"vertex.names", blk_mod_2$glabels)]
+#plot network using "role" to color nodes: statnet
+GGally::ggnet2(wars_1100s_for_equiv_clust,
+               node.color="role", 
+               node.size=degree(wars_1100s_for_equiv_clust, gmode="graph"),
+               node.label = "vertex.names",
+               size.legend="Node Degree",
+               label.size= 1,
+               node.alpha = .5,
+               max_size	=5,
+                arrow.size=3,
+               arrow.gap	=0.01
+)
+
+```
+
+#### Network 1100s Plot Grouping Determined with the Ward.D Cluster Method
+
+```{r, echo=FALSE}
+set.seed(2)
+#blockmodel and select partitions
+blk_mod_2<-blockmodel(wars_1100s_for_equiv_clust, war_1100s.se_ward, k=5)
+#assign block membership to vertex attribute
+wars_1100s_for_equiv_clust%v%"role" <- blk_mod_2$block.membership[match(wars_1000s_for_equiv_clust%v%"vertex.names", blk_mod_2$glabels)]
+#plot network using "role" to color nodes: statnet
+GGally::ggnet2(wars_1100s_for_equiv_clust,
+               node.color="role", 
+               node.size=degree(wars_1100s_for_equiv_clust, gmode="graph"),
+               node.label = "vertex.names",
+               size.legend="Node Degree",
+               label.size= 1,
+               node.alpha = .5,
+               max_size	=5,
+                arrow.size=3,
+               arrow.gap	=0.01
+)
+
+```
+
+#### Network 1100s Plot igraph
+
+```{r, echo=FALSE}
+
+plot.igraph(wars_in_1100s.ig, 
+            vertex.color=V(wars_in_1100s.ig)$role,
+            edge.arrow.size=.2,
+            vertex.size=2+(igraph::degree(wars_in_1100s.ig)*0.1), vertex.label.color="black", vertex.label.cex=0.3, vertex.label.dist=2, xlim=c(-1 ,1),
+            ylim=c(-1, 1 ))
+
+```
+
+```{r, echo=FALSE}
+
+pls_work_3<-as.network(wars_in_1200s_edgelist, matrix.type = "edgelist", directed = TRUE,  hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = FALSE, vertex.attrnames=wars_in_1200s_network%v%"vertex.names")
+
+flomarr.se_3<-equiv.clust(pls_work_3, equiv.fun="sedist", method="hamming", mode="graph")
+plot(flomarr.se_3, labels=flomarr.se_3$glabels,  cex=0.3,  main="Cluster Dendrogram 1200s")
+rect.hclust(flomarr.se_3$cluster, h=10)
+
+```
+
+```{r, echo=FALSE}
+#blockmodel and select partitions
+blk_mod_3<-blockmodel(pls_work_3,flomarr.se_3,k=5)
+#assign block membership to vertex attribute
+V(wars_in_1200s.ig)$role<-blk_mod_3$block.membership[match(V(wars_in_1200s.ig)$name,blk_mod_3$plabels)]
+wars_in_1200s_network%v%"role"<-blk_mod_3$block.membership[match(wars_in_1200s_network%v%"vertex.names", blk_mod_3$glabels)]
+
+```
+
+```{r, echo=FALSE}
+
+set.seed(2)
+#blockmodel and select partitions
+blk_mod_3<-blockmodel(pls_work_3, flomarr.se_3, k=5)
+#assign block membership to vertex attribute
+pls_work_3%v%"role"<-blk_mod_3$block.membership[match(pls_work_3%v%"vertex.names", blk_mod$glabels)]
+#plot network using "role" to color nodes: statnet
+GGally::ggnet2(pls_work_3,
+               node.color="role", 
+               node.size=degree(pls_work_3, gmode="graph"),
+               node.label = "vertex.names",
+               size.legend="Node Degree",
+               label.size= 1,
+               node.alpha = .5,
+               max_size	=5,
+               arrow.size=3,
+               arrow.gap	=0.01)
+
+```
+
+```{r, echo=FALSE}
+
+plot.igraph(wars_in_1200s.ig, 
+            vertex.color=V(wars_in_1200s.ig)$role,
+            edge.arrow.size=.2,
+            vertex.size=2+(igraph::degree(wars_in_1200s.ig)*0.1), vertex.label.color="black", vertex.label.cex=0.3, vertex.label.dist=2,
+            xlim=c(-1 ,1),
+            ylim=c(-1, 1 ))
+
+```
+
+```{r, echo=FALSE}
+
+plot.block<-function(x=blk_mod, main=NULL, cex.lab=1){
+  plot.sociomatrix(x$blocked.data, labels=list(x$plabels,x$plabels),
+                   main=main, drawlines = FALSE, cex.lab=cex.lab)
+  for (j in 2:length(x$plabels)) if (x$block.membership[j] !=
+                                     x$block.membership[j-1]) 
+    abline(v = j - 0.5, h = j - 0.5, lty = 3, xpd=FALSE)
+}
+
+```
+
+
+```{r, echo=FALSE}
+
+plot.block(blk_mod, cex.lab=.35)
+
+```
+
+```{r, echo=FALSE}
+
+plot.block(blk_mod_2, cex.lab=.35)
+
+```
+```{r, echo=FALSE}
+
+plot.block(blk_mod_3, cex.lab=.35)
+
+```
+```{r}
+
+wars_in_1000s_edgelist <- as.matrix(wars_in_1000s)
+
+wars_in_1000s_edgelist_network_edgelist <- graph.edgelist(wars_in_1000s_edgelist, directed=TRUE)
+
+wars_in_1000s.ig<-graph_from_data_frame(wars_in_1000s)
+
+wars_in_1000s_network <- asNetwork(wars_in_1000s.ig)
+
+```
+
+```{r}
+
+wars_in_1000s.nodes.stat_2
+
+aspects_of_1000s_states <- read_excel("~/Desktop/Spring 2022/Networks/aspects_of_1000s_states.xlsx")
+
+total_1000s <- merge(aspects_of_1000s_states, wars_in_1000s.nodes.stat_2, by="name")
+
+```
+
+```{r}
+
+total_1000s_brokerag_reg<-total_1000s
+
+total_1000s_brokerag_reg$win_rate <- (total_1000s_brokerag_reg$outdegree/total_1000s_brokerag_reg$totdegree)
+
+total_1000s_brokerag_reg$loss_rate <- (total_1000s_brokerag_reg$indegree/total_1000s_brokerag_reg$totdegree)
+
+total_1000s_brokerag_reg_binom <- total_1000s_brokerag_reg %>% mutate(more_win_or_loss = case_when(
+  win_rate < 0.5 ~ 0,
+    win_rate >= 0.5 ~ 1))
+
+First_1000s_regression <- glm(more_win_or_loss~.-name-totdegree-indegree-outdegree-dc-eigen.dc-win_rate-loss_rate, total_1000s_brokerag_reg_binom, family=binomial)
+
+First_1000s_regression
+
+
+```
+
+
+```{r}
+
+set.seed(292)
+
+total_1000s_for_regression <- total_1000s[,-c(1, 20:25)]
+
+total_1000s_for_regression$win_rate <- (total_1000s_for_regression$outdegree/total_1000s_for_regression$totdegree)
+
+total_1000s_for_regression$loss_rate <- (total_1000s_for_regression$indegree/total_1000s_for_regression$totdegree)
+
+total_1000s_for_regression <- total_1000s_for_regression %>% mutate(more_win_or_loss = case_when(
+  win_rate < 0.5 ~ 0,
+    win_rate >= 0.5 ~ 1))
+
+First_1000s_regression <- glm(more_win_or_loss~.-loss_rate-win_rate-totdegree-indegree-outdegree-dc-eigen.dc, total_1000s_for_regression, family=binomial)
+
+First_1000s_regression
+
+```
+
+```{r}
+
+set.seed(6738)
+
+in_training<- sample(1:nrow(total_1000s_for_regression),  nrow(total_1000s_for_regression) * 0.7 )
+
+training_1000s <- total_1000s_for_regression[in_training,]
+
+test_1000s <- total_1000s_for_regression[-in_training,]
+
+lm_1000s_binom_subset_1 <- glm(more_win_or_loss~.-loss_rate-win_rate-totdegree-indegree-outdegree-dc-eigen.dc, total_1000s_for_regression, family=binomial, subset = in_training )
+
+logsitic_1_1000s_prob <- predict(lm_1000s_binom_subset_1, test_1000s,
+type = "response")
+
+log_preds_1<-ifelse(logsitic_1_1000s_prob >= 0.5, 1, 0)
+
+prediction_1_logs <-mean(log_preds_1 == test_1000s$more_win_or_loss)
+
+prediction_1_logs %>% kable()
+
+```
+
+```{r}
+
+library(glmnet)
+library(MASS)
+```
+
+
+```{r}
+
+x_ridge <- model.matrix(more_win_or_loss ~ .-loss_rate-win_rate-totdegree-indegree-outdegree-dc-eigen.dc, total_1000s_for_regression)[, -1] 
+
+y_ridge <- total_1000s_for_regression$more_win_or_loss
+
+grid <- 10^seq(10, -2, length = 100)
+
+ridge.mod <- glmnet(x_ridge, y_ridge, alpha = 0, lambda = grid)
+
+dim(coef(ridge.mod))
+
+
+
+```
+
+```{r}
+set.seed(729)
+train_ridge <- sample(1:nrow(x_ridge), nrow(x_ridge)*0.8 ) 
+
+test_ridge <- (-train_ridge)
+
+y.test_ridge <- y_ridge[test_ridge]
+
+```
+
+```{r}
+set.seed(9292)
+
+ridge.mod <- glmnet(x_ridge[train_ridge, ], y_ridge[train_ridge], 
+                    alpha = 0, lambda = grid, thresh = 1e-12)
+
+ridge.pred <- predict(ridge.mod, s = 4, newx = x_ridge[test_ridge,])
+
+mean((ridge.pred - y.test_ridge)^2) %>% kable()
+```
+```{r}
+set.seed(231)
+ridge.pred <- predict(ridge.mod, s = 0, newx = x_ridge[test_ridge, ], 
+                      exact = T, x = x_ridge[train_ridge, ], y = y_ridge[train_ridge])
+
+predict(ridge.mod, s = 0, exact = T, type = "coefficients", 
+        x = x_ridge[train_ridge, ], y = y_ridge[train_ridge])[1:14, ]
+
+```
+
+```{r}
+
+set.seed(9292)
+
+cv.out <- cv.glmnet(x_ridge[train_ridge, ], y_ridge[train_ridge], alpha = 0) 
+
+plot(cv.out)
+
+```
+
+```{r}
+set.seed(9292)
+
+bestlam <- cv.out$lambda.min
+
+bestlam
+```
+
+```{r}
+set.seed(9292)
+
+ridge.pred <- predict(cv.out, s = bestlam, newx = x_ridge[test_ridge,])
+
+mean((ridge.pred - y.test_ridge)^2) %>% kable()
+```
+
+```{r}
+set.seed(9292)
+
+lasso.mod <- glmnet(x_ridge[train_ridge, ], y_ridge[train_ridge], 
+                    alpha = 1, lambda = grid)
+
+plot(lasso.mod)
+```
+
+```{r}
+
+set.seed(1029)
+
+cv.out_2 <- cv.glmnet(x_ridge[train_ridge, ], y_ridge[train_ridge], alpha = 1) 
+
+plot(cv.out_2)
+
+```
+
+
+
+```{r}
+set.seed(1920)
+
+bestlam <- cv.out_2$lambda.min
+
+lasso.pred <- predict(cv.out_2, s = bestlam, newx = x_ridge[test_ridge,])
+
+mean((lasso.pred - y.test_ridge)^2) %>% kable()
+
+```
+
+```{r}
+
+set.seed(2739)
+
+out <- glmnet(x_ridge[train_ridge, ], y_ridge[train_ridge], 
+              alpha = 1, lambda = grid)
+
+lasso.coef <- predict(out, type = "coefficients", s = bestlam)[1:14, ]
+
+lasso.coef
+
+```
+
+
+(information regarding the meaning of each type of brokerage was acquired from https://edis.ifas.ufl.edu/publication/WC197)

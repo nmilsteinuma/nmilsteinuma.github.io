@@ -12,6 +12,7 @@ output:
 ---
 
 ```{r, echo=FALSE, warning=FALSE, message=FALSE}
+
 library(corrr)
 library(readxl)
 library(igraph)
@@ -365,7 +366,7 @@ library(igraph)
 
 ```{r}
 
-#gjs <- graphjs(net.js, main="Cold War Interactive Network", bg="gray10", #vertex.size=0.5, showLabels=T, vertex.label = V(net.js)$name, stroke=F, curvature=0.1, #attraction=0.9, repulsion=0.7, opacity=0.9)
+#gjs <- graphjs(net.js, main="Cold War Interactive Network", bg="gray10", vertex.size=0.5, showLabels=T, vertex.label = V(net.js)$name, stroke=F, curvature=0.1, attraction=0.9, repulsion=0.7, opacity=0.9)
 #print(gjs)
 #saveWidget(gjs, file="Media-Network-gjs.html")
 #browseURL("Media-Network-gjs.html")

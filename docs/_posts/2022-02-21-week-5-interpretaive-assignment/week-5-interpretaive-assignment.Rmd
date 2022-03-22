@@ -13,8 +13,7 @@ output:
 
 ```{r, echo=FALSE}
 
-library(readxl)
-library(igraph)
+library(readxl); library(igraph)
 library(statnet)
 library(network)
 library(tidyverse)
@@ -852,6 +851,214 @@ plot.block(blk_mod_2, cex.lab=.35)
 ```{r, echo=FALSE}
 
 plot.block(blk_mod_3, cex.lab=.35)
+
+```
+```{r}
+
+wars_in_1000s_edgelist <- as.matrix(wars_in_1000s)
+
+wars_in_1000s_edgelist_network_edgelist <- graph.edgelist(wars_in_1000s_edgelist, directed=TRUE)
+
+wars_in_1000s.ig<-graph_from_data_frame(wars_in_1000s)
+
+wars_in_1000s_network <- asNetwork(wars_in_1000s.ig)
+
+```
+
+```{r}
+
+wars_in_1000s.nodes.stat_2
+
+aspects_of_1000s_states <- read_excel("~/Desktop/Spring 2022/Networks/aspects_of_1000s_states.xlsx")
+
+total_1000s <- merge(aspects_of_1000s_states, wars_in_1000s.nodes.stat_2, by="name")
+
+```
+
+```{r}
+
+total_1000s_brokerag_reg<-total_1000s
+
+total_1000s_brokerag_reg$win_rate <- (total_1000s_brokerag_reg$outdegree/total_1000s_brokerag_reg$totdegree)
+
+total_1000s_brokerag_reg$loss_rate <- (total_1000s_brokerag_reg$indegree/total_1000s_brokerag_reg$totdegree)
+
+total_1000s_brokerag_reg_binom <- total_1000s_brokerag_reg %>% mutate(more_win_or_loss = case_when(
+  win_rate < 0.5 ~ 0,
+    win_rate >= 0.5 ~ 1))
+
+First_1000s_regression <- glm(more_win_or_loss~.-name-totdegree-indegree-outdegree-dc-eigen.dc-win_rate-loss_rate, total_1000s_brokerag_reg_binom, family=binomial)
+
+First_1000s_regression
+
+
+```
+
+
+```{r}
+
+set.seed(292)
+
+total_1000s_for_regression <- total_1000s[,-c(1, 20:25)]
+
+total_1000s_for_regression$win_rate <- (total_1000s_for_regression$outdegree/total_1000s_for_regression$totdegree)
+
+total_1000s_for_regression$loss_rate <- (total_1000s_for_regression$indegree/total_1000s_for_regression$totdegree)
+
+total_1000s_for_regression <- total_1000s_for_regression %>% mutate(more_win_or_loss = case_when(
+  win_rate < 0.5 ~ 0,
+    win_rate >= 0.5 ~ 1))
+
+First_1000s_regression <- glm(more_win_or_loss~.-loss_rate-win_rate-totdegree-indegree-outdegree-dc-eigen.dc, total_1000s_for_regression, family=binomial)
+
+First_1000s_regression
+
+```
+
+```{r}
+
+set.seed(6738)
+
+in_training<- sample(1:nrow(total_1000s_for_regression),  nrow(total_1000s_for_regression) * 0.7 )
+
+training_1000s <- total_1000s_for_regression[in_training,]
+
+test_1000s <- total_1000s_for_regression[-in_training,]
+
+lm_1000s_binom_subset_1 <- glm(more_win_or_loss~.-loss_rate-win_rate-totdegree-indegree-outdegree-dc-eigen.dc, total_1000s_for_regression, family=binomial, subset = in_training )
+
+logsitic_1_1000s_prob <- predict(lm_1000s_binom_subset_1, test_1000s,
+type = "response")
+
+log_preds_1<-ifelse(logsitic_1_1000s_prob >= 0.5, 1, 0)
+
+prediction_1_logs <-mean(log_preds_1 == test_1000s$more_win_or_loss)
+
+prediction_1_logs %>% kable()
+
+```
+
+```{r}
+
+library(glmnet)
+library(MASS)
+```
+
+
+```{r}
+
+x_ridge <- model.matrix(more_win_or_loss ~ .-loss_rate-win_rate-totdegree-indegree-outdegree-dc-eigen.dc, total_1000s_for_regression)[, -1] 
+
+y_ridge <- total_1000s_for_regression$more_win_or_loss
+
+grid <- 10^seq(10, -2, length = 100)
+
+ridge.mod <- glmnet(x_ridge, y_ridge, alpha = 0, lambda = grid)
+
+dim(coef(ridge.mod))
+
+
+
+```
+
+```{r}
+set.seed(729)
+train_ridge <- sample(1:nrow(x_ridge), nrow(x_ridge)*0.8 ) 
+
+test_ridge <- (-train_ridge)
+
+y.test_ridge <- y_ridge[test_ridge]
+
+```
+
+```{r}
+set.seed(9292)
+
+ridge.mod <- glmnet(x_ridge[train_ridge, ], y_ridge[train_ridge], 
+                    alpha = 0, lambda = grid, thresh = 1e-12)
+
+ridge.pred <- predict(ridge.mod, s = 4, newx = x_ridge[test_ridge,])
+
+mean((ridge.pred - y.test_ridge)^2) %>% kable()
+```
+```{r}
+set.seed(231)
+ridge.pred <- predict(ridge.mod, s = 0, newx = x_ridge[test_ridge, ], 
+                      exact = T, x = x_ridge[train_ridge, ], y = y_ridge[train_ridge])
+
+predict(ridge.mod, s = 0, exact = T, type = "coefficients", 
+        x = x_ridge[train_ridge, ], y = y_ridge[train_ridge])[1:14, ]
+
+```
+
+```{r}
+
+set.seed(9292)
+
+cv.out <- cv.glmnet(x_ridge[train_ridge, ], y_ridge[train_ridge], alpha = 0) 
+
+plot(cv.out)
+
+```
+
+```{r}
+set.seed(9292)
+
+bestlam <- cv.out$lambda.min
+
+bestlam
+```
+
+```{r}
+set.seed(9292)
+
+ridge.pred <- predict(cv.out, s = bestlam, newx = x_ridge[test_ridge,])
+
+mean((ridge.pred - y.test_ridge)^2) %>% kable()
+```
+
+```{r}
+set.seed(9292)
+
+lasso.mod <- glmnet(x_ridge[train_ridge, ], y_ridge[train_ridge], 
+                    alpha = 1, lambda = grid)
+
+plot(lasso.mod)
+```
+
+```{r}
+
+set.seed(1029)
+
+cv.out_2 <- cv.glmnet(x_ridge[train_ridge, ], y_ridge[train_ridge], alpha = 1) 
+
+plot(cv.out_2)
+
+```
+
+
+
+```{r}
+set.seed(1920)
+
+bestlam <- cv.out_2$lambda.min
+
+lasso.pred <- predict(cv.out_2, s = bestlam, newx = x_ridge[test_ridge,])
+
+mean((lasso.pred - y.test_ridge)^2) %>% kable()
+
+```
+
+```{r}
+
+set.seed(2739)
+
+out <- glmnet(x_ridge[train_ridge, ], y_ridge[train_ridge], 
+              alpha = 1, lambda = grid)
+
+lasso.coef <- predict(out, type = "coefficients", s = bestlam)[1:14, ]
+
+lasso.coef
 
 ```
 

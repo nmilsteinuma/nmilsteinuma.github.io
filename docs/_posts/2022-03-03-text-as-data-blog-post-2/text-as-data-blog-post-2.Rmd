@@ -34,16 +34,18 @@ library(knitr)
 library(lubridate)
 library(cleanNLP)
 library(quanteda.textstats)
-library("SnowballC")
-library("wordcloud")
-library("RColorBrewer")
-library("stopwords")
+library(quanteda.textplots)
+
+library(SnowballC)
+library(wordcloud)
+library(RColorBrewer)
+library(stopwords)
 library(tidyverse)
 library(rvest)
 library(tidytext)
-# colors from RColorBrewer::brewer.pal(6, "Set1")
-palette(c("#E41A1C", "#377EB8", "#4DAF4A", "#984EA3", "#FF7F00", "#FFFF33"))
 library(preText)
+library(plyr)
+
 ```
 
 ### Blog Post 2:
@@ -85,7 +87,7 @@ top_guns_urls_df=top_guns_urls[,c("title", "date_utc", "comments")]
 
 #### Conversion From Data Frame to Corpus
 
-**Explanation:** Below I have processed my inital dataframe from reddit into a corpus.
+**Explanation:** Below I have processed my initial dataframe from Reddit into a corpus.
 
 
 ```{r, results='hide'}
@@ -99,6 +101,109 @@ top_guns_documents<-top_guns_corpus[1:10,]
 top_guns_corpus_summary <- summary(top_guns_corpus)
 
 ```
+
+### Broad Characteristics
+
+```{r}
+
+top_guns_corpus_dfm <- tokens(top_guns_corpus,
+                                    remove_punct = TRUE,) %>%
+                           dfm(tolower=TRUE) %>%
+                           dfm_remove(stopwords('english'))
+
+```
+
+```{r}
+
+topfeatures(top_guns_corpus_dfm, 20)
+
+```
+
+```{r}
+
+set.seed(123456)
+
+textplot_wordcloud(top_guns_corpus_dfm, min_count = 8, random_order = FALSE)
+
+```
+```{r}
+
+
+top_guns_corpus_summary <- summary(top_guns_corpus)
+
+mean(top_guns_corpus_summary$Types)
+
+mean(top_guns_corpus_summary$Tokens)
+
+mean(top_guns_corpus_summary$Sentences)
+
+
+```
+
+```{r}
+
+word_counts <- as.data.frame(sort(colSums(top_guns_corpus_dfm),dec=T))
+
+colnames(word_counts) <- c("Frequency")
+
+word_counts$Rank <- c(1:ncol(top_guns_corpus_dfm))
+
+head(word_counts)
+
+```
+
+```{r}
+
+ggplot(word_counts, mapping = aes(x = Rank, y = Frequency)) + 
+  geom_point() +
+  labs(title = "Zipf's Law", x = "Rank", y = "Frequency") + 
+  theme_bw()
+
+```
+
+```{r}
+# trim based on the overall frequency (i.e., the word counts)
+smaller_dfm <- dfm_trim(top_guns_corpus_dfm, min_termfreq = 5)
+
+# trim based on the proportion of documents that the feature appears in; here, 
+# the feature needs to appear in more than 10% of documents (chapters)
+smaller_dfm <- dfm_trim(smaller_dfm, min_docfreq = 0, docfreq_type = "prop")
+
+smaller_dfm
+```
+
+```{r}
+# let's create a nicer dfm by limiting to words that appear frequently and are in more than 30% of chapters
+smaller_dfm <- dfm_trim(top_guns_corpus_dfm, min_termfreq = 5)
+
+# create fcm from dfm
+smaller_fcm <- fcm(smaller_dfm)
+
+# check the dimensions (i.e., the number of rows and the number of columnns)
+# of the matrix we created
+dim(smaller_fcm)
+```
+
+
+```{r}
+
+# pull the top features
+myFeatures <- names(topfeatures(smaller_fcm, 30))
+
+# retain only those top features as part of our matrix
+even_smaller_fcm <- fcm_select(smaller_fcm, pattern = myFeatures, selection = "keep")
+
+# check dimensions
+dim(even_smaller_fcm)
+
+# compute size weight for vertices in network
+size <- log(colSums(even_smaller_fcm))
+
+# create plot
+textplot_network(even_smaller_fcm, vertex_size = size / max(size) * 3)
+
+```
+
 
 #### Pre-processing 
 
@@ -125,6 +230,8 @@ names(preprocessed_documents)
 head(preprocessed_documents$choices)
 
 ```
+
+
 
 
 #### preText Results
