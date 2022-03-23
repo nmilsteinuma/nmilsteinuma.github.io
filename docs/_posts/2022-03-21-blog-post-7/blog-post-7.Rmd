@@ -12,7 +12,7 @@ output:
 ---
 
 ```{r, fig.align='center', out.width='20%'}
-knitr::include_graphics("/Users/noahmilstein/Desktop/silly_cat.png")
+#knitr::include_graphics("/Users/noahmilstein/Desktop/Spring 2022/Networks/Git_Projects/DACCS/nmilsteinuma.github.io/docs/silly_cat.png")
 ```
 
 ```{r, echo=FALSE}
