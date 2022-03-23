@@ -11,6 +11,9 @@ output:
     self_contained: false
 ---
 
+```{r, fig.align='center', out.width='20%'}
+knitr::include_graphics("/Users/noahmilstein/Desktop/silly_cat.png")
+```
 
 ```{r, echo=FALSE}
 library(readxl)
@@ -1076,6 +1079,46 @@ out <- glmnet(x_lasso[train_lasso, ], y_lasso[train_lasso],
 lasso.coef <- predict(out, type = "coefficients", s = bestlam_2)[1:14, ]
 
 lasso.coef
+
+```
+
+```{r}
+
+aspects_of_1100s_states <- read_excel("~/Desktop/Spring 2022/Networks/aspects_of_1100s_states.xlsx")
+
+total_1100s <- merge(aspects_of_1100s_states, wars_in_1100s.nodes.stat_2, by="name")
+
+```
+
+```{r}
+
+aspects_of_1200s_states <- read_excel("~/Desktop/Spring 2022/Networks/aspects_of_1200s_states.xlsx")
+
+total_1200s <- merge(aspects_of_1200s_states, wars_in_1200s.nodes.stat_2, by="name")
+
+```
+
+```{r}
+
+set.seed(238)
+#Run clustering algorithm: fast_greedy
+wars_in_1000s.wt<-walktrap.community(wars_in_1000s.ig)
+
+igraph::groups(wars_in_1000s.wt)
+
+```
+
+```{r}
+#Run & inspect clustering algorithm: 10 steps
+igraph::groups(walktrap.community(wars_in_1000s.ig, steps=10)) 
+#Run & inspect clustering algorithm: 20 steps
+igraph::groups(walktrap.community(wars_in_1000s.ig ,steps=20))
+#Run & inspect clustering algorithm
+```
+
+```{r}
+
+plot(wars_in_1000s.wt, wars_in_1000s.ig)
 
 ```
 
