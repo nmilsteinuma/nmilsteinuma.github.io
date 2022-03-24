@@ -11,6 +11,11 @@ output:
     self_contained: false
 ---
 
+```{r, fig.align='center', out.width='20%'}
+
+knitr::include_graphics("images/silly_cat.png")
+
+```
 ![](images/silly_cat.png)
 
 ```{r, echo=FALSE}
