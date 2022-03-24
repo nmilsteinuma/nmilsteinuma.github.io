@@ -11,9 +11,7 @@ output:
     self_contained: false
 ---
 
-```{r, fig.align='center', out.width='20%'}
-#knitr::include_graphics("/Users/noahmilstein/Desktop/Spring 2022/Networks/Git_Projects/DACCS/nmilsteinuma.github.io/docs/silly_cat.png")
-```
+![](images/silly_cat.png)
 
 ```{r, echo=FALSE}
 library(readxl)
@@ -31,11 +29,9 @@ library(GGally)
 library(aRtsy)
 ```
 
-
-
 ### An Introduction to the Project and Dataset
 
-| The project that I am doing involves conflict in the high middle ages. This was the period between 1000 and 1200 
+| The project that I am doing involves conflict in the high middle ages. This was the period between 1000 and 1200
 
 ```{r setup, include=FALSE}
 
@@ -91,16 +87,15 @@ wars_in_1200s_network <- asNetwork(wars_in_1200s.ig)
 
 ```
 
-
-## Part 1: 
+## Part 1:
 
 ### Describe the Dataset You Are Using:
 
-**The Dataset Being Used:** The dataset that I am using is wikipedia list of wars throughout history, this article is the "List of wars: 1000–1499" which acts as a subset of the "2nd-millennium conflicts" I chose this dataset as an exemplar of popular history's depiction of the centralization of worldwide conflict. Wikipedia, being an accessible source generally created from relevant citations makes it a good case study to see where historical writers and academics center their world are relevant conflicts.
+**The Dataset Being Used:** The dataset that I am using is wikipedia list of wars throughout history, this article is the "List of wars: 1000--1499" which acts as a subset of the "2nd-millennium conflicts" I chose this dataset as an exemplar of popular history's depiction of the centralization of worldwide conflict. Wikipedia, being an accessible source generally created from relevant citations makes it a good case study to see where historical writers and academics center their world are relevant conflicts.
 
 ### Identify initial network format:
 
-**Answer:** The initial network format is as an edge list, the first, **in** column contains the winners of each war while the second, **out** column contains the losers of each. These sets of belligerents are directed 
+**Answer:** The initial network format is as an edge list, the first, **in** column contains the winners of each war while the second, **out** column contains the losers of each. These sets of belligerents are directed
 
 ### Network Structure: Wars Startings in the 1000s
 
@@ -138,14 +133,13 @@ print(wars_in_1200s_network)
 
 **Answer:** There are a number of attributes that could be used to subset the data, year that the conflict began or the length of time it lasted are available. Aspects like each side's religion and the area where the conflict took place could be used to subset the data itself.
 
-## Part 2: 
+## Part 2:
 
-### Brokerage and Betweeness centrality 
+### Brokerage and Betweeness centrality
 
-**What are betweeness and brokerage cenrrality** Calculate brokerage and betweenneess centrality measures for one or more subsets of your network data, and write up the results and your interpretation of them. 
+**What are betweeness and brokerage cenrrality** Calculate brokerage and betweenneess centrality measures for one or more subsets of your network data, and write up the results and your interpretation of them.
 
 **Answer:** I will be calculating these measures for wars in 1000-1099, 1100-1199, and 1200-1399.
-
 
 ```{r,echo=FALSE}
 
@@ -344,7 +338,7 @@ wars_in_1200s.nodes.stat_2<-wars_in_1200s.nodes.stat %>%
 
 ```
 
-## Option 2.A 
+## Option 2.A
 
 **For a Specific Research Question:** If you have a specific research question, please feel free to use that to guide your analysis. Otherwise, you may want to orient your analysis as follows in order to identify a compelling question or noteworthy pattern in the data that can be interpreted.
 
@@ -420,10 +414,9 @@ ggplot(wars_in_1200s_network, aes(x = x, y = y, xend = xend, yend = yend)) +
 
 ```
 
-
 #### Representative Brokerage
 
-**Explanation:** Representative brokerage indicates that the broker, or nation in question loses a war to another in their group, but wins another against a faction outside of their group. This can be though of as their directed connections to them. In this case the Seljuk Empire	and Kingdom of Aragon	have instances in which they lose to factions within their group before beating those outside of it.
+**Explanation:** Representative brokerage indicates that the broker, or nation in question loses a war to another in their group, but wins another against a faction outside of their group. This can be though of as their directed connections to them. In this case the Seljuk Empire and Kingdom of Aragon have instances in which they lose to factions within their group before beating those outside of it.
 
 ```{r, echo=FALSE}
 
@@ -447,8 +440,7 @@ ggplot(wars_in_1200s_network, aes(x = x, y = y, xend = xend, yend = yend)) +
 
 #### Liaison Brokerage
 
-**Explanation:** A liaison broker, in this case, is a faction that loses a war to a group they do not belong to and wins a war against a different group than the first that they also do not belong to. The Byzantine Empire, Sultanate of Rum, and Holy Roman Empire	are highest in this category likely owing to their frequent states of conflict beyond the crusades against a variety of groups.
-
+**Explanation:** A liaison broker, in this case, is a faction that loses a war to a group they do not belong to and wins a war against a different group than the first that they also do not belong to. The Byzantine Empire, Sultanate of Rum, and Holy Roman Empire are highest in this category likely owing to their frequent states of conflict beyond the crusades against a variety of groups.
 
 ```{r, echo=FALSE}
 
@@ -826,7 +818,6 @@ plot.block<-function(x=blk_mod, main=NULL, cex.lab=1){
 
 ```
 
-
 ```{r, echo=FALSE}
 
 plot.block(blk_mod, cex.lab=.35)
@@ -838,11 +829,13 @@ plot.block(blk_mod, cex.lab=.35)
 plot.block(blk_mod_2, cex.lab=.35)
 
 ```
+
 ```{r, echo=FALSE}
 
 plot.block(blk_mod_3, cex.lab=.35)
 
 ```
+
 ```{r}
 
 wars_in_1000s_edgelist <- as.matrix(wars_in_1000s)
@@ -882,7 +875,6 @@ First_1000s_regression
 
 
 ```
-
 
 ```{r}
 
@@ -933,7 +925,6 @@ library(glmnet)
 library(MASS)
 ```
 
-
 ```{r}
 
 
@@ -973,6 +964,7 @@ ridge.pred <- predict(ridge.mod, s = 4, newx = x_ridge[test_ridge,])
 
 mean((ridge.pred - y.test_ridge)^2) %>% kable()
 ```
+
 ```{r}
 set.seed(231)
 ridge.pred <- predict(ridge.mod, s = 0, newx = x_ridge[test_ridge, ], 
@@ -1037,6 +1029,7 @@ test_lasso <- (-train_lasso)
 
 y.test_lasso <- y_lasso[test_lasso]
 ```
+
 ```{r}
 set.seed(9292)
 
@@ -1055,8 +1048,6 @@ cv.out_2 <- cv.glmnet(x_lasso[train_lasso, ], y_lasso[train_lasso], alpha = 1)
 plot(cv.out_2)
 
 ```
-
-
 
 ```{r}
 set.seed(1920)
@@ -1122,5 +1113,228 @@ plot(wars_in_1000s.wt, wars_in_1000s.ig)
 
 ```
 
+```{r}
+countries <- row.names(total_1000s)
+```
 
-(information regarding the meaning of each type of brokerage was acquired from https://edis.ifas.ufl.edu/publication/WC197)
+```{r}
+
+names(total_1000s)
+
+```
+
+```{r}
+
+View(total_1000s_brokerag_reg_binom)
+
+total_1000s_for_PCA <- total_1000s_brokerag_reg_binom[-c(20:27)]
+
+
+apply(total_1000s_for_PCA[-1], 2, mean)
+
+```
+
+```{r}
+
+apply(total_1000s_for_PCA[-1], 2, var)
+
+```
+
+```{r}
+
+pr.out <- prcomp(total_1000s_for_PCA[-1], scale = TRUE)
+
+```
+
+```{r}
+names(pr.out)
+```
+
+```{r}
+pr.out$center
+```
+
+```{r}
+
+pr.out$scale
+
+```
+
+```{r, echo=FALSE}
+pr.out$rotation
+```
+
+```{r}
+biplot(pr.out, scale = 0)
+```
+
+```{r}
+
+pr.out$rotation = -pr.out$rotation 
+
+pr.out$x = -pr.out$x
+
+biplot(pr.out, scale = 0)
+
+```
+
+```{r}
+
+pr.out$sdev
+
+```
+
+```{r}
+
+pr.var <- pr.out$sdev^2
+
+pr.var
+
+```
+
+```{r}
+
+pve <- pr.var / sum(pr.var)
+
+pve
+
+```
+
+```{r}
+
+par(mfrow = c(1, 2))
+plot(pve, xlab = "Principal Component",
+ylab = "Proportion of Variance Explained", ylim = c(0, 1),
+type = "b")
+
+plot(cumsum(pve), xlab = "Principal Component",
+ylab = "Cumulative Proportion of Variance Explained", ylim = c(0, 1), type = "b")
+
+```
+
+```{r}
+
+names(total_1200s)
+
+```
+
+```{r}
+
+total_1200s_brokerag_reg<-total_1200s
+
+```
+
+```{r}
+total_1200s_brokerag_reg$win_rate <- (total_1200s_brokerag_reg$outdegree/total_1200s_brokerag_reg$totdegree)
+```
+
+```{r}
+total_1200s_brokerag_reg$loss_rate <- (total_1200s_brokerag_reg$indegree/total_1200s_brokerag_reg$totdegree)
+```
+
+```{r}
+
+total_1200s_brokerag_reg_binom <- total_1200s_brokerag_reg %>% mutate(more_win_or_loss = case_when(
+  win_rate < 0.5 ~ 0,
+    win_rate >= 0.5 ~ 1))
+
+```
+
+```{r}
+
+total_1200s_for_PCA <- total_1200s_brokerag_reg_binom[-c(20:27)]
+
+
+apply(total_1200s_for_PCA[-1], 2, mean)
+
+```
+
+```{r}
+
+apply(total_1200s_for_PCA[-1], 2, var)
+
+```
+
+```{r}
+
+# I cannot scale variables with 
+
+View(total_1200s_for_PCA)
+
+total_1200s_for_PCA<-total_1200s_for_PCA[-c(8,10)]
+
+```
+
+```{r}
+
+pr.out_2 <- prcomp(total_1200s_for_PCA[-1], scale = TRUE)
+
+```
+
+```{r}
+names(pr.out_2)
+```
+
+```{r}
+pr.out_2$center
+```
+
+```{r}
+
+pr.out_2$scale
+
+```
+
+```{r, echo=FALSE}
+pr.out_2$rotation
+```
+
+```{r}
+biplot(pr.out_2, scale = 0)
+```
+
+```{r}
+
+pr.out_2$rotation = -pr.out_2$rotation 
+
+pr.out_2$x = -pr.out_2$x
+
+biplot(pr.out_2, scale = 0)
+
+```
+
+```{r}
+
+pr.out$sdev
+
+```
+
+```{r}
+
+pr.var_2 <- pr.out_2$sdev^2
+
+pr.var_2
+
+```
+
+```{r}
+
+pve_2 <- pr.var_2 / sum(pr.var_2)
+
+pve_2
+
+```
+
+```{r}
+
+par(mfrow = c(1, 2))
+plot(pve_2, xlab = "Principal Component",
+ylab = "Proportion of Variance Explained", ylim = c(0, 1),
+type = "b")
+
+plot(cumsum(pve_2), xlab = "Principal Component",
+ylab = "Cumulative Proportion of Variance Explained", ylim = c(0, 1), type = "b")
+
+```
+
+(information regarding the meaning of each type of brokerage was acquired from <https://edis.ifas.ufl.edu/publication/WC197>)
