@@ -16,7 +16,6 @@ output:
 knitr::include_graphics("images/silly_cat.png")
 
 ```
-![](images/silly_cat.png)
 
 ```{r, echo=FALSE}
 library(readxl)
@@ -1094,6 +1093,23 @@ total_1200s <- merge(aspects_of_1200s_states, wars_in_1200s.nodes.stat_2, by="na
 
 ```
 
+### Community Grouping
+
+
+```{r}
+
+comm.lab<-label.propagation.community(wars_in_1000s.ig)
+#Inspect clustering object
+igraph::groups(comm.lab)
+
+```
+
+```{r, warning=FALSE}
+
+plot(comm.lab,wars_in_1000s.ig)
+
+```
+
 ```{r}
 
 set.seed(238)
@@ -1133,7 +1149,6 @@ names(total_1000s)
 View(total_1000s_brokerag_reg_binom)
 
 total_1000s_for_PCA <- total_1000s_brokerag_reg_binom[-c(20:27)]
-
 
 apply(total_1000s_for_PCA[-1], 2, mean)
 
@@ -1341,5 +1356,9 @@ plot(cumsum(pve_2), xlab = "Principal Component",
 ylab = "Cumulative Proportion of Variance Explained", ylim = c(0, 1), type = "b")
 
 ```
+
+
+
+
 
 (information regarding the meaning of each type of brokerage was acquired from <https://edis.ifas.ufl.edu/publication/WC197>)
