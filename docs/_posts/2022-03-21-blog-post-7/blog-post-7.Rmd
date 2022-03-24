@@ -11,7 +11,7 @@ output:
     self_contained: false
 ---
 
-```{r, fig.align='center', out.width='20%'}
+```{r, fig.align='center', out.width='20%', echo=FALSE}
 
 knitr::include_graphics("images/silly_cat.png")
 
