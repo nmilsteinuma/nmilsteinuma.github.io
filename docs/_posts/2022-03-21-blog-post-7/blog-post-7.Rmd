@@ -117,7 +117,7 @@ print(wars_in_1100s_network)
 
 ```
 
-### Network Structure: Wars Startings in the 1200s
+### Network Structure: Wars Starting in the 1200s
 
 ```{r, echo=FALSE}
 
@@ -1095,20 +1095,30 @@ total_1200s <- merge(aspects_of_1200s_states, wars_in_1200s.nodes.stat_2, by="na
 
 ### Community Grouping
 
+#### Label Propagation 1000s:
+
+The first community cluster below is done using label propagation. This results in 39 groups
 
 ```{r}
-
+set.seed(23)
 comm.lab<-label.propagation.community(wars_in_1000s.ig)
 #Inspect clustering object
-igraph::groups(comm.lab)
+# igraph::groups(comm.lab)
 
 ```
 
-```{r, warning=FALSE}
+```{r, echo=FALSE, warning=FALSE}
 
-plot(comm.lab,wars_in_1000s.ig)
+set.seed(123)
+
+plot(comm.lab,wars_in_1000s.ig, vertex.size=0.5, edge.size=0.25, edge.arrow.size=.25,  vertex.label.dist=1.5,vertex.label.cex=0.25,asp = 0)
+
 
 ```
+
+#### Walktrap 1000s:
+
+Walktrap classification as seen below results in 19 distinct communities.
 
 ```{r}
 
@@ -1116,37 +1126,30 @@ set.seed(238)
 #Run clustering algorithm: fast_greedy
 wars_in_1000s.wt<-walktrap.community(wars_in_1000s.ig)
 
-igraph::groups(wars_in_1000s.wt)
+#igraph::groups(wars_in_1000s.wt)
 
 ```
+
+Adding more steps resulted in 19 groups for both 10 and 20 steps.
 
 ```{r}
 #Run & inspect clustering algorithm: 10 steps
-igraph::groups(walktrap.community(wars_in_1000s.ig, steps=10)) 
+#igraph::groups(walktrap.community(wars_in_1000s.ig, steps=10)) 
 #Run & inspect clustering algorithm: 20 steps
-igraph::groups(walktrap.community(wars_in_1000s.ig ,steps=20))
+#igraph::groups(walktrap.community(wars_in_1000s.ig ,steps=20))
 #Run & inspect clustering algorithm
 ```
 
-```{r}
+```{r, echo=FALSE}
 
-plot(wars_in_1000s.wt, wars_in_1000s.ig)
+plot(wars_in_1000s.wt, wars_in_1000s.ig, vertex.size=0.5, edge.size=0.25, edge.arrow.size=.25,  vertex.label.dist=1.5,vertex.label.cex=0.25,asp = 0)
 
-```
-
-```{r}
-countries <- row.names(total_1000s)
-```
-
-```{r}
-
-names(total_1000s)
 
 ```
 
-```{r}
+### Machine Learning, Regression and Principle Components:
 
-View(total_1000s_brokerag_reg_binom)
+```{r}
 
 total_1000s_for_PCA <- total_1000s_brokerag_reg_binom[-c(20:27)]
 
@@ -1180,8 +1183,10 @@ pr.out$scale
 
 ```
 
-```{r, echo=FALSE}
+```{r, results=FALSE, echo=FALSE}
+
 pr.out$rotation
+
 ```
 
 ```{r}
@@ -1279,8 +1284,6 @@ apply(total_1200s_for_PCA[-1], 2, var)
 
 # I cannot scale variables with 
 
-View(total_1200s_for_PCA)
-
 total_1200s_for_PCA<-total_1200s_for_PCA[-c(8,10)]
 
 ```
@@ -1305,7 +1308,7 @@ pr.out_2$scale
 
 ```
 
-```{r, echo=FALSE}
+```{r, results=FALSE, echo=FALSE}
 pr.out_2$rotation
 ```
 
@@ -1356,9 +1359,5 @@ plot(cumsum(pve_2), xlab = "Principal Component",
 ylab = "Cumulative Proportion of Variance Explained", ylim = c(0, 1), type = "b")
 
 ```
-
-
-
-
 
 (information regarding the meaning of each type of brokerage was acquired from <https://edis.ifas.ufl.edu/publication/WC197>)
