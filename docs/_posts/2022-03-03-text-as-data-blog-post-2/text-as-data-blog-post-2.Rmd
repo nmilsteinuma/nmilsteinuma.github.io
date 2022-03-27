@@ -444,7 +444,7 @@ sentimetnsdf <- read_csv("/Users/noahmilstein/Desktop/Spring 2022/Textasdata/tex
 ### Sentiment Results Using NRC
 
 ```{r}
-
+top_guns_urls_df
 top_guns_urls_df_2<-top_guns_urls_df
 top_guns_urls_df_2$text<- seq(1, 998, by=1)
 

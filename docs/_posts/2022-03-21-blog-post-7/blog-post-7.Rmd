@@ -839,6 +839,109 @@ plot.block(blk_mod_2, cex.lab=.35)
 plot.block(blk_mod_3, cex.lab=.35)
 
 ```
+### Community Grouping
+
+#### Label Propagation 1000s:
+
+The first community cluster below is done using label propagation. This results in 39 groups
+
+```{r}
+set.seed(23)
+comm.lab<-label.propagation.community(wars_in_1000s.ig)
+#Inspect clustering object
+# igraph::groups(comm.lab)
+
+```
+
+```{r, echo=FALSE, warning=FALSE}
+
+set.seed(123)
+
+plot(comm.lab,wars_in_1000s.ig, vertex.size=0.5, edge.size=0.25, edge.arrow.size=.25,  vertex.label.dist=1.5,vertex.label.cex=0.25,asp = 0)
+
+
+```
+
+#### Walktrap 1000s:
+
+Walktrap classification as seen below results in 19 distinct communities.
+
+```{r}
+
+set.seed(238)
+
+wars_in_1000s.wt<-walktrap.community(wars_in_1000s.ig)
+
+#igraph::groups(wars_in_1000s.wt)
+
+```
+
+Adding more steps resulted in 19 groups for both 10 and 20 steps.
+
+```{r}
+#Run & inspect clustering algorithm: 10 steps
+#igraph::groups(walktrap.community(wars_in_1000s.ig, steps=10)) 
+#Run & inspect clustering algorithm: 20 steps
+#igraph::groups(walktrap.community(wars_in_1000s.ig ,steps=20))
+#Run & inspect clustering algorithm
+```
+
+```{r, echo=FALSE}
+
+plot(wars_in_1000s.wt, wars_in_1000s.ig, vertex.size=0.5, edge.size=0.25, edge.arrow.size=.25,  vertex.label.dist=1.5,vertex.label.cex=0.25,asp = 0)
+
+
+```
+
+#### Label Propagation 1100s:
+
+In the 1100s data, label propagation leads to 30 groups, despite the comparatively smaller number of nations, or observations in the dataset.
+
+```{r}
+
+set.seed(12376)
+
+comm.lab_1100s<-label.propagation.community(wars_in_1100s.ig)
+#igraph::groups(comm.lab_1100s)
+
+```
+
+```{r, echo=FALSE, warning=FALSE}
+
+set.seed(123)
+
+plot(comm.lab_1100s,wars_in_1100s.ig, vertex.size=0.5, edge.size=0.25, edge.arrow.size=.25,  vertex.label.dist=1.5,vertex.label.cex=0.4,asp = 0)
+
+
+```
+#### Walktrap 1100s:
+
+The walktrap method results in 16 communities, which is significantly less than with the label propogation method.
+
+```{r}
+
+wars_in_1100s.wt<-walktrap.community(wars_in_1100s.ig)
+
+# igraph::groups(wars_in_1100s.wt)
+```
+
+A walktrap with 10 steps further reduces the number of groups to 14 while 20 steps results in 15 communities.
+
+```{r}
+set.seed(982)
+#Run & inspect clustering algorithm: 10 steps
+#igraph::groups(walktrap.community(wars_in_1100s.ig, steps=10)) 
+#Run & inspect clustering algorithm: 20 steps
+#igraph::groups(walktrap.community(wars_in_1100s.ig ,steps=20))
+#Run & inspect clustering algorithm
+```
+
+```{r, echo=FALSE}
+
+plot(wars_in_1100s.wt, wars_in_1100s.ig, vertex.size=0.5, edge.size=0.25, edge.arrow.size=.25,  vertex.label.dist=1.5,vertex.label.cex=0.4,asp = 0)
+
+
+```
 
 ```{r}
 
@@ -860,6 +963,10 @@ aspects_of_1000s_states <- read_excel("~/Desktop/Spring 2022/Networks/aspects_of
 total_1000s <- merge(aspects_of_1000s_states, wars_in_1000s.nodes.stat_2, by="name")
 
 ```
+
+### Machine Learning, Regression and Principle Components:
+
+The machine learning techniques I will use in the paper will primarily involve.
 
 ```{r}
 
@@ -1093,62 +1200,6 @@ total_1200s <- merge(aspects_of_1200s_states, wars_in_1200s.nodes.stat_2, by="na
 
 ```
 
-### Community Grouping
-
-#### Label Propagation 1000s:
-
-The first community cluster below is done using label propagation. This results in 39 groups
-
-```{r}
-set.seed(23)
-comm.lab<-label.propagation.community(wars_in_1000s.ig)
-#Inspect clustering object
-# igraph::groups(comm.lab)
-
-```
-
-```{r, echo=FALSE, warning=FALSE}
-
-set.seed(123)
-
-plot(comm.lab,wars_in_1000s.ig, vertex.size=0.5, edge.size=0.25, edge.arrow.size=.25,  vertex.label.dist=1.5,vertex.label.cex=0.25,asp = 0)
-
-
-```
-
-#### Walktrap 1000s:
-
-Walktrap classification as seen below results in 19 distinct communities.
-
-```{r}
-
-set.seed(238)
-#Run clustering algorithm: fast_greedy
-wars_in_1000s.wt<-walktrap.community(wars_in_1000s.ig)
-
-#igraph::groups(wars_in_1000s.wt)
-
-```
-
-Adding more steps resulted in 19 groups for both 10 and 20 steps.
-
-```{r}
-#Run & inspect clustering algorithm: 10 steps
-#igraph::groups(walktrap.community(wars_in_1000s.ig, steps=10)) 
-#Run & inspect clustering algorithm: 20 steps
-#igraph::groups(walktrap.community(wars_in_1000s.ig ,steps=20))
-#Run & inspect clustering algorithm
-```
-
-```{r, echo=FALSE}
-
-plot(wars_in_1000s.wt, wars_in_1000s.ig, vertex.size=0.5, edge.size=0.25, edge.arrow.size=.25,  vertex.label.dist=1.5,vertex.label.cex=0.25,asp = 0)
-
-
-```
-
-### Machine Learning, Regression and Principle Components:
-
 ```{r}
 
 total_1000s_for_PCA <- total_1000s_brokerag_reg_binom[-c(20:27)]
@@ -1314,6 +1365,7 @@ pr.out_2$rotation
 
 ```{r}
 biplot(pr.out_2, scale = 0)
+?biplot
 ```
 
 ```{r}
