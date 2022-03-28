@@ -11,11 +11,6 @@ output:
     self_contained: false
 ---
 
-```{r, fig.align='center', out.width='20%', echo=FALSE}
-
-knitr::include_graphics("/Users/noahmilstein/Desktop/Spring 2022/Textasdata/Week_7_Readings/o-SNAIL-FIGHTS-A-KNIGHT-3-900.png")
-
-```
 
 ```{r, echo=FALSE}
 library(rmarkdown)
