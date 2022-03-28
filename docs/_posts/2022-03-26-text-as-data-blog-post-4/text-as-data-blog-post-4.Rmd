@@ -69,7 +69,7 @@ New_guns_urls_df <- loadRData("/Users/noahmilstein/Desktop/Spring 2022/Networks/
 ```
 
 ```{r}
-New_guns_urls_df
+
 str(New_guns_urls_df)
 
 ```
