@@ -1,11 +1,10 @@
 ---
-title: "Text as Data Blog Post 4"
+title: "Post 4"
 description: |
-  In last weeks post I combined a the material for blog posts 2, 3, and began on the 4th post. As a result this will be a continuation of dictionary validation methods.
-author:
+  In last weeks post I combined a the material for blog posts 2, 3, and began on the 4th post. As a result this will be a continuation of dictionary validation methods.author:
   - name: Noah Milstein
     url: {}
-date: 2022-03-26
+date: 2022-03-28
 output:
   distill::distill_article:
     self_contained: false
@@ -61,7 +60,7 @@ loadRData <- function(fileName){
     load(fileName)
     get(ls()[ls() != "fileName"])
 }
-New_guns_urls_df <- loadRData("/Users/noahmilstein/Desktop/Spring 2022/Networks/Git_Projects/DACCS/nmilsteinuma.github.io/docs/_posts/2022-03-26-text-as-data-blog-post-4/New_reddit_posts_3_26.RData")
+New_guns_urls_df <- loadRData("/Users/noahmilstein/Desktop/Spring 2022/Textasdata/text_as_data_work/New_reddit_posts_3_26.RData")
 
 
 
@@ -350,7 +349,7 @@ head(preprocessed_documents$choices)
 
 ```{r}
 
-preText_results <- loadRData("~/Desktop/Spring 2022/Networks/Git_Projects/DACCS/nmilsteinuma.github.io/docs/_posts/2022-03-26-text-as-data-blog-post-4/preText_results_3_27_gun_50_comp.RData")
+preText_results <- loadRData("/Users/noahmilstein/Desktop/Spring 2022/Textasdata/text_as_data_work/preText_results_3_27_gun_50_comp.RData")
 
 preText_results
 ```
