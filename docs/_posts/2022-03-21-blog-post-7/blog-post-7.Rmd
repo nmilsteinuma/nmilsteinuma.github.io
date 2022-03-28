@@ -31,6 +31,7 @@ library(intergraph)
 library(knitr)
 library(GGally)
 library(aRtsy)
+library(ggbiplot)
 ```
 
 ### An Introduction to the Project and Dataset
@@ -839,6 +840,7 @@ plot.block(blk_mod_2, cex.lab=.35)
 plot.block(blk_mod_3, cex.lab=.35)
 
 ```
+
 ### Community Grouping
 
 #### Label Propagation 1000s:
@@ -914,6 +916,7 @@ plot(comm.lab_1100s,wars_in_1100s.ig, vertex.size=0.5, edge.size=0.25, edge.arro
 
 
 ```
+
 #### Walktrap 1100s:
 
 The walktrap method results in 16 communities, which is significantly less than with the label propogation method.
@@ -1241,7 +1244,9 @@ pr.out$rotation
 ```
 
 ```{r}
-biplot(pr.out, scale = 0)
+
+ggbiplot(pr.out, labels =  total_1000s_for_PCA$name, labels.size	=1.5)
+
 ```
 
 ```{r}
@@ -1250,7 +1255,7 @@ pr.out$rotation = -pr.out$rotation
 
 pr.out$x = -pr.out$x
 
-biplot(pr.out, scale = 0)
+ggbiplot(pr.out, labels =  total_1000s_for_PCA$name, labels.size	=1.5)
 
 ```
 
@@ -1337,6 +1342,7 @@ apply(total_1200s_for_PCA[-1], 2, var)
 
 total_1200s_for_PCA<-total_1200s_for_PCA[-c(8,10)]
 
+
 ```
 
 ```{r}
@@ -1364,8 +1370,11 @@ pr.out_2$rotation
 ```
 
 ```{r}
-biplot(pr.out_2, scale = 0)
-?biplot
+
+ggbiplot(pr.out_2, labels =  total_1200s_for_PCA$name, labels.size	=1.5)
+
+#biplot(pr.out_2, scale = 0)
+
 ```
 
 ```{r}
@@ -1374,8 +1383,8 @@ pr.out_2$rotation = -pr.out_2$rotation
 
 pr.out_2$x = -pr.out_2$x
 
-biplot(pr.out_2, scale = 0)
-
+ggbiplot(pr.out_2, labels =  total_1200s_for_PCA$name, labels.size	=1.5)
+ 
 ```
 
 ```{r}
