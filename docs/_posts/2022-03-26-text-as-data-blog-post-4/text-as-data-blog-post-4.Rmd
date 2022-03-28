@@ -4,7 +4,7 @@ description: |
   In last weeks post I combined a the material for blog posts 2, 3, and began on the 4th post. As a result this will be a continuation of dictionary validation methods.
 author:
   - name: Noah Milstein
-    url: https://nmilsteinuma.github.io/posts/2022-03-26-text-as-data-blog-post-4/
+    url: {}
 date: 2022-03-26
 output:
   distill::distill_article:
