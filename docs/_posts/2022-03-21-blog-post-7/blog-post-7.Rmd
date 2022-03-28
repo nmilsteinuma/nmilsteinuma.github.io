@@ -4,7 +4,7 @@ description: |
  This post is an analysis of community structure and machine learning techniques on my medieval dataset.
 author:
   - name: Noah Milstein
-    url: {}
+    url: https://nmilsteinuma.github.io/posts/2022-03-21-blog-post-7/
 date: 2022-03-21
 output:
   distill::distill_article:
